@@ -48,7 +48,7 @@ public class UserDao {
 //        return user;
 //    }
 
-    public User getMyUser(String account) {
+    public User getUser(String account) {
         return this.sqlSession.selectOne("getUser", account);
     }
 
