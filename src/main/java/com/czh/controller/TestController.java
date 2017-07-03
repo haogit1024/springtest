@@ -21,7 +21,7 @@ public class TestController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView test(HttpSession session){
         ModelAndView model = new ModelAndView();
 //        User user = userDao.getMyUser("admin");
