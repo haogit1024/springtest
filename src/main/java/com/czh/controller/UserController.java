@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +26,11 @@ public class UserController {
     private final static Logger log = Logger.getLogger(UserController.class);
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestBody LoginModel loginModel, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ModelAndView login(@RequestParam String account, @RequestParam String password, @RequestParam int keepLogin) throws IOException {
         ModelAndView model = new ModelAndView();
-        String account = loginModel.getAccount();
-        String password = loginModel.getPassword();
-        boolean keepLogin = loginModel.isKeepLogin();
-        log.info("account = " + account);
-        log.info("password = " + password);
+        model.addObject("account", account);
+        model.addObject("password", password);
+        model.addObject("keepLogin", keepLogin);
         return model;
 
     }

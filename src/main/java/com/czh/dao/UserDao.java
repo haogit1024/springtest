@@ -17,8 +17,7 @@ import java.sql.SQLException;
 /**
  * Created by czh on 17-6-9.
  */
-//@Repository
-@Component
+@Repository
 public class UserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -29,7 +28,43 @@ public class UserDao {
         this.sqlSession = sqlSession;
     }
 
-//    public User getUser(String account) {
+    public User getUser(String account) {
+        return this.sqlSession.selectOne("getUser", account);
+    }
+
+    public int insertUser(User user) {
+        return this.sqlSession.insert("addUser", user);
+    }
+
+
+//    public User getMyUserby(String nickname) {
+//        return this.sqlSession.selectOne("getUserByNickname", nickname);
+//    }
+
+//    public boolean insertUser(User user) {
+//        String sql = "insert into tb_user(id, account, password, email, phone, gender, nickname, realname) values(?,?,?,?,?,?,?,?)";
+//        int i = jdbcTemplate.update(new PreparedStatementCreator() {
+//            @Override
+//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+//                PreparedStatement ps = connection.prepareStatement(sql);
+//                ps.setObject(1, user.getId());
+//                ps.setObject(2, user.getAccount());
+//                ps.setObject(3, user.getPassword());
+//                ps.setObject(4, user.getEmail());
+//                ps.setObject(5, user.getPhone());
+//                ps.setObject(6, user.getGender());
+//                ps.setObject(7, user.getNickname());
+//                ps.setObject(8, user.getRealname());
+//                return ps;
+//            }
+//        });
+//        if (i > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
+
+    //    public User getUser(String account) {
 //        User user = jdbcTemplate.queryForObject("select * from tb_user where accoutn = ?", new RowMapper<User>() {
 //            @Override
 //            public User mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -47,35 +82,4 @@ public class UserDao {
 //        }, account);
 //        return user;
 //    }
-
-    public User getUser(String account) {
-        return this.sqlSession.selectOne("getUser", account);
-    }
-
-    public User getMyUserby(String nickname) {
-        return this.sqlSession.selectOne("getUserByNickname", nickname);
-    }
-
-    public boolean insertUser(User user) {
-        String sql = "insert into tb_user(id, account, password, email, phone, gender, nickname, realname) values(?,?,?,?,?,?,?,?)";
-        int i = jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql);
-                ps.setObject(1, user.getId());
-                ps.setObject(2, user.getAccount());
-                ps.setObject(3, user.getPassword());
-                ps.setObject(4, user.getEmail());
-                ps.setObject(5, user.getPhone());
-                ps.setObject(6, user.getGender());
-                ps.setObject(7, user.getNickname());
-                ps.setObject(8, user.getRealname());
-                return ps;
-            }
-        });
-        if (i > 0) {
-            return true;
-        }
-        return false;
-    }
 }

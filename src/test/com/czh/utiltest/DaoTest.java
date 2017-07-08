@@ -22,17 +22,16 @@ public class DaoTest {
     @Test
     public void testDao(){
         User user = new User();
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        user.setId(uuid);
-        user.setRealname("czh");
-        user.setPhone("12345678901");
-        user.setPassword("root");
-        user.setNickname("hao");
+        user.setAccount("tese1");
+        user.setEmail("testemail.com");
         user.setGender(1);
-        user.setEmail("a.com");
-        user.setAccount("admin");
-        boolean b = userDao.insertUser(user);
-        System.out.println(b);
+        user.setNickname("testnick");
+        user.setPassword("test1");
+        user.setPhone("12345678901");
+        user.setRealname("testReal");
+        user.setId("testid");
+        userDao.insertUser(user);
+//        userDao.getUser("admin");
     }
 
 }

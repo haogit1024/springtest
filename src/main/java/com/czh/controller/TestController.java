@@ -34,8 +34,7 @@ public class TestController {
     @RequestMapping(value = "/test1", method = RequestMethod.GET)
     public ModelAndView test1(){
         ModelAndView model = new ModelAndView();
-        User user = userDao.getMyUserby("hao");
-        model.addObject(user);
+
         return model;
     }
 
