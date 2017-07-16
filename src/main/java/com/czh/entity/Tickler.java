@@ -1,25 +1,27 @@
 package com.czh.entity;
 
-import java.math.BigDecimal;
 
 public class Tickler{
 	private Integer id;
-	private String uid;
+	private int bid;
 	private Integer inputTime;
 	private Integer time;
 	private String remark;
-	private float money;
 	private int status;
 
 	public Integer getId() { return id; } 
 
-	public void setId(Integer id) { this.id=id; } 
+	public void setId(Integer id) { this.id=id; }
 
-	public String getUid() { return uid; } 
+	public int getBid() {
+		return bid;
+	}
 
-	public void setUid(String uid) { this.uid=uid; } 
+	public void setBid(int bid) {
+		this.bid = bid;
+	}
 
-	public Integer getInputTime() { return inputTime; } 
+	public Integer getInputTime() { return inputTime; }
 
 	public void setInputTime(Integer inputTime) { this.inputTime=inputTime; } 
 
@@ -29,11 +31,7 @@ public class Tickler{
 
 	public String getRemark() { return remark; } 
 
-	public void setRemark(String remark) { this.remark=remark; } 
-
-	public float getMoney() { return money; }
-
-	public void setMoney(float money) { this.money=money; }
+	public void setRemark(String remark) { this.remark=remark; }
 
 	public int getStatus() {
 		return status;

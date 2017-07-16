@@ -1,10 +1,7 @@
 package com.czh.mapper;
 
 import com.czh.entity.Tickler;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,12 +10,18 @@ import java.util.List;
  */
 @Mapper
 public interface TicklerMapper {
-    @Insert("insert into tb_tickler(uid, inputTime, time, remark, money, status) value(#{uid}, #{inputTime}, #{time}, #{remark}, #{money}, #{status})")
-    int addTickler(Tickler tickler);
+
+    //select last_insert_id()是mysql的函数，用户获得刚刚插入数据的ID
+    @Insert("insert into tb_tickler(bid, inputTime, time, remark, status) value(#{bid}, #{inputTime}, #{time}, #{remark}, #{status})")
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=int.class)
+    int insertTickler(@Param("tickler") Tickler tickler);
 
     @Select("select * from tb_tickler where id = #{id}")
-    Tickler getTickler(@Param("id") int id);
+    Tickler getTicklerById(@Param("id") int id);
 
-//    @Select("select * from tb_tickler where uid = #{uid}")
-//    List<Tickler> getTickler(@Param("uid") String uid);
+    @Select("select * from tb_tickler where bid = #{bid}")
+    List<Tickler> getTicklerByBid(@Param("bid") int bid);
+
+    @Update("update tb_tickler set bid = #{bid}, inputTime = #{inputTime}, time = #{time}, remark = #{remark}, status = #{status} where id = #{id}")
+    int updateTickler(Tickler tickler);
 }

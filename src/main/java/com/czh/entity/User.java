@@ -9,6 +9,7 @@ public class User{
 	private Integer gender;
 	private String nickname;
 	private String realname;
+	private int status;
 
 	public String getId() { return id; } 
 
@@ -40,6 +41,13 @@ public class User{
 
 	public String getRealname() { return realname; } 
 
-	public void setRealname(String realname) { this.realname=realname; } 
+	public void setRealname(String realname) { this.realname=realname; }
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 }

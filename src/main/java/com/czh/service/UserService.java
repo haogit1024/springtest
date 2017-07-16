@@ -16,4 +16,12 @@ public class UserService {
     public User getUser(String account){
         return userDao.getUser(account);
     }
+
+    public String insertUser(User user) {
+        return userDao.insertUser(user);
+    }
+
+    public boolean updateUser(User user) {
+        return userDao.updateUser(user);
+    }
 }

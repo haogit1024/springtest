@@ -5,6 +5,8 @@ import com.czh.mapper.TicklerMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by czh on 17-7-4.
  */
@@ -23,11 +25,26 @@ public class TicklerDao {
         this.session = session;
     }
 
-    public Tickler getTickler(int id) {
-        return this.session.selectOne("getTickler", id);
+    public Tickler getTicklerById(int id) {
+        return this.session.selectOne("getTicklerById", id);
+    }
+    public List<Tickler> getTicklerByBid(int bid) {
+        return this.session.selectList("getTicklerByBid", bid);
     }
 
     public int insertTickler(Tickler tickler) {
-        return session.insert("addTickler", tickler);
+        int i = session.insert("insertTickler", tickler);
+        if (i > 0) {
+            return tickler.getId();
+        }
+        return -1;
+    }
+
+    public boolean updateTick(Tickler tickler) {
+        int i = this.session.update("updateTickler", tickler);
+        if (i > 0) {
+            return true;
+        }
+        return false;
     }
 }
