@@ -45,6 +45,8 @@ public class UserController {
         }
         if (password.equals(user.getPassword())) {
             model.addObject("status", 0);
+            user.setPassword("");
+            model.addObject("user", user);
             session.setAttribute("uid", user.getId());
             return model;
         } else {

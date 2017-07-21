@@ -25,6 +25,12 @@
     </form>
 
     <script>
+        $(function () {
+            if(!window.localStorage || !window.sessionStorage){//判断用户浏览器是否支持本地存储
+                alert('抱歉，您的浏览器版本过低，请升级浏览器或更换先进浏览器再行使用，谢谢');
+                return false;
+            }
+        });
         $('#subBtn').click(function () {
             var account = $('#account').val();
             var password = $('#password').val();
@@ -51,7 +57,12 @@
                 contentType:'application/json',
                 data:data
             }).done(function (res) {
-                alert(res.status);
+                if (res.status == 0) {
+//                    localStorage[user] = JSON.stringify(res.user);
+//                    var json_date = JSON.parse(loa)
+                } else {
+                    alert(res.statusCode);
+                }
             }).fail(function (res) {
                 alert('失败'+JSON.stringify(res));
             })

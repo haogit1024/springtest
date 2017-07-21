@@ -28,19 +28,13 @@ public class TicklerController {
     @Autowired
     private TicklerService ticklerService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private RecordService recordService;
 
-    /**
-     * 用uid提取tickler,如果session没有保存uid,就从account拿uid
-     * @param account 用户名
-     * @return
-     */
+
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ModelAndView getTickler(@RequestParam String account, @RequestParam String bid, HttpSession session){
+    public ModelAndView getTickler(@RequestParam String bid, HttpSession session){
         ModelAndView model = new ModelAndView();
-        if (account == null || "".equals(account) || null == bid || "".equals(bid)) {
+        if (null == bid || "".equals(bid)) {
             model.addObject("status",1);
             model.addObject("statusCode", "请求参数为空");
             return model;
@@ -55,12 +49,12 @@ public class TicklerController {
         }
         List<Tickler> list = ticklerService.getTicklerByBid(bookId);
         model.addObject("status", 0);
-        model.addObject("list", list);
+        model.addObject("ticklers", list);
         return model;
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
-    public ModelAndView insertTickler(@RequestParam String account, @RequestParam int inputTime, @RequestParam String remark, @RequestParam int bid , HttpSession session){
+    public ModelAndView insertTickler(@RequestParam String account, @RequestParam int time, @RequestParam String remark, @RequestParam int bid , HttpSession session){
         ModelAndView model = new ModelAndView();
         if (account == null || "".equals(account) || null == remark || "".equals(remark) || bid == 0) {
             model.addObject("status",1);
@@ -68,8 +62,8 @@ public class TicklerController {
             return model;
         }
         Tickler tickler = new Tickler();
-        tickler.setTime((int)new Date().getTime());
-        tickler.setInputTime(inputTime);
+        tickler.setInputTime((int)new Date().getTime());
+        tickler.setTime(time);
         tickler.setBid(bid);
         tickler.setStatus(1);
         int id = ticklerService.insertTickler(tickler);
@@ -82,24 +76,24 @@ public class TicklerController {
         return model;
     }
 
-    @RequestMapping(value = "/getRecord", method = RequestMethod.GET)
-    public ModelAndView getTicklerRecord(@RequestParam String tid){
-        ModelAndView model = new ModelAndView();
-        if (null == tid || "".equals(tid)) {
-            model.addObject("status", 1);
-            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
-        }
-        int ticklerId = 0;
-        try {
-            ticklerId = Integer.parseInt(tid);
-        } catch (Exception e) {
-            model.addObject("status",1);
-            model.addObject("statusCode", StatusCode.NOTNUMBERPARAMETER.toString());
-            return model;
-        }
-        List<Record> records = recordService.getRecordByTid(ticklerId);
-        model.addObject("status", 0);
-        model.addObject("records", records);
-        return model;
-    }
+//    @RequestMapping(value = "/getRecord", method = RequestMethod.GET)
+//    public ModelAndView getTicklerRecord(@RequestParam String tid){
+//        ModelAndView model = new ModelAndView();
+//        if (null == tid || "".equals(tid)) {
+//            model.addObject("status", 1);
+//            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
+//        }
+//        int ticklerId = 0;
+//        try {
+//            ticklerId = Integer.parseInt(tid);
+//        } catch (Exception e) {
+//            model.addObject("status",1);
+//            model.addObject("statusCode", StatusCode.NOTNUMBERPARAMETER.toString());
+//            return model;
+//        }
+//        List<Record> records = recordService.getRecordByTid(ticklerId);
+//        model.addObject("status", 0);
+//        model.addObject("records", records);
+//        return model;
+//    }
 }
