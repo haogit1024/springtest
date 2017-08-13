@@ -24,8 +24,8 @@ public class TestController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView test(HttpSession session){
         ModelAndView model = new ModelAndView();
-//        User user = userDao.getMyUser("admin");
-//        model.addObject(user);
+        User user = userDao.getUser("admin");
+        model.addObject(user);
         String path = session.getServletContext().getContextPath();
         model.addObject(path);
         return model;

@@ -21,12 +21,12 @@ public class BookTest {
 
     @Test
     public void testGet(){
-//        Book book = bookDao.getBookById(1);
-//        System.out.println(book);
-        List<Book> books = bookDao.getBookByUid("fuck");
-        for (Book book : books) {
-            System.out.println(book);
-        }
+        Book book = bookDao.getBookById(1);
+        System.out.println(book);
+//        List<Book> books = bookDao.getBookByUid("fuck");
+//        for (Book book : books) {
+//            System.out.println(book);
+//        }
     }
 
     @Test
