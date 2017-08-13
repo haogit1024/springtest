@@ -11,7 +11,7 @@
 <div class="container">
 
     <form class="form-signin" action="/springtest/user/login" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">请登录</h2>
         <label for="account" class="sr-only">账号</label>
         <input type="text" id="account" class="form-control" placeholder="账号" name="account" required autofocus>
         <label for="password" class="sr-only">密码</label>
@@ -48,18 +48,20 @@
             var data = {
                 account:account,
                 password:password,
-                keepLogin:keepLogin
             };
+            alert("data = " + JSON.stringify(data));
             $.ajax({
                 type:'POST',
                 url:'../user/login',
                 dataType:'json',
                 contentType:'application/json',
-                data:data
+                processData: false,
+                data: JSON.stringify(data)
             }).done(function (res) {
                 if (res.status == 0) {
 //                    localStorage[user] = JSON.stringify(res.user);
 //                    var json_date = JSON.parse(loa)
+                    alert(JSON.stringify(res))
                 } else {
                     alert(res.statusCode);
                 }

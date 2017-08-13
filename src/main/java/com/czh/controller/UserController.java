@@ -30,7 +30,9 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam String account, @RequestParam String password, @RequestParam int keepLogin, HttpSession session) throws IOException {
+    public ModelAndView login(@RequestBody LoginModel loginModel, HttpSession session) throws IOException {
+        String account = loginModel.getAccount();
+        String password = loginModel.getPassword();
         ModelAndView model = new ModelAndView();
         if (account == null || "".equals(account) || password == null || "".equals(password)) {
             model.addObject("status", 1);
