@@ -1,10 +1,7 @@
 package com.czh;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
@@ -21,11 +18,22 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 静态资源。
+     * 静态资源
+     */
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("d/static/**").addResourceLocations("/static/");
+//        super.addResourceHandlers(registry);
+//    }
+
+    /**
+     * 我们要求DispatcherServlet将对静态资源的请求转发到Servlet容
+     * 器中默认的Servlet上,而不是使用DispatcherServlet本身来处理
+     * 此类请求
      */
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-        super.addResourceHandlers(registry);
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        super.configureDefaultServletHandling(configurer);
+        configurer.enable();
     }
 }
