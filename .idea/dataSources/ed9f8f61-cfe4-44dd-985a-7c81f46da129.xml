@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
     <root id="1"/>
     <schema id="2" parent="1" name="czhdata">
       <Current>1</Current>
@@ -10,161 +10,157 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="sys"/>
-    <schema id="7" parent="1" name="testsql"/>
-    <schema id="8" parent="1" name="canteen">
-      <Current>1</Current>
-    </schema>
-    <table id="9" parent="2" name="tb_book">
+    <table id="7" parent="2" name="tb_book">
       <Comment>记账本</Comment>
     </table>
-    <table id="10" parent="2" name="tb_record"/>
-    <table id="11" parent="2" name="tb_tickler"/>
-    <table id="12" parent="2" name="tb_user"/>
-    <column id="13" parent="9" name="id">
+    <table id="8" parent="2" name="tb_record"/>
+    <table id="9" parent="2" name="tb_tickler"/>
+    <table id="10" parent="2" name="tb_user"/>
+    <column id="11" parent="7" name="id">
       <Position>1</Position>
       <Comment>唯一标识</Comment>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="14" parent="9" name="name">
+    <column id="12" parent="7" name="name">
       <Position>2</Position>
       <Comment>名字</Comment>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="15" parent="9" name="uid">
+    <column id="13" parent="7" name="uid">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="16" parent="9" name="budget">
+    <column id="14" parent="7" name="budget">
       <Position>4</Position>
       <Comment>预算</Comment>
       <DataType>double(10,2)|0</DataType>
     </column>
-    <key id="17" parent="9" name="PRIMARY">
+    <key id="15" parent="7" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="18" parent="10" name="id">
+    <column id="16" parent="8" name="id">
       <Position>1</Position>
       <Comment>id自增长</Comment>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="19" parent="10" name="tid">
+    <column id="17" parent="8" name="tid">
       <Position>2</Position>
       <Comment>tickler表的id</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="20" parent="10" name="createTime">
+    <column id="18" parent="8" name="createTime">
       <Position>3</Position>
       <Comment>创建时间</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="21" parent="10" name="time">
+    <column id="19" parent="8" name="time">
       <Position>4</Position>
       <Comment>填入的时间</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="22" parent="10" name="grade">
+    <column id="20" parent="8" name="grade">
       <Position>5</Position>
       <Comment>分数</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="23" parent="10" name="money">
+    <column id="21" parent="8" name="money">
       <Position>6</Position>
       <DataType>float|0</DataType>
     </column>
-    <key id="24" parent="10" name="PRIMARY">
+    <key id="22" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="25" parent="11" name="id">
+    <column id="23" parent="9" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="26" parent="11" name="inputTime">
+    <column id="24" parent="9" name="bid">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="25" parent="9" name="inputTime">
       <Position>3</Position>
       <Comment>导入时间，时间戳</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="27" parent="11" name="time">
+    <column id="26" parent="9" name="time">
       <Position>4</Position>
       <Comment>时间发生时间，时间戳</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="28" parent="11" name="remark">
+    <column id="27" parent="9" name="remark">
       <Position>5</Position>
       <Comment>备注，最多300字</Comment>
       <DataType>varchar(300)|0</DataType>
     </column>
-    <column id="29" parent="11" name="status">
+    <column id="28" parent="9" name="status">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="30" parent="11" name="bid">
-      <Position>2</Position>
-      <DataType>int(11)|0</DataType>
-    </column>
-    <key id="31" parent="11" name="PRIMARY">
+    <key id="29" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="32" parent="12" name="id">
+    <column id="30" parent="10" name="id">
       <Position>1</Position>
       <Comment>uuid唯一标识</Comment>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="12" name="account">
+    <column id="31" parent="10" name="account">
       <Position>2</Position>
       <Comment>账号</Comment>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="12" name="password">
+    <column id="32" parent="10" name="password">
       <Position>3</Position>
       <Comment>密码</Comment>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="35" parent="12" name="email">
+    <column id="33" parent="10" name="email">
       <Position>4</Position>
       <Comment>邮件</Comment>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="36" parent="12" name="phone">
+    <column id="34" parent="10" name="phone">
       <Position>5</Position>
       <Comment>电话号码</Comment>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="37" parent="12" name="gender">
+    <column id="35" parent="10" name="gender">
       <Position>6</Position>
       <Comment>性别</Comment>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="38" parent="12" name="nickname">
+    <column id="36" parent="10" name="nickname">
       <Position>7</Position>
       <Comment>昵称</Comment>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="39" parent="12" name="realname">
+    <column id="37" parent="10" name="realname">
       <Position>8</Position>
       <Comment>真名</Comment>
       <DataType>varchar(64)|0</DataType>
     </column>
-    <column id="40" parent="12" name="status">
+    <column id="38" parent="10" name="status">
       <Position>9</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <key id="41" parent="12" name="PRIMARY">
+    <key id="39" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
