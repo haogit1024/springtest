@@ -1,12 +1,16 @@
 package com.czh.utiltest;
 
+import com.czh.dao.FileDao;
 import com.czh.dao.UserDao;
+import com.czh.entity.FileRouting;
 import com.czh.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * Created by czh on 17-6-9.
@@ -15,25 +19,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class DaoTest {
     @Autowired
-    private UserDao userDao;
+    private FileDao fileDao;
 
     @Test
     public void testDao(){
-//        User u = userDao.getUser("tese1");
-        User user = new User();
-//        user.setId(u.getId());
-        user.setAccount("tese11");
-        user.setEmail("testemail.com1");
-        user.setGender(1);
-        user.setNickname("testnick1");
-        user.setPassword("test11");
-        user.setPhone("1234567");
-        user.setRealname("testReal1");
-        user.setId("testid");
-//        userDao.insertUser(user);
-//        userDao.getUser("admin");
-        boolean b = userDao.updateUser(user);
-        System.out.println(b);
+        FileRouting fileRouting = new FileRouting();
+        fileRouting.setUid("aaa");
+        fileRouting.setMd5("bbbb");
+        fileRouting.setOriginalFilename("cccc");
+        int id = fileDao.insertFile(fileRouting);
+        System.out.println(id);
+        FileRouting file = fileDao.getFileById(id);
+        System.out.println(file);
+//        List<FileRouting> list = fileDao.getFileByUid("dddd");
+//        System.out.println("size = " + list.size());
+//        for (FileRouting f : list) {
+//            System.out.println(f);
+//        }
     }
 
 }

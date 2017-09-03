@@ -2,14 +2,15 @@ package com.czh.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -23,14 +24,18 @@ public class FileController {
     private static Logger log = Logger.getLogger(FileController.class);
     private static final int BUFFER_SIZE = 100 * 1024;
 
+    //TODO 保存到数据库
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @ResponseBody
     public ModelAndView uploadFile(@RequestParam MultipartFile file,@RequestParam String name, HttpSession session){
         ModelAndView model = new ModelAndView();
         try {
+
+            //生成uuid名字
             String fileName = dealWithFileName(file.getOriginalFilename());
             String realPath = getRealPath(session);
             String relativePath = "file";
-            File folder = new File(realPath + relativePath);
+            File folder = new File(realPath + relativePath +"/" + name +"/");
             if (!folder.exists()) {
                 folder.mkdir();
             }
@@ -38,8 +43,12 @@ public class FileController {
             FileOutputStream fs = new FileOutputStream(destFile);
             InputStream in = file.getInputStream();
             copy(in, fs);
+            model.addObject("folder", folder);
+            model.addObject("filename", fileName);
+            model.addObject("origin", file.getOriginalFilename());
         } catch (Exception e) {
-
+            model.addObject("status", 1);
+            model.addObject("statusCode","保存文件失败");
         }
         return model;
     }
@@ -50,7 +59,8 @@ public class FileController {
         newFileName.append(uuid);
         if (fileName.contains(".")) {
             String ext = fileName.substring(fileName.lastIndexOf("."));
-            if (null != ext && "".equals(ext)) {
+            System.out.println("ext = " + ext);
+            if (!"".equals(ext)) {
                 newFileName.append(ext);
             }
         }
@@ -73,6 +83,28 @@ public class FileController {
 
     private String getRealPath(HttpSession session) {
         return session.getServletContext().getRealPath("/");
+    }
+
+    private String getMD5(InputStream inputStream) {
+        try {
+            BufferedInputStream bis = new BufferedInputStream(inputStream, BUFFER_SIZE);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] buffer = new byte[1024];
+            int length = -1;
+            while ((length = bis.read(buffer, 0, 1024)) != -1) {
+                md.update(buffer, 0, length);
+            }
+            BigInteger bigInt = new BigInteger(1, md.digest());
+            System.out.println("文件md5值：" + bigInt.toString(16));
+            return bigInt.toString(16);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void copy(InputStream in, FileOutputStream fs) {
