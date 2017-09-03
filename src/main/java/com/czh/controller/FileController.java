@@ -1,7 +1,9 @@
 package com.czh.controller;
 
 import com.czh.entity.FileRouting;
+import com.czh.response.StatusCode;
 import com.czh.service.FileService;
+import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -22,6 +25,7 @@ import java.util.UUID;
  * Created by czh on 17-7-1.
  */
 @Controller
+@RequestMapping("/file")
 public class FileController {
 
     private static Logger log = Logger.getLogger(FileController.class);
@@ -30,8 +34,33 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    //TODO 保存到数据库
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public ModelAndView getFileByUid(@RequestParam String uid, HttpSession session){
+        ModelAndView model = new ModelAndView();
+        if (uid == null || "".equals(uid)){
+            model.addObject("status", 1);
+            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
+        }
+        List<FileRouting> files = fileService.getFileByUid(uid);
+        model.addObject("status",0);
+        model.addObject("files", files);
+        return model;
+    }
+
+    //TODO 返回一个下载文件http响应
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public ModelAndView downLoad(@RequestParam String url, HttpResponse response) {
+        ModelAndView model = new ModelAndView();
+        if (null == url || url.equals("")) {
+            model.addObject("status", 1);
+            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
+        }
+
+        return model;
+    }
+
+    //TODO 根据md5优化保存过程
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView uploadFile(@RequestParam MultipartFile file,@RequestParam String name, HttpSession session){
         ModelAndView model = new ModelAndView();
@@ -42,6 +71,7 @@ public class FileController {
             String relativePath = "file";
             File folder = new File(realPath + relativePath +"/" + name +"/");
             if (!folder.exists()) {
+                log.info("创建文件夹");
                 folder.mkdir();
             }
             File destFile = new File(folder, fileName);
@@ -58,6 +88,7 @@ public class FileController {
 
             model.addObject("file", fileRouting);
         } catch (Exception e) {
+            e.printStackTrace();
             model.addObject("status", 1);
             model.addObject("statusCode","保存文件失败");
         }
@@ -95,6 +126,7 @@ public class FileController {
         return session.getServletContext().getRealPath("/");
     }
 
+    //TODO 把获取md5编码整合到copy方法中
     private String getMD5(InputStream inputStream) {
         try {
             BufferedInputStream bis = new BufferedInputStream(inputStream, BUFFER_SIZE);

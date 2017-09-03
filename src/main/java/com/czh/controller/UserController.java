@@ -3,6 +3,7 @@ package com.czh.controller;
 import com.czh.dao.UserDao;
 import com.czh.entity.User;
 import com.czh.model.LoginModel;
+import com.czh.response.StatusCode;
 import com.czh.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         if (account == null || "".equals(account) || password == null || "".equals(password)) {
             model.addObject("status", 1);
-            model.addObject("statusCode","");
+            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
             return model;
         }
         User user = userService.getUser(account);
