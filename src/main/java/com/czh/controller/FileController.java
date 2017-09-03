@@ -1,6 +1,9 @@
 package com.czh.controller;
 
+import com.czh.entity.FileRouting;
+import com.czh.service.FileService;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,13 +27,15 @@ public class FileController {
     private static Logger log = Logger.getLogger(FileController.class);
     private static final int BUFFER_SIZE = 100 * 1024;
 
+    @Autowired
+    private FileService fileService;
+
     //TODO 保存到数据库
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView uploadFile(@RequestParam MultipartFile file,@RequestParam String name, HttpSession session){
         ModelAndView model = new ModelAndView();
         try {
-
             //生成uuid名字
             String fileName = dealWithFileName(file.getOriginalFilename());
             String realPath = getRealPath(session);
@@ -43,9 +48,15 @@ public class FileController {
             FileOutputStream fs = new FileOutputStream(destFile);
             InputStream in = file.getInputStream();
             copy(in, fs);
-            model.addObject("folder", folder);
-            model.addObject("filename", fileName);
-            model.addObject("origin", file.getOriginalFilename());
+            FileRouting fileRouting = new FileRouting();
+            fileRouting.setUid(name);
+            fileRouting.setOriginalFilename(file.getOriginalFilename());
+            fileRouting.setUrl(getDomain()+relativePath+"/"+name+"/"+fileName);
+            fileRouting.setMd5(getMD5(in));
+            int id = fileService.insertFile(fileRouting);
+            fileRouting.setId(id);
+
+            model.addObject("file", fileRouting);
         } catch (Exception e) {
             model.addObject("status", 1);
             model.addObject("statusCode","保存文件失败");
@@ -59,7 +70,6 @@ public class FileController {
         newFileName.append(uuid);
         if (fileName.contains(".")) {
             String ext = fileName.substring(fileName.lastIndexOf("."));
-            System.out.println("ext = " + ext);
             if (!"".equals(ext)) {
                 newFileName.append(ext);
             }
@@ -70,7 +80,7 @@ public class FileController {
     private String getDomain() {
         try {
             Properties prop = new Properties();
-            String propFileName = "file.properties";
+            String propFileName = "/file.properties";
             InputStream in = FileController.class.getResourceAsStream(propFileName);
             prop.load(in);
             String domain = prop.getProperty("domain");
@@ -95,7 +105,6 @@ public class FileController {
                 md.update(buffer, 0, length);
             }
             BigInteger bigInt = new BigInteger(1, md.digest());
-            System.out.println("文件md5值：" + bigInt.toString(16));
             return bigInt.toString(16);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

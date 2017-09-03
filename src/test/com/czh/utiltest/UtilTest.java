@@ -1,15 +1,14 @@
 package com.czh.utiltest;
 
+import com.czh.controller.FileController;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 import java.util.UUID;
 
 /**
@@ -48,6 +47,19 @@ public class UtilTest {
 
     @Test
     public void testMD52(){
-
+        try {
+            Properties prop = new Properties();
+            String propFileName = "/file.properties";
+            InputStream in = UtilTest.class.getResourceAsStream(propFileName);
+            if (in == null) {
+                System.out.println("fuck");
+                return;
+            }
+            prop.load(in);
+            String domain = prop.getProperty("domain");
+            System.out.println("domain = " + domain);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
