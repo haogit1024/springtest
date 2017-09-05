@@ -1,9 +1,10 @@
 package com.czh;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
@@ -14,10 +15,11 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     //json解析ModelAndView
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.enableContentNegotiation(new MappingJackson2JsonView());
-    }
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        registry.enableContentNegotiation(new MappingJackson2JsonView());
+//        registry.freeMarker().cache(false);
+//    }
 
     /**
      * 静态资源
@@ -39,10 +41,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver(){
-//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//        resolver.setDefaultEncoding("utf-8");
-//        return resolver;
-//    }
+
 }

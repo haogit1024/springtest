@@ -3,7 +3,6 @@ package com.czh.controller;
 import com.czh.entity.FileRouting;
 import com.czh.response.StatusCode;
 import com.czh.service.FileService;
-import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,7 @@ public class FileController {
 
     //TODO 返回一个下载文件http响应,根据http://www.cnblogs.com/dengyg200891/p/6012802.html返回mime类型
     @RequestMapping(value = "/download", method = RequestMethod.GET)
-    public ModelAndView downLoad(@RequestParam String url, HttpResponse response) {
+    public ModelAndView downLoad(@RequestParam String url) {
         ModelAndView model = new ModelAndView();
         if (null == url || url.equals("")) {
             model.addObject("status", 1);
