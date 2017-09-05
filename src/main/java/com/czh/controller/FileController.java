@@ -34,6 +34,7 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    //根据uid获取所有文件
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public ModelAndView getFileByUid(@RequestParam String uid, HttpSession session){
         ModelAndView model = new ModelAndView();
@@ -47,7 +48,7 @@ public class FileController {
         return model;
     }
 
-    //TODO 返回一个下载文件http响应
+    //TODO 返回一个下载文件http响应,根据http://www.cnblogs.com/dengyg200891/p/6012802.html返回mime类型
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public ModelAndView downLoad(@RequestParam String url, HttpResponse response) {
         ModelAndView model = new ModelAndView();
@@ -60,6 +61,7 @@ public class FileController {
     }
 
     //TODO 根据md5优化保存过程
+    //保存文件
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView uploadFile(@RequestParam MultipartFile file,@RequestParam String name, HttpSession session){

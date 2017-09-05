@@ -16,7 +16,7 @@ public interface FileMapper {
     @Select("select * from tb_file where uid = #{uid}")
     List<FileRouting> getFileByUid(String uid);
 
-    @Insert("insert into tb_file(uid, originalFilename, url, md5) values(#{uid}, #{originalFilename}, #{url}, #{md5})")
+    @Insert("insert into tb_file(uid, originalFilename, url, md5, status, type) values(#{uid}, #{originalFilename}, #{url}, #{md5}, #{status}, #{type})")
     @SelectKey(statement = "select LAST_INSERT_ID()", before = false, keyProperty = "id", resultType = int.class)
     int insertFile(FileRouting book);
 }

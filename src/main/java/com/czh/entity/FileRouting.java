@@ -6,6 +6,8 @@ public class FileRouting {
     private String originalFilename;
     private String url;
     private String md5;
+    private int status;
+    private String type;
 
     public int getId() {
         return id;
@@ -45,6 +47,22 @@ public class FileRouting {
 
     public void setMd5(String md5) {
         this.md5 = md5;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

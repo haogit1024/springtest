@@ -29,7 +29,7 @@ public class TestController {
         return model;
     }
 
-    @RequestMapping(value = "/test1", method = RequestMethod.GET)
+    @RequestMapping(value = "/ftl", method = RequestMethod.GET)
     public ModelAndView test1(){
         ModelAndView model = new ModelAndView();
 
