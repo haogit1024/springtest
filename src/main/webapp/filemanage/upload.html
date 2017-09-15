@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <script type="text/javascript" src="../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<form class="form-signin" action="" method="post">
+    <h2 class="form-signin-heading">请登录</h2>
+    <label for="file" class="sr-only">文件</label>
+    <input type="file" id="file" class="form-control" name="account" required autofocus>
+
+    <button id="subBtn" class="btn btn- lg btn-primary btn-block" type="button">上传</button>
+</form>
+<script>
+    $("#subBtn").on('click', function () {
+        var formdata = new FormData();
+        var files = $('#file')[0].files[0];
+        formdata.append("name","czh");
+        formdata.append("file", files);
+        $.ajax({
+            type: 'POST',
+            url: '../file/upload',
+            data: formdata,
+            mimeType: "multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData: false
+        }).done(function(res){
+            alert('res = ' + JSON.stringify(res));
+        }).fail(function(){
+            alert('网络错误，请重试！');
+        });
+    })
+</script>
+</body>
+</html>

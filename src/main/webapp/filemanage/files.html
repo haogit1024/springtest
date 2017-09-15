@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sidebar</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
+    <script type="text/javascript" src="../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!--<button onclick="getFile()" class="btn btn-primary">按钮</button>-->
+    <p>this is file</p>
+<div id="fileList">
+
+</div>
+
+<script>
+    $(function () {
+        getFile();
+    })
+    function getFile() {
+        $.ajax({
+            type:'get',
+            url:'../file/get',
+            data:{
+                uid:'czh'
+            }
+        }).done(function (res) {
+            if (res.status == 0) {
+                var html = '';
+                $.each(res.files, function (index, file) {
+                    var originFile = file.originalFilename;
+                    var url = file.url;
+                    var alabel = '<a href=\"'+url+'\">'+originFile+'</a><br>';
+                    html += alabel;
+                });
+                $('#fileList').html(html);
+            } else {
+                alert("请求出错");
+                alert("res = " + JSON.stringify(res));
+            }
+        }).fail(function (res) {
+            alert(JSON.stringify(res))
+        })
+
+
+    }
+
+</script>
+</body>
+</html>

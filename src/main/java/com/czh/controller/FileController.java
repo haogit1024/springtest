@@ -28,12 +28,12 @@ import java.util.UUID;
 public class FileController {
 
     private static Logger log = Logger.getLogger(FileController.class);
-    private static final int BUFFER_SIZE = 100 * 1024;
+    private static final int BUFFER_SIZE = 100;
 
     @Autowired
     private FileService fileService;
 
-    //根据uid获取所有文件
+    //根据uid获取文件
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public ModelAndView getFileByUid(@RequestParam String uid, HttpSession session){
         ModelAndView model = new ModelAndView();
@@ -78,7 +78,8 @@ public class FileController {
             File destFile = new File(folder, fileName);
             FileOutputStream fs = new FileOutputStream(destFile);
             InputStream in = file.getInputStream();
-            copy(in, fs);
+            copy(in, fs, file.getSize());
+            log.info("file originalFilename = " + file.getOriginalFilename());
             FileRouting fileRouting = new FileRouting();
             fileRouting.setUid(name);
             fileRouting.setOriginalFilename(file.getOriginalFilename());
@@ -87,6 +88,7 @@ public class FileController {
             int id = fileService.insertFile(fileRouting);
             fileRouting.setId(id);
 
+            model.addObject("status", 0);
             model.addObject("file", fileRouting);
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,7 +99,7 @@ public class FileController {
     }
 
     private String dealWithFileName(String fileName){
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
         StringBuilder newFileName = new StringBuilder();
         newFileName.append(uuid);
         if (fileName.contains(".")) {
@@ -129,11 +131,10 @@ public class FileController {
 
     //TODO 把获取md5编码整合到copy方法中
     private String getMD5(InputStream inputStream) {
-        try {
-            BufferedInputStream bis = new BufferedInputStream(inputStream, BUFFER_SIZE);
+        try {BufferedInputStream bis = new BufferedInputStream(inputStream);
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] buffer = new byte[1024];
-            int length = -1;
+            byte[] buffer = new byte[64];
+            int length;
             while ((length = bis.read(buffer, 0, 1024)) != -1) {
                 md.update(buffer, 0, length);
             }
@@ -149,18 +150,24 @@ public class FileController {
         return null;
     }
 
-    private void copy(InputStream in, FileOutputStream fs) {
+    private void copy(InputStream in, FileOutputStream fs, long fileSize) {
         try {
             in = new BufferedInputStream(in, BUFFER_SIZE);
             BufferedOutputStream bos = new BufferedOutputStream(fs, BUFFER_SIZE);
             int len;
-            byte[] bytes = new byte[BUFFER_SIZE];
+            byte[] bytes;
+            //防止bytes大于文件大小
+            if (fileSize >= BUFFER_SIZE) {
+                bytes = new byte[BUFFER_SIZE];
+            } else {
+                bytes = new byte[64];
+            }
             while ((len = in.read(bytes)) > 0) {
                 bos.write(bytes, 0, len);
             }
+            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
