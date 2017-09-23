@@ -1,7 +1,9 @@
 package com.czh.controller;
 
 import com.czh.dao.UserDao;
+import com.czh.entity.FileRouting;
 import com.czh.entity.User;
+import com.czh.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.List;
 
 
 /**
@@ -19,6 +23,8 @@ public class TestController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private FileService fileService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView test(HttpSession session){
@@ -35,4 +41,11 @@ public class TestController {
         return "test";
     }
 
+    @RequestMapping(value = "testDb")
+    public ModelAndView testDataBase(){
+        ModelAndView model = new ModelAndView();
+        List<FileRouting> fileList = fileService.getFileByUid("test");
+        model.addObject("files", fileList);
+        return model;
+    }
 }

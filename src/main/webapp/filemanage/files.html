@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <title>sidebar</title>
     <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
     <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
     <script type="text/javascript" src="../static/js/jquery.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 </head>
 <body>
-<!--<button onclick="getFile()" class="btn btn-primary">按钮</button>-->
-    <p>this is file</p>
-<div id="fileList">
 
-</div>
+    <form action="/springtest/file/upload" id="fileForm" style="display: none;">
+        <input type="file" name="file" id="file" onchange="fileChange()">
+    </form>
+    <button class="btn btn-primary" onclick="fileClick()"><i class="fa fa-upload"></i>上传文件</button>
+    <div id="fileList">
+
+    </div>
+    <div>
+        <i class="fa fa-file-image-o"></i>
+        <i class="fa fa-folder fa-2x"></i>
+
+    </div>
 
 <script>
     $(function () {
         getFile();
-    })
+    });
     function getFile() {
         $.ajax({
             type:'get',
@@ -32,7 +41,13 @@
                 $.each(res.files, function (index, file) {
                     var originFile = file.originalFilename;
                     var url = file.url;
-                    var alabel = '<a href=\"'+url+'\">'+originFile+'</a><br>';
+                    var icon = '';
+                    if (file.type != null) {
+                        icon = '<i class="fa fa-file-' +file.type+ '-o" ></i>'
+                    } else {
+                        icon = '<i class="fa fa-file" ></i>'
+                    }
+                    var alabel = icon + '<a href=\"'+url+'\">'+originFile+'</a><br>';
                     html += alabel;
                 });
                 $('#fileList').html(html);
@@ -47,6 +62,40 @@
 
     }
 
+    function fileClick() {
+        $('#file').click();
+    }
+
+    function fileChange() {
+        var file = $('#file').val();
+        if (file != "") {
+            var formData = new FormData($('#fileForm')[0]);
+            formData.append("name", "czh");
+            $.ajax({
+                url:'../file/upload',
+                type:'post',
+                data:formData,
+                processData: false,  // 不处理数据
+                contentType: false   // 不设置内容类型
+            }).done(function (res) {
+                alert('success = ' + res.status)
+                //TODO 找一个好一点的保存成功方法
+                if (res.status == 0) {
+                    location.reload();
+                } else {
+                    alert("保存出错" + res.statusCode);
+                }
+            }).fail(function (res) {
+                alert('fail = ' + res.status)
+            })
+        } else {
+            alert('没有选择文件')
+        }
+
+//        formdata.append('file',file);
+//        formdata.append('name','czh');
+
+    }
 </script>
 </body>
 </html>

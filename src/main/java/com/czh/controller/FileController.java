@@ -66,8 +66,21 @@ public class FileController {
     public ModelAndView uploadFile(@RequestParam MultipartFile file,@RequestParam String name, HttpSession session){
         ModelAndView model = new ModelAndView();
         try {
-            //生成uuid名字
-            String fileName = dealWithFileName(file.getOriginalFilename());
+            //生成uuid和后缀名
+            String fileName = file.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            StringBuilder newFileName = new StringBuilder();
+            newFileName.append(uuid);
+            String ext = "";
+            if (fileName.contains(".")) {
+                ext = fileName.substring(fileName.lastIndexOf("."));
+                if (!"".equals(ext)) {
+                    newFileName.append(ext);
+                }
+            }
+
+            String dealFileName = newFileName.toString();
+
             String realPath = getRealPath(session);
             String relativePath = "file";
             File folder = new File(realPath + relativePath +"/" + name +"/");
@@ -75,7 +88,7 @@ public class FileController {
                 log.info("创建文件夹");
                 folder.mkdir();
             }
-            File destFile = new File(folder, fileName);
+            File destFile = new File(folder, dealFileName);
             FileOutputStream fs = new FileOutputStream(destFile);
             InputStream in = file.getInputStream();
             copy(in, fs, file.getSize());
@@ -83,8 +96,9 @@ public class FileController {
             FileRouting fileRouting = new FileRouting();
             fileRouting.setUid(name);
             fileRouting.setOriginalFilename(file.getOriginalFilename());
-            fileRouting.setUrl(getDomain()+relativePath+"/"+name+"/"+fileName);
+            fileRouting.setUrl(getDomain()+relativePath+"/"+name+"/"+dealFileName);
             fileRouting.setMd5(getMD5(in));
+            fileRouting.setType(getFileType(ext));
             int id = fileService.insertFile(fileRouting);
             fileRouting.setId(id);
 
@@ -98,17 +112,32 @@ public class FileController {
         return model;
     }
 
-    private String dealWithFileName(String fileName){
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        StringBuilder newFileName = new StringBuilder();
-        newFileName.append(uuid);
-        if (fileName.contains(".")) {
-            String ext = fileName.substring(fileName.lastIndexOf("."));
-            if (!"".equals(ext)) {
-                newFileName.append(ext);
-            }
+    //根据文件后缀返回font awesome图标类型
+    //TODO 这里不全文件格式判断
+    private String getFileType(String ext) {
+        if (ext.equals(".text")) {
+            return "text";
+        } else if (ext.equals(".java") || ext.equals(".html") || ext.equals(".js") || ext.equals("php")) {
+            return "code";
+        } else if (ext.equals(".mp4") || ext.equals(".avi") || ext.equals(".rmvb") || ext.equals(".wmv") || ext.equals(".mov") || ext.equals(".flv")) {
+            return "movie";
+        } else if (ext.equals(".jpg") || ext.equals(".jpeg") || ext.equals(".png") || ext.equals(".gif")) {
+            return "image";
+        } else if (ext.equals(".mp3")) {
+            return "audio";
+        } else if (ext.equals(".xls") || ext.equals(".xlsx") || ext.equals("csv")) {
+            return "excel";
+        } else if (ext.equals(".docx") || ext.equals(".doc")) {
+            return "word";
+        } else if (ext.equals(".pdf")) {
+            return "pdf";
+        } else if (ext.equals(".rar") || ext.equals(".zip") || ext.equals(".7z")) {
+            return "zip";
+        } else if (ext.equals(".ppt")) {
+            return "powerpoint";
         }
-        return newFileName.toString();
+//        return ext.substring(1,ext.length());
+        return "";
     }
 
     private String getDomain() {
@@ -135,7 +164,7 @@ public class FileController {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] buffer = new byte[64];
             int length;
-            while ((length = bis.read(buffer, 0, 1024)) != -1) {
+            while ((length = bis.read(buffer,0, 64)) != -1) {
                 md.update(buffer, 0, length);
             }
             BigInteger bigInt = new BigInteger(1, md.digest());
