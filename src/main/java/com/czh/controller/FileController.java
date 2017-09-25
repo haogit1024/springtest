@@ -15,6 +15,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -28,7 +29,7 @@ import java.util.UUID;
 public class FileController {
 
     private static Logger log = Logger.getLogger(FileController.class);
-    private static final int BUFFER_SIZE = 100;
+    private static final int BUFFER_SIZE = 64;
 
     @Autowired
     private FileService fileService;
@@ -70,7 +71,8 @@ public class FileController {
             String fileName = file.getOriginalFilename();
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
             StringBuilder newFileName = new StringBuilder();
-            newFileName.append(uuid);
+            //TODO 暂时改成时间戳
+            newFileName.append(new Date().getTime());
             String ext = "";
             if (fileName.contains(".")) {
                 ext = fileName.substring(fileName.lastIndexOf("."));
@@ -80,7 +82,7 @@ public class FileController {
             }
 
             String dealFileName = newFileName.toString();
-
+            log.info("save file name is = " + dealFileName);
             String realPath = getRealPath(session);
             String relativePath = "file";
             File folder = new File(realPath + relativePath +"/" + name +"/");
@@ -97,7 +99,7 @@ public class FileController {
             fileRouting.setUid(name);
             fileRouting.setOriginalFilename(file.getOriginalFilename());
             fileRouting.setUrl(getDomain()+relativePath+"/"+name+"/"+dealFileName);
-            fileRouting.setMd5(getMD5(in));
+//            fileRouting.setMd5(getMD5(in));
             fileRouting.setType(getFileType(ext));
             int id = fileService.insertFile(fileRouting);
             fileRouting.setId(id);
@@ -181,7 +183,7 @@ public class FileController {
 
     private void copy(InputStream in, FileOutputStream fs, long fileSize) {
         try {
-            in = new BufferedInputStream(in, BUFFER_SIZE);
+//            in = new BufferedInputStream(in, BUFFER_SIZE);
             BufferedOutputStream bos = new BufferedOutputStream(fs, BUFFER_SIZE);
             int len;
             byte[] bytes;

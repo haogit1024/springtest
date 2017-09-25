@@ -23,14 +23,16 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        FileRouting fileRouting = new FileRouting();
-        fileRouting.setUid("aaa");
-        fileRouting.setMd5("bbbb");
-        fileRouting.setOriginalFilename("cccc");
-        int id = fileDao.insertFile(fileRouting);
-        System.out.println(id);
-        FileRouting file = fileDao.getFileById(id);
+        FileRouting file = fileDao.getFileById(2);
         System.out.println(file);
+//        FileRouting fileRouting = new FileRouting();
+//        fileRouting.setUid("aaa");
+//        fileRouting.setMd5("bbbb");
+//        fileRouting.setOriginalFilename("cccc");
+//        int id = fileDao.insertFile(fileRouting);
+//        System.out.println(id);
+//        FileRouting file = fileDao.getFileById(id);
+//        System.out.println(file);
 //        List<FileRouting> list = fileDao.getFileByUid("dddd");
 //        System.out.println("size = " + list.size());
 //        for (FileRouting f : list) {

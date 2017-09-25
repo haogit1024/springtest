@@ -8,6 +8,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -61,5 +62,10 @@ public class UtilTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testGetTimestamp(){
+        System.out.println(new Date().getTime());
     }
 }

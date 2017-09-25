@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -38,6 +39,8 @@ public class TestController {
 
     @RequestMapping(value = "/ftl", method = RequestMethod.GET)
     public String test1() {
+        HashMap<String, Object> map = new HashMap<>();
+
         return "test";
     }
 
