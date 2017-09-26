@@ -8,7 +8,7 @@ public enum StatusCode {
     NULLREQUESTPARAMETER(101,"请求参数为空"),
     OBJECTNOTEXIST(102,"对象不存在"),
     NOTNUMBERPARAMETER(103,"不是数字参数"),
-    FAILOPERATIONDATABASE(104,"数据库造作失败");
+    FAILOPERATIONDATABASE(104,"数据库操作失败");
 
     private int code;
     private String message;

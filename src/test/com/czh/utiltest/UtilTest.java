@@ -68,4 +68,10 @@ public class UtilTest {
     public void testGetTimestamp(){
         System.out.println(new Date().getTime());
     }
+
+    @Test
+    public void testString() {
+        String a = null;
+        System.out.println(a.equals("a"));
+    }
 }

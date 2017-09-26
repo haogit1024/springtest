@@ -36,13 +36,16 @@ public class FileController {
 
     //根据uid获取文件
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public ModelAndView getFileByUid(@RequestParam String uid, HttpSession session){
+    public ModelAndView getFileByUid(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
         ModelAndView model = new ModelAndView();
         if (uid == null || "".equals(uid)){
             model.addObject("status", 1);
             model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
         }
-        List<FileRouting> files = fileService.getFileByUid(uid);
+        if (parsonPath == null || parsonPath.equals("")) {
+            parsonPath = "/";
+        }
+        List<FileRouting> files = fileService.getFileByParsonPath(uid, parsonPath);
         model.addObject("status",0);
         model.addObject("files", files);
         return model;
@@ -57,6 +60,27 @@ public class FileController {
             model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
         }
 
+        return model;
+    }
+
+    //新建文件夹
+    @RequestMapping(value = "/newFolder", method = RequestMethod.GET)
+    public ModelAndView newFolder(@RequestParam String parsonPath, @RequestParam String name, @RequestParam String uid){
+        ModelAndView model = new ModelAndView();
+        FileRouting file = new FileRouting();
+        file.setType("folder");
+        file.setParsonPath(parsonPath);
+        file.setOriginalFilename(name);
+        file.setUid(uid);
+        file.setStatus(1);
+        int id = fileService.insertFile(file);
+        if (id > 1) {
+            model.addObject("status",0);
+            model.addObject("file", file);
+        } else {
+            model.addObject("status",1);
+            model.addObject("statusCode",StatusCode.FAILOPERATIONDATABASE.toString());
+        }
         return model;
     }
 
@@ -100,6 +124,7 @@ public class FileController {
             fileRouting.setOriginalFilename(file.getOriginalFilename());
             fileRouting.setUrl(getDomain()+relativePath+"/"+name+"/"+dealFileName);
 //            fileRouting.setMd5(getMD5(in));
+            fileRouting.setStatus(1);
             fileRouting.setType(getFileType(ext));
             int id = fileService.insertFile(fileRouting);
             fileRouting.setId(id);

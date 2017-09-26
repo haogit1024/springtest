@@ -8,6 +8,8 @@ public class FileRouting {
     private String md5;
     private int status;
     private String type;
+    private long size;
+    private String parsonPath;
 
     public int getId() {
         return id;
@@ -63,6 +65,22 @@ public class FileRouting {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public String getParsonPath() {
+        return parsonPath;
+    }
+
+    public void setParsonPath(String parsonPath) {
+        this.parsonPath = parsonPath;
     }
 
     @Override

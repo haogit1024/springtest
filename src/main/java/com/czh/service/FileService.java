@@ -20,6 +20,10 @@ public class FileService {
         return fileDao.getFileByUid(uid);
     }
 
+    public List<FileRouting> getFileByParsonPath(String uid, String parsonPath) {
+        return this.fileDao.getFileByParsonPath(uid,parsonPath);
+    }
+
     public int insertFile(FileRouting fileRouting) {
         return fileDao.insertFile(fileRouting);
     }

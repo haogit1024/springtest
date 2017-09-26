@@ -14,7 +14,8 @@
     <form action="/springtest/file/upload" id="fileForm" style="display: none;">
         <input type="file" name="file" id="file" onchange="fileChange()">
     </form>
-    <button class="btn btn-primary" onclick="fileClick()"><i class="fa fa-upload"></i>上传文件</button>
+    <button class="btn btn-primary" onclick="fileClick()"><i class="fa fa-upload"></i> 上传文件</button>
+    <button class="btn btn-info" onchange=""><i class="fa fa-folder-o"></i> 新建文件夹</button>
     <div id="fileList"></div>
 
     <div class="panel panel-info">
@@ -61,24 +62,12 @@
             type:'get',
             url:'../file/get',
             data:{
-                uid:'czh'
+                uid:'czh',
+                parsonPath : '/'
             }
         }).done(function (res) {
             if (res.status == 0) {
                 var html = '';
-//                $.each(res.files, function (index, file) {
-//                    var originFile = file.originalFilename;
-//                    var url = file.url;
-//                    var icon = '';
-//                    if (file.type != null) {
-//                        icon = '<i class="fa fa-file-' +file.type+ '-o" ></i>'
-//                    } else {
-//                        icon = '<i class="fa fa-file" ></i>'
-//                    }
-//                    var alabel = icon + '<a href=\"'+url+'\">'+originFile+'</a><br>';
-//                    html += alabel;
-//                });
-//                $('#fileList').html(html);
                 $.each(res.files, function (index, file) {
                     var originFile = file.originalFilename;
                     var url = file.url;
@@ -107,6 +96,7 @@
         $('#file').click();
     }
 
+    //上次文件input元素onchange事件触发
     function fileChange() {
         var file = $('#file').val();
         if (file != "") {
@@ -132,9 +122,10 @@
         } else {
             alert('没有选择文件')
         }
+    }
 
-//        formdata.append('file',file);
-//        formdata.append('name','czh');
+    //TODO 接新建文件夹的功能
+    function newFolder() {
 
     }
 </script>

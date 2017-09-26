@@ -23,8 +23,8 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        FileRouting file = fileDao.getFileById(2);
-        System.out.println(file);
+//        FileRouting file = fileDao.getFileById(2);
+//        System.out.println(file);
 //        FileRouting fileRouting = new FileRouting();
 //        fileRouting.setUid("aaa");
 //        fileRouting.setMd5("bbbb");
@@ -38,6 +38,10 @@ public class DaoTest {
 //        for (FileRouting f : list) {
 //            System.out.println(f);
 //        }
+        List<FileRouting> files = fileDao.getFileByParsonPath("a","/");
+        for (FileRouting file : files) {
+            System.out.println(file);
+        }
     }
 
 }
