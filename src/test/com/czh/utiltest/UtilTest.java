@@ -4,8 +4,11 @@ import com.czh.controller.FileController;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 import java.math.BigInteger;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -73,5 +76,15 @@ public class UtilTest {
     public void testString() {
         String a = null;
         System.out.println(a.equals("a"));
+    }
+
+    @Test
+    public void testMine(){
+        String name = "aaa.doc";
+        String type = new MimetypesFileTypeMap().getContentType(name);
+//        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+//        String type = fileNameMap.getContentTypeFor(name);//name:"aa.txt"
+
+        System.out.println(type);
     }
 }
