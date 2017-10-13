@@ -34,6 +34,12 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    @RequestMapping(value = "/fileList", method = RequestMethod.GET)
+    public String fileListFtl(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
+
+        return "";
+    }
+
     //根据uid获取文件
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public ModelAndView getFileByUid(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
@@ -81,6 +87,13 @@ public class FileController {
             model.addObject("status",1);
             model.addObject("statusCode",StatusCode.FAILOPERATIONDATABASE.toString());
         }
+        return model;
+    }
+
+    @RequestMapping(value = "/rename", method = RequestMethod.GET)
+    public ModelAndView rename(){
+        ModelAndView model = new ModelAndView();
+
         return model;
     }
 
@@ -144,7 +157,7 @@ public class FileController {
     private String getFileType(String ext) {
         if (ext.equals(".text")) {
             return "text";
-        } else if (ext.equals(".java") || ext.equals(".html") || ext.equals(".js") || ext.equals("php")) {
+        } else if (ext.equals(".java") || ext.equals(".html") || ext.equals(".js") || ext.equals("php") || ext.equals("xml")) {
             return "code";
         } else if (ext.equals(".mp4") || ext.equals(".avi") || ext.equals(".rmvb") || ext.equals(".wmv") || ext.equals(".mov") || ext.equals(".flv")) {
             return "movie";
