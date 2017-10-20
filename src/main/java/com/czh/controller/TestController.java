@@ -6,12 +6,14 @@ import com.czh.entity.User;
 import com.czh.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,9 +40,13 @@ public class TestController {
     }
 
     @RequestMapping(value = "/ftl", method = RequestMethod.GET)
-    public String test1() {
-        HashMap<String, Object> map = new HashMap<>();
-
+    public String test1(Model model) {
+        List<String> strings = new ArrayList<>();
+        strings.add("hello");
+        strings.add("world");
+        strings.add("freemarker");
+//        strings.add("中文");
+        model.addAttribute("strings", strings);
         return "test";
     }
 
