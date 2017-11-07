@@ -25,19 +25,7 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    private UserDao userDao;
-    @Autowired
     private FileService fileService;
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView test(HttpSession session){
-        ModelAndView model = new ModelAndView();
-        User user = userDao.getUser("admin");
-        model.addObject(user);
-        String path = session.getServletContext().getContextPath();
-        model.addObject(path);
-        return model;
-    }
 
     @RequestMapping(value = "/ftl", method = RequestMethod.GET)
     public String test1(Model model) {
@@ -53,8 +41,8 @@ public class TestController {
     @RequestMapping(value = "testDb")
     public ModelAndView testDataBase(){
         ModelAndView model = new ModelAndView();
-        List<FileRouting> fileList = fileService.getFileByUid("test");
-        model.addObject("files", fileList);
+//        List<FileRouting> fileList = fileService.getFileByUid("test");
+//        model.addObject("files", fileList);
         return model;
     }
 }

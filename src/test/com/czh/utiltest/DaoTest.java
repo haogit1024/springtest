@@ -1,9 +1,7 @@
 package com.czh.utiltest;
 
 import com.czh.dao.FileDao;
-import com.czh.dao.UserDao;
 import com.czh.entity.FileRouting;
-import com.czh.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +36,12 @@ public class DaoTest {
 //        for (FileRouting f : list) {
 //            System.out.println(f);
 //        }
-        List<FileRouting> files = fileDao.getFileByParsonPath("a","/");
-        for (FileRouting file : files) {
-            System.out.println(file);
-        }
+//        List<FileRouting> files = fileDao.getFileByParsonId("czh", 0);
+//        System.out.println("size = " + files.size());
+//        for (FileRouting file : files) {
+//            System.out.println(file);
+//        }
+
     }
 
 }

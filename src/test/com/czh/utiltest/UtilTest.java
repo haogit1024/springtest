@@ -1,14 +1,10 @@
 package com.czh.utiltest;
 
-import com.czh.controller.FileController;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 import java.math.BigInteger;
-import java.net.FileNameMap;
-import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;

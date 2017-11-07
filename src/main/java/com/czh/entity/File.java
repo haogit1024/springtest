@@ -1,9 +1,9 @@
 package com.czh.entity;
 
-public class FileRouting {
+public class File {
     private int id;
     private String uid;
-    private String originalFilename;
+    private String filename;
     private String url;
     private String md5;
     private int status;
@@ -28,12 +28,12 @@ public class FileRouting {
         this.uid = uid;
     }
 
-    public String getOriginalFilename() {
-        return originalFilename;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setOriginalFilename(String originalFilename) {
-        this.originalFilename = originalFilename;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getUrl() {
@@ -90,10 +90,5 @@ public class FileRouting {
 
     public void setParsonId(int parsonId) {
         this.parsonId = parsonId;
-    }
-
-    @Override
-    public String toString() {
-        return "id=" + id + " uid=" + uid + " originlFilename=" + originalFilename +" url="+url + " md5="+md5;
     }
 }

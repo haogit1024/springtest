@@ -1,6 +1,6 @@
 package com.czh.dao;
 
-import com.czh.entity.FileRouting;
+import com.czh.entity.File;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -16,22 +16,29 @@ public class FileDao {
         this.session = session;
     }
 
-    public FileRouting getFileById(int id) {
+    public File getFileById(int id) {
         return this.session.selectOne("getFileById", id);
     }
 
-    public List<FileRouting> getFileByUid(String uid) {
+    public List<File> getFileByUid(String uid) {
         return this.session.selectList("getFileByUid", uid);
     }
 
-    public List<FileRouting> getFileByParsonPath(String uid, String parsonPath) {
+    public List<File> getFileByParsonPath(String uid, String parsonPath) {
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid);
         map.put("parsonPath", parsonPath);
         return this.session.selectList("getFileByParsonPath", map);
     }
 
-    public int insertFile(FileRouting fileRouting) {
+    public List<File> getFileByParsonId(String uid, Integer parsonId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("parsonId", parsonId);
+        return this.session.selectList("getFileByParsonId", map);
+    }
+
+    public int insertFile(File fileRouting) {
         int i = this.session.insert("insertFile", fileRouting);
         if (i > 0) {
             return fileRouting.getId();

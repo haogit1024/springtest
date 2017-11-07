@@ -1,8 +1,12 @@
 package com.czh.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User{
 	private String id;
+	@NotEmpty
 	private String account;
+	@NotEmpty
 	private String password;
 	private String email;
 	private String phone;
