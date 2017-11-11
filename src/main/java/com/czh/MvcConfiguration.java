@@ -1,5 +1,6 @@
 package com.czh;
 
+import com.czh.interceptors.LoginInterceptors;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -16,6 +17,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.enableContentNegotiation(new MappingJackson2JsonView());
         registry.freeMarker().cache(false);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/error").excludePathPatterns("/error/**");
     }
 
     /**

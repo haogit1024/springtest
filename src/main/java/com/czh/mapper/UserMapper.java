@@ -14,6 +14,7 @@ public interface UserMapper {
     User getUser(@Param("account") String account);
 
     @Insert("insert into tb_user(id, account, password, email, phone, gender, nickname, realname) value(#{id}, #{account}, #{password}, #{email}, #{phone}, #{gender}, #{nickname}, #{realname})")
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="id", before=false, resultType=int.class)
     String addUser(User user);
 
     @Update("update tb_user set account = #{account}, password = #{password}, email = #{email}, phone = #{phone}, gender = #{gender}, nickname = #{nickname}, realname = #{realname}, status = #{status} where id = #{id}")

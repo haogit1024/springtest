@@ -16,7 +16,7 @@ public interface FileMapper {
     File getFileById(int id);
 
     @Select("select * from tb_file where uid = #{uid}")
-    List<File> getFileByUid(String uid);
+    List<File> getFileByUid(int uid);
 
     @Select("select * from tb_file where uid = #{uid} and parsonPath = #{parsonPath}")
     List<File> getFileByParsonPath(Map<String, String> map);

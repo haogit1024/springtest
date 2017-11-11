@@ -44,10 +44,10 @@ public class BookController {
                 model.addObject("status",1);
                 model.addObject("statusCode", StatusCode.OBJECTNOTEXIST.toString());
             } else {
-                String uid = user.getId();
-                List<Book> books = bookService.getBookByUid(uid);
+                int uid = user.getId();
+//                List<Book> books = bookService.getBookByUid(uid);
                 model.addObject("status", 0);
-                model.addObject("books", books);
+//                model.addObject("books", books);
             }
         } else {
             List<Book> books = bookService.getBookByUid(sessionUid);
@@ -76,7 +76,7 @@ public class BookController {
                 model.addObject("stausCode", StatusCode.OBJECTNOTEXIST.toString());
                 return model;
             }
-            book.setUid(user.getId());
+//            book.setUid(user.getId());
         } else {
             book.setUid(sessionUid);
         }

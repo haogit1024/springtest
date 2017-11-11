@@ -32,14 +32,13 @@ public class UserDao {
         return this.sqlSession.selectOne("getUser", account);
     }
 
-    public String insertUser(User user) {
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        user.setId(uuid);
+    public int insertUser(User user) {
+
         int i = this.sqlSession.insert("addUser", user);
         if (i > 0) {
             return user.getId();
         }
-        return null;
+        return -1;
     }
 
     public boolean updateUser(User user){

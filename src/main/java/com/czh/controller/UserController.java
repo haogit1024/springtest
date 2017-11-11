@@ -30,34 +30,34 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestBody LoginModel loginModel, HttpSession session) throws IOException {
-        String account = loginModel.getAccount();
-        String password = loginModel.getPassword();
-        ModelAndView model = new ModelAndView();
-        if (account == null || "".equals(account) || password == null || "".equals(password)) {
-            model.addObject("status", 1);
-            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
-            return model;
-        }
-        User user = userService.getUser(account);
-        if (user == null) {
-            model.addObject("status", 1);
-            model.addObject("statusCode","该用户不存在");
-            return model;
-        }
-        if (password.equals(user.getPassword())) {
-            model.addObject("status", 0);
-            user.setPassword("");
-            model.addObject("user", user);
-            session.setAttribute("uid", user.getId());
-            return model;
-        } else {
-            model.addObject("status",1);
-            model.addObject("statusCode","密码错误");
-            return model;
-        }
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    public ModelAndView login(@RequestBody LoginModel loginModel, HttpSession session) throws IOException {
+//        String account = loginModel.getAccount();
+//        String password = loginModel.getPassword();
+//        ModelAndView model = new ModelAndView();
+//        if (account == null || "".equals(account) || password == null || "".equals(password)) {
+//            model.addObject("status", 1);
+//            model.addObject("statusCode", StatusCode.NULLREQUESTPARAMETER.toString());
+//            return model;
+//        }
+//        User user = userService.getUser(account);
+//        if (user == null) {
+//            model.addObject("status", 1);
+//            model.addObject("statusCode","该用户不存在");
+//            return model;
+//        }
+//        if (password.equals(user.getPassword())) {
+//            model.addObject("status", 0);
+//            user.setPassword("");
+//            model.addObject("user", user);
+//            session.setAttribute("uid", user.getId());
+//            return model;
+//        } else {
+//            model.addObject("status",1);
+//            model.addObject("statusCode","密码错误");
+//            return model;
+//        }
+//    }
 
     @RequestMapping(value = "/registered", method = RequestMethod.POST)
     public ModelAndView insertUser(@RequestParam String account, @RequestParam String password){
@@ -76,8 +76,8 @@ public class UserController {
         User newUser = new User();
         newUser.setAccount(account);
         newUser.setPassword(password);
-        String id = userService.insertUser(newUser);
-        if (id != null) {
+        int id = userService.insertUser(newUser);
+        if (id > 0) {
             model.addObject("status", 0);
             return model;
         } else {

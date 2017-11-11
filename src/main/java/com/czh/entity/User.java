@@ -3,7 +3,7 @@ package com.czh.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class User{
-	private String id;
+	private int id;
 	@NotEmpty
 	private String account;
 	@NotEmpty
@@ -15,9 +15,9 @@ public class User{
 	private String realname;
 	private int status;
 
-	public String getId() { return id; } 
+	public int getId() { return id; }
 
-	public void setId(String id) { this.id=id; } 
+	public void setId(int id) { this.id=id; }
 
 	public String getAccount() { return account; } 
 

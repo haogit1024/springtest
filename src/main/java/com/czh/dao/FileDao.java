@@ -20,8 +20,15 @@ public class FileDao {
         return this.session.selectOne("getFileById", id);
     }
 
-    public List<File> getFileByUid(String uid) {
+    public List<File> getFileByUid(int uid) {
         return this.session.selectList("getFileByUid", uid);
+    }
+
+    public List<File> getFileByParsonId(int uid, int parsonId) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("parsonId", parsonId);
+        return this.session.selectList("getFileByParsonId", map);
     }
 
     public List<File> getFileByParsonPath(String uid, String parsonPath) {
@@ -31,12 +38,12 @@ public class FileDao {
         return this.session.selectList("getFileByParsonPath", map);
     }
 
-    public List<File> getFileByParsonId(String uid, Integer parsonId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", uid);
-        map.put("parsonId", parsonId);
-        return this.session.selectList("getFileByParsonId", map);
-    }
+//    public List<File> getFileByParsonId(String uid, Integer parsonId) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("uid", uid);
+//        map.put("parsonId", parsonId);
+//        return this.session.selectList("getFileByParsonId", map);
+//    }
 
     public int insertFile(File fileRouting) {
         int i = this.session.insert("insertFile", fileRouting);

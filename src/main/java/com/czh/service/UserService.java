@@ -17,7 +17,7 @@ public class UserService {
         return userDao.getUser(account);
     }
 
-    public String insertUser(User user) {
+    public int insertUser(User user) {
         return userDao.insertUser(user);
     }
 

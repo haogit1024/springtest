@@ -6,16 +6,15 @@ import com.czh.exception.LoginException;
 import com.czh.jwt.Header;
 import com.czh.jwt.Payload;
 import com.czh.service.UserService;
+import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.Mac;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +41,7 @@ public class LoginController {
             InputStream is = LoginController.class.getResourceAsStream(propFileName);
             prop.load(is);
             String secret = prop.getProperty("secret");
-            System.out.println(secret);
+//            System.out.println(secret);
             String iss = prop.getProperty("iss");
 
             ObjectMapper mapper = new ObjectMapper();
@@ -52,57 +51,31 @@ public class LoginController {
 
             Payload payload = new Payload();
             payload.setIss(iss);
-            payload.setAud(user.getAccount());
-            payload.setExp(new Date().getTime() + 7200);
+            payload.setAud(String.valueOf(realUser.getId()));
+            payload.setExp(new Date().getTime() + 7200000);
             payload.setSub(user.getAccount());
-            payload.setExp(new Date().getTime());
+            payload.setIat(new Date().getTime());
 
             String headerJson = mapper.writeValueAsString(header);
             String payloadJson = mapper.writeValueAsString(payload);
+            System.out.println("login payload = " + payloadJson );
 
             String base64Header = new String(Base64.encodeBase64(headerJson.getBytes()));
             String base64Payload = new String(Base64.encodeBase64(payloadJson.getBytes()));
             String signStr = base64Header + "." + base64Payload;
-            System.out.println(signStr);
+//            System.out.println(signStr);
 
             SecretKeySpec signingKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(signingKey);
-            String sign = byte2hex(mac.doFinal(signStr.getBytes()));
-
-            return new Token(sign, 7200);
+            Encrypt encrypt = new Encrypt();
+            String sign = encrypt.byte2hex(mac.doFinal(signStr.getBytes()));
+            String token = signStr + "." + sign;
+            return new Token(token, 7200);
         } else {
             throw new LoginException("密码错误");
         }
     }
 
-    private String base64Encode(String str) {
-        byte[] bytes = Base64.encodeBase64(str.getBytes());
-        return new String(bytes);
-    }
 
-    private String base64Decode(String str) {
-        byte[] bytes = Base64.decodeBase64(str.getBytes());
-        return new String(bytes);
-    }
-
-    private String HmacSHA256(String content, String secret) throws NoSuchAlgorithmException, InvalidKeyException {
-        SecretKeySpec signingKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
-//        String sign = byte2hex(mac.doFinal(content.getBytes()));
-        return byte2hex(mac.doFinal(content.getBytes()));
-    }
-
-    private static String byte2hex(byte[] b) {
-        StringBuilder hs = new StringBuilder();
-        String stmp;
-        for (int n = 0; b!=null && n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0XFF);
-            if (stmp.length() == 1)
-                hs.append('0');
-            hs.append(stmp);
-        }
-        return hs.toString().toUpperCase();
-    }
 }
