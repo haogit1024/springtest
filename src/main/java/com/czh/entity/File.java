@@ -1,8 +1,11 @@
 package com.czh.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class File {
     private int id;
-    private String uid;
+    @NotEmpty
+    private int uid;
     private String filename;
     private String url;
     private String md5;
@@ -20,11 +23,11 @@ public class File {
         this.id = id;
     }
 
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
@@ -90,5 +93,21 @@ public class File {
 
     public void setParsonId(int parsonId) {
         this.parsonId = parsonId;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", uid='" + uid + '\'' +
+                ", filename='" + filename + '\'' +
+                ", url='" + url + '\'' +
+                ", md5='" + md5 + '\'' +
+                ", status=" + status +
+                ", type='" + type + '\'' +
+                ", size=" + size +
+                ", parsonPath='" + parsonPath + '\'' +
+                ", parsonId=" + parsonId +
+                '}';
     }
 }

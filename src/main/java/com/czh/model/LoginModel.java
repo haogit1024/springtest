@@ -6,7 +6,6 @@ package com.czh.model;
 public class LoginModel {
     private String account;
     private String password;
-    private boolean keepLogin;
 
     public String getAccount() {
         return account;
@@ -24,11 +23,4 @@ public class LoginModel {
         this.password = password;
     }
 
-    public boolean isKeepLogin() {
-        return keepLogin;
-    }
-
-    public void setKeepLogin(boolean keepLogin) {
-        this.keepLogin = keepLogin;
-    }
 }

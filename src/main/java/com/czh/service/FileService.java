@@ -24,9 +24,11 @@ public class FileService {
         return this.fileDao.getFileByParsonId(uid,parsonId);
     }
 
-    public int insertFile(File fileRouting) {
-        return fileDao.insertFile(fileRouting);
+    public int insertFile(File file) {
+        return fileDao.insertFile(file);
     }
 
-
+    public boolean updateFile(File file) {
+        return fileDao.updateFile(file);
+    }
 }

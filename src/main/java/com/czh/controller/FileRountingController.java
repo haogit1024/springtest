@@ -97,7 +97,7 @@ public class FileRountingController {
         return model;
     }
 
-    //TODO 根据md5优化保存过程
+
     //保存文件
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
@@ -108,7 +108,7 @@ public class FileRountingController {
             String fileName = file.getOriginalFilename();
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
             StringBuilder newFileName = new StringBuilder();
-            //TODO 暂时改成时间戳
+            //时间长
             newFileName.append(new Date().getTime());
             String ext = "";
             if (fileName.contains(".")) {
@@ -130,7 +130,7 @@ public class FileRountingController {
             File destFile = new File(folder, dealFileName);
             FileOutputStream fs = new FileOutputStream(destFile);
             InputStream in = file.getInputStream();
-            copy(in, fs, file.getSize());
+//            copy(in, fs, file.getSize());
             log.info("file originalFilename = " + file.getOriginalFilename());
             FileRouting fileRouting = new FileRouting();
             fileRouting.setUid(name);
@@ -153,7 +153,7 @@ public class FileRountingController {
     }
 
     //根据文件后缀返回font awesome图标类型
-    //TODO 这里不全文件格式判断
+
     private String getFileType(String ext) {
         if (ext.equals(".text")) {
             return "text";
@@ -198,45 +198,45 @@ public class FileRountingController {
         return session.getServletContext().getRealPath("/");
     }
 
-    //TODO 把获取md5编码整合到copy方法中
-    private String getMD5(InputStream inputStream) {
-        try {BufferedInputStream bis = new BufferedInputStream(inputStream);
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] buffer = new byte[64];
-            int length;
-            while ((length = bis.read(buffer,0, 64)) != -1) {
-                md.update(buffer, 0, length);
-            }
-            BigInteger bigInt = new BigInteger(1, md.digest());
-            return bigInt.toString(16);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    private void copy(InputStream in, FileOutputStream fs, long fileSize) {
-        try {
-//            in = new BufferedInputStream(in, BUFFER_SIZE);
-            BufferedOutputStream bos = new BufferedOutputStream(fs, BUFFER_SIZE);
-            int len;
-            byte[] bytes;
-            //防止bytes大于文件大小
-            if (fileSize >= BUFFER_SIZE) {
-                bytes = new byte[BUFFER_SIZE];
-            } else {
-                bytes = new byte[64];
-            }
-            while ((len = in.read(bytes)) > 0) {
-                bos.write(bytes, 0, len);
-            }
-            in.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private String getMD5(InputStream inputStream) {
+//        try {BufferedInputStream bis = new BufferedInputStream(inputStream);
+//            MessageDigest md = MessageDigest.getInstance("MD5");
+//            byte[] buffer = new byte[64];
+//            int length;
+//            while ((length = bis.read(buffer,0, 64)) != -1) {
+//                md.update(buffer, 0, length);
+//            }
+//            BigInteger bigInt = new BigInteger(1, md.digest());
+//            return bigInt.toString(16);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
+//    private void copy(InputStream in, FileOutputStream fs, long fileSize) {
+//        try {
+////            in = new BufferedInputStream(in, BUFFER_SIZE);
+//            BufferedOutputStream bos = new BufferedOutputStream(fs, BUFFER_SIZE);
+//            int len;
+//            byte[] bytes;
+//            //防止bytes大于文件大小
+//            if (fileSize >= BUFFER_SIZE) {
+//                bytes = new byte[BUFFER_SIZE];
+//            } else {
+//                bytes = new byte[64];
+//            }
+//            while ((len = in.read(bytes)) > 0) {
+//                bos.write(bytes, 0, len);
+//            }
+//            in.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

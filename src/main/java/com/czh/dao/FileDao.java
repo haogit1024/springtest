@@ -45,11 +45,16 @@ public class FileDao {
 //        return this.session.selectList("getFileByParsonId", map);
 //    }
 
-    public int insertFile(File fileRouting) {
-        int i = this.session.insert("insertFile", fileRouting);
+    public int insertFile(File file) {
+        int i = this.session.insert("insertFile", file);
         if (i > 0) {
-            return fileRouting.getId();
+            return file.getId();
         }
         return -1;
+    }
+
+    public boolean updateFile(File file) {
+        int i = this.session.update("updateFile", file);
+        return i > 0;
     }
 }

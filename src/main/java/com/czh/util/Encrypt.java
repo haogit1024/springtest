@@ -16,13 +16,13 @@ import java.util.Properties;
  */
 public class Encrypt {
 
-    public Properties getProp() throws IOException {
-        Properties prop = new Properties();
-        String propFileName = "/application.properties";
-        InputStream is = Encrypt.class.getResourceAsStream(propFileName);
-        prop.load(is);
-        return prop;
-    }
+//    public Properties getProp() throws IOException {
+//        Properties prop = new Properties();
+//        String propFileName = "/application.properties";
+//        InputStream is = Encrypt.class.getResourceAsStream(propFileName);
+//        prop.load(is);
+//        return prop;
+//    }
 
     public String base64Encode(String str) {
         byte[] bytes = Base64.encodeBase64(str.getBytes());

@@ -1,24 +1,20 @@
 package com.czh.interceptors;
 
+import com.czh.App;
 import com.czh.controller.LoginController;
+import com.czh.exception.NotFoundException;
 import com.czh.jwt.Payload;
 import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.Date;
-import java.util.Properties;
 
 public class LoginInterceptors implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(LoginInterceptors.class);
@@ -27,7 +23,6 @@ public class LoginInterceptors implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 //        log.info("interceptors is run");
         Encrypt encrypt = new Encrypt();
-        Properties prop = encrypt.getProp();
         String authorization = httpServletRequest.getHeader("Authorization");
 //        log.info("authorization = " + authorization);
         String token = authorization.split(" ")[1];
@@ -37,7 +32,8 @@ public class LoginInterceptors implements HandlerInterceptor {
         String base64Payload = tokenData[1];
         String sign = tokenData[2];
         String signStrTpl = base64Header + "." + base64Payload;
-        String secret = prop.getProperty("secret");
+        String secret = App.SECRET;
+//        log.info("secret = " + secret);
         String againSign = encrypt.hmacSHA256(signStrTpl, secret);
         if (!againSign.equals(sign)) {
             log.info("签名被篡改");

@@ -1,6 +1,7 @@
 package com.czh.utiltest;
 
 import com.czh.dao.FileDao;
+import com.czh.entity.File;
 import com.czh.entity.FileRouting;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,27 +22,10 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-//        FileRouting file = fileDao.getFileById(2);
+        File file = fileDao.getFileById(8);
 //        System.out.println(file);
-//        FileRouting fileRouting = new FileRouting();
-//        fileRouting.setUid("aaa");
-//        fileRouting.setMd5("bbbb");
-//        fileRouting.setOriginalFilename("cccc");
-//        int id = fileDao.insertFile(fileRouting);
-//        System.out.println(id);
-//        FileRouting file = fileDao.getFileById(id);
-//        System.out.println(file);
-//        List<FileRouting> list = fileDao.getFileByUid("dddd");
-//        System.out.println("size = " + list.size());
-//        for (FileRouting f : list) {
-//            System.out.println(f);
-//        }
-//        List<FileRouting> files = fileDao.getFileByParsonId("czh", 0);
-//        System.out.println("size = " + files.size());
-//        for (FileRouting file : files) {
-//            System.out.println(file);
-//        }
-
+        file.setFilename("daotestupdate");
+        fileDao.updateFile(file);
     }
 
 }
