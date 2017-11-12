@@ -1,6 +1,7 @@
 package com.czh.controller;
 
 import com.czh.dto.FileDTO;
+import com.czh.entity.Error;
 import com.czh.entity.File;
 import com.czh.exception.DatabaseException;
 import com.czh.exception.NotFoundException;
@@ -9,6 +10,7 @@ import com.czh.service.FileService;
 import com.czh.util.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,5 +71,11 @@ public class FileController {
     public File deleteFile(){
 
         return null;
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Error notFound(NotFoundException e){
+        return new Error((int)e.getId(), "not found");
     }
 }

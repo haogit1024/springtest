@@ -10,4 +10,11 @@ public class LoginException extends RuntimeException {
     public String getMsg() {
         return msg;
     }
+
+    @Override
+    public String toString() {
+        return "LoginException{" +
+                "msg='" + msg + '\'' +
+                '}';
+    }
 }

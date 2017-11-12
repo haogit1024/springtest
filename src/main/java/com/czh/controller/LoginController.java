@@ -1,6 +1,7 @@
 package com.czh.controller;
 
 import com.czh.App;
+import com.czh.entity.Error;
 import com.czh.entity.Token;
 import com.czh.entity.User;
 import com.czh.exception.LoginException;
@@ -12,9 +13,8 @@ import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -77,4 +77,9 @@ public class LoginController {
     }
 
 
+    @ExceptionHandler(LoginException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error loginError(LoginException e){
+        return new Error(400, e.getMsg());
+    }
 }

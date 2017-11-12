@@ -24,9 +24,9 @@ public class RestTestController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/testEx", method = RequestMethod.GET)
     public User test(){
-        User user = userDao.getUser("admin");
+        User user = userDao.getUser("admin111");
         if (user == null) throw new NotFoundException(1);
         return user;
     }
@@ -35,9 +35,9 @@ public class RestTestController {
     public void handle(@RequestBody String body, Writer writer) throws IOException {
         writer.write(body);
     }
-
-    @GetMapping("/get/something")
-    @ResponseBody
+//
+//    @GetMapping("/get/something")
+//    @ResponseBody
 //    public FileRouting helloWorld() {
 //        return fileService.getFileById(4);
 //    }
