@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>sidebar</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>files</title>
+    <link href="../../../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../../../static/css/font-awesome.min.css" rel="stylesheet">
     <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
-    <script type="text/javascript" src="../static/js/jquery.js"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../../../static/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -31,12 +31,14 @@
             </tr>
             </thead>
             <tbody id="tFileList" class="">
-            <#--<tr>-->
-                <#--<td>1内容</td>-->
-                <#--<td>1内容</td>-->
-                <#--<td>1内容</td>-->
-                <#--<td>1内容</td>-->
-            <#--</tr>-->
+            <#--<#list files as file>-->
+            <tr>
+                <td>${file.filename}</td>
+                <td><a href="">2</a></td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <#--</#list>-->
 
 
             </tbody>

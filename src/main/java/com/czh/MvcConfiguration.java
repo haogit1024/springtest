@@ -21,7 +21,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/error").excludePathPatterns("/error/**");
+        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
+                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**").excludePathPatterns("/static/**");
     }
 
     /**
