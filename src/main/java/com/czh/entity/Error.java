@@ -1,22 +1,22 @@
 package com.czh.entity;
 
 public class Error {
-    private int code;
+    private int status;
     private String message;
 
     public Error() {}
 
     public Error(int code, String message) {
-        this.code = code;
+        this.status = code;
         this.message = message;
     }
 
-    public int getCode() {
-        return code;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMessage() {

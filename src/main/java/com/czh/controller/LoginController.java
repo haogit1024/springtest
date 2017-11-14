@@ -77,9 +77,4 @@ public class LoginController {
     }
 
 
-    @ExceptionHandler(LoginException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Error loginError(LoginException e){
-        return new Error(400, e.getMsg());
-    }
 }

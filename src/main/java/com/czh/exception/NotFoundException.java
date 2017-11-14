@@ -1,13 +1,13 @@
 package com.czh.exception;
 
 public class NotFoundException extends RuntimeException {
-    private long id;
+    private int id;
 
-    public NotFoundException(long id) {
+    public NotFoundException(int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 }

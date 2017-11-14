@@ -58,6 +58,13 @@ public class FileController {
         return fileData;
     }
 
+    @GetMapping(value = "/{id}")
+    public File getFile(@PathVariable int id){
+        File file = fileService.getFileById(id);
+        if (null == file) throw new NotFoundException(id);
+        return file;
+    }
+
     @PutMapping(value = "/{id}")
     public File updateFile(@PathVariable int id, @RequestBody FileModel fileModel){
         File file = fileService.getFileById(id);
@@ -68,14 +75,5 @@ public class FileController {
         return file;
     }
 
-    public File deleteFile(){
 
-        return null;
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Error notFound(NotFoundException e){
-        return new Error((int)e.getId(), "not found");
-    }
 }
