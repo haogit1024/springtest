@@ -31,4 +31,9 @@ public class PageController {
         return "test";
     }
 
+    @RequestMapping(value = "/test")
+    public String test() {
+        return "test";
+    }
+
 }
