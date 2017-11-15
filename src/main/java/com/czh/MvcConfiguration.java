@@ -13,17 +13,17 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     //json解析ModelAndView
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        registry.enableContentNegotiation(new MappingJackson2JsonView());
-        registry.freeMarker().cache(false);
-    }
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        registry.enableContentNegotiation(new MappingJackson2JsonView());
+//        registry.freeMarker().cache(false);
+//    }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
-                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**").excludePathPatterns("/static/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
+//                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**").excludePathPatterns("/static/**");
+//    }
 
     /**
      * 静态资源
