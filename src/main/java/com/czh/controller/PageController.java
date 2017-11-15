@@ -28,4 +28,9 @@ public class PageController {
         return "fileList";
     }
 
+    @RequestMapping(value = "/test")
+    public String test() {
+        return "test";
+    }
+
 }
