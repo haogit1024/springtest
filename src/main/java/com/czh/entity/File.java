@@ -2,6 +2,7 @@ package com.czh.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+
 public class File {
     private int id;
     @NotEmpty
@@ -14,6 +15,7 @@ public class File {
     private long size;
     private String parsonPath;
     private int parsonId;
+    private long time;
 
     public int getId() {
         return id;
@@ -95,11 +97,19 @@ public class File {
         this.parsonId = parsonId;
     }
 
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", uid='" + uid + '\'' +
+                ", uid=" + uid +
                 ", filename='" + filename + '\'' +
                 ", url='" + url + '\'' +
                 ", md5='" + md5 + '\'' +
@@ -108,6 +118,7 @@ public class File {
                 ", size=" + size +
                 ", parsonPath='" + parsonPath + '\'' +
                 ", parsonId=" + parsonId +
+                ", time=" + time +
                 '}';
     }
 }

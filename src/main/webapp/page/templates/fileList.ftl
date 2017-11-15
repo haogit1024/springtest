@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
     <title>files</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/css/font-awesome.min.css" rel="stylesheet">
     <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
-    <script type="text/javascript" src="../static/js/jquery.js"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
+    <style>
+        a:hover {text-decoration: none;}
+    </style>
 </head>
 <body>
 
@@ -24,65 +27,36 @@
         <table class="table">
             <thead class="navbar-default">
             <tr>
-                <td style="width: 10%"></td>
+                <td style="width: 10%"></></td>
                 <td style="width: 20%">文件名</td>
                 <td style="width: 20%">大小</td>
                 <td style="width: 20%">修改时间</td>
             </tr>
             </thead>
             <tbody id="tFileList" class="">
-            <#--<#list files as file>-->
+            <#list files as file>
             <tr>
-                <td>${file.filename}</td>
-                <td><a href="">2</a></td>
-                <td>3</td>
-                <td>4</td>
+                <td>
+                    <#if file.type == "folder">
+                        <i class="fa fa-${file.type}"></i>
+                    <#else>
+                        <i class="fa fa-file-${file.type}-o"></i>
+                    </#if>
+                </td>
+                <td><a href="javascript:void(0)" >${file.filename}</a></td>
+                <td>${file.size}</td>
+                <td>${file.time}</td>
             </tr>
-            <#--</#list>-->
-
+            </#list>
 
             </tbody>
         </table>
     </div>
 </div>
 <script>
-//    $(function () {
-//        getFile();
-//    });
-//    function getFile() {
-//        $.ajax({
-//            type:'get',
-//            url:'../file/get',
-//            data:{
-//                uid:'czh',
-//                parsonPath : '/'
-//            }
-//        }).done(function (res) {
-//            if (res.status == 0) {
-//                var html = '';
-//                $.each(res.files, function (index, file) {
-//                    var originFile = file.originalFilename;
-//                    var url = file.url;
-//                    var icon = '';
-//                    if (file.type != null) {
-//                        icon = '<i class="fa fa-file-' +file.type+ '-o" ></i>'
-//                    } else {
-//                        icon = '<i class="fa fa-file" ></i>'
-//                    }
-//                    var alabel = icon + '<a href=\"'+url+'\">'+originFile+'</a><br>';
-//                    html += '<tr><td></td><td class="">'+ alabel +'</td><td>大小</td><td>时间</td></tr>';
-//                });
-//                $('#tFileList').html(html);
-//            } else {
-//                alert("请求出错");
-//                alert("res = " + JSON.stringify(res));
-//            }
-//        }).fail(function (res) {
-//            alert(JSON.stringify(res))
-//        })
-//
-//
-//    }
+    function testClick() {
+        alert("test click")
+    }
 
     function fileClick() {
         $('#file').click();

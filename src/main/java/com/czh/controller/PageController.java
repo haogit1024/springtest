@@ -8,13 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 
-@RestController
+@Controller
 @RequestMapping(value = "/page")
 public class PageController {
 
@@ -22,13 +20,10 @@ public class PageController {
     private FileService fileService;
 
     @RequestMapping(value = "/files/{uid}", method = RequestMethod.GET)
-    public String files(@PathVariable int uid){
-//        List<File> files = fileService.getFileByUid(uid);
-//        model.addAttribute("files", files);
-//        File file = fileService.getFileById(uid);
-//        map.put("file", file);
-//        model.addAttribute("file", file);
-        return "test";
+    public String files(Model model, @PathVariable int uid){
+        List<File> files = fileService.getFileByUid(uid);
+        model.addAttribute("files", files);
+        return "fileList";
     }
 
     @RequestMapping(value = "/test")
