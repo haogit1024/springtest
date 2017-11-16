@@ -22,10 +22,8 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        File file = fileDao.getFileById(8);
-//        System.out.println(file);
-        file.setFilename("daotestupdate");
-        fileDao.updateFile(file);
+        List<File> files = fileDao.getFileByUid(1);
+        files.forEach(System.out::println);
     }
 
 }

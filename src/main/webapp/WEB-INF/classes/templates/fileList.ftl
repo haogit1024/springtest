@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <#--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    <meta charset="UTF-8">
     <title>files</title>
-    <link href="../../../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../../../static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/css/font-awesome.min.css" rel="stylesheet">
     <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
-    <script type="text/javascript" src="../../../static/js/jquery.js"></script>
-    <script type="text/javascript" src="../../../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../static/js/jquery.js"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
 </head>
 <body>
 

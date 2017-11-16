@@ -21,10 +21,8 @@ public class PageController {
 
     @RequestMapping(value = "/files/{uid}", method = RequestMethod.GET)
     public String files(Model model, @PathVariable int uid){
-//        List<File> files = fileService.getFileByUid(uid);
-//        model.addAttribute("files", files);
-        File file = fileService.getFileById(7);
-        model.addAttribute("file", file);
+        List<File> files = fileService.getFileByUid(uid);
+        model.addAttribute("files", files);
         return "fileList";
     }
 
