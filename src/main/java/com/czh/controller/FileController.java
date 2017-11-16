@@ -75,5 +75,15 @@ public class FileController {
         return file;
     }
 
+    @DeleteMapping(value = "/{id}")
+    public File deleteFile(@PathVariable int id) {
+        File file = fileService.getFileById(id);
+        if (null == file) throw new NotFoundException(id);
+        file.setStatus(2);
+        boolean flag = fileService.updateFile(file);
+        if (!flag) throw new DatabaseException("file", "update", file.toString());
+        return file;
+    }
 
+    
 }

@@ -8,6 +8,7 @@
     <!--<link href="static/css/bootstrap-theme.css" rel="stylesheet">-->
     <script type="text/javascript" src="../static/js/jquery.js"></script>
     <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/js/app.js"></script>
 </head>
 <body>
 
@@ -16,6 +17,7 @@
 </form>
 <button class="btn btn-primary" onclick="fileClick()"><i class="fa fa-upload"></i> 上传文件</button>
 <button class="btn btn-info" onchange=""><i class="fa fa-folder-o"></i> 新建文件夹</button>
+<button class="btn btn-primary" id="testBtn" onclick="testFun()">测试</button>
 <div id="fileList"></div>
 
 <div class="panel panel-info">
