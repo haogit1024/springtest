@@ -7,6 +7,7 @@ import com.czh.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 @ControllerAdvice
 public class ExceptionController {
 

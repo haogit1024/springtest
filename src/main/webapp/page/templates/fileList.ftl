@@ -22,6 +22,7 @@
 <button class="btn btn-primary" onclick="fileClick()"><i class="fa fa-upload"></i> 上传文件</button>
 <button class="btn btn-info" onchange=""><i class="fa fa-folder-o"></i> 新建文件夹</button>
 <button class="btn btn-primary" id="testBtn" onclick="testFun()">测试</button>
+<button class="btn btn-primary" id="testBtn2" onclick="test2()">测试2</button>
 <div id="fileList"></div>
 
 <div class="panel panel-info">

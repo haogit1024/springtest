@@ -112,7 +112,7 @@ public class FileUtil {
         fileData.setFilename(fileName);
         fileData.setSize(size);
         fileData.setMd5(md5);
-        fileData.setType(ext);
+        fileData.setType(getFileType(ext));
         fileData.setUrl(url);
         fileData.setUid(uid);
         return fileData;

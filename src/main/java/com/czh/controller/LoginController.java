@@ -35,6 +35,7 @@ public class LoginController {
     public Token login(@RequestBody LoginModel user) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         User realUser = userService.getUser(user.getAccount());
         if (realUser == null) {
+            System.out.println("用户不存在");
             throw new LoginException("用户不存在");
         }
         if (user.getPassword().equals(realUser.getPassword())) {
@@ -72,6 +73,8 @@ public class LoginController {
             String token = signStr + "." + sign;
             return new Token(token, 7200);
         } else {
+            System.out.println("密码错误");
+            System.out.println(user);
             throw new LoginException("密码错误");
         }
     }
