@@ -34,6 +34,7 @@ function test2() {
         login(loginObject)
     }
 }
+
 function testAjax() {
     $.ajax({
         url : "../../files",

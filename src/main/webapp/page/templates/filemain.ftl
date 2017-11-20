@@ -31,27 +31,14 @@
         <table class="table">
             <thead class="navbar-default">
             <tr>
-                <td style="width: 10%"></></td>
+                <td style="width: 2%"></></td>
                 <td style="width: 20%">文件名</td>
                 <td style="width: 20%">大小</td>
                 <td style="width: 20%">修改时间</td>
             </tr>
             </thead>
             <tbody id="tFileList" class="">
-            <#list files as file>
-            <tr>
-                <td class="text-right">
-                    <#if file.type == "folder">
-                        <i class="fa fa-${file.type}"></i>
-                    <#else>
-                        <i class="fa fa-file-${file.type}-o"></i>
-                    </#if>
-                </td>
-                <td><a href="javascript:void(0)" >${file.filename}</a></td>
-                <td>${file.size}</td>
-                <td>${file.time}</td>
-            </tr>
-            </#list>
+            <#include "filelist.ftl"/>
 
             </tbody>
         </table>

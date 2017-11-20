@@ -28,6 +28,12 @@ public class FileController {
 
     private final Logger log = Logger.getLogger(FileController.class);
 
+    /**
+     * 获取uid的所有parsonId为某个值的文件
+     * @param parsonId
+     * @param uid
+     * @return
+     */
     @GetMapping(value = "")
     public List<File> getFileList(@RequestParam(name = "parsonId", required = false) Integer parsonId, @RequestAttribute("uid") int uid){
         if (null == parsonId) {
@@ -36,6 +42,17 @@ public class FileController {
         return fileService.getFileByParsonId(uid, parsonId);
     }
 
+    /**
+     * 新建文件
+     * 保存用户上传的文件
+     * @param file 文件
+     * @param parsonId 父id
+     * @param md5 md5码
+     * @param uid 用户id
+     * @param session session,用于获取实际物理路径
+     * @return
+     * @throws IOException
+     */
     @PostMapping(value = "")
     public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart(value = "parsonId", required = false) Integer parsonId,
                            @RequestPart(value = "md5", required = false) String md5, @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
@@ -57,6 +74,11 @@ public class FileController {
         return fileData;
     }
 
+    /**
+     * 根据id获取文件
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/{id}")
     public File getFile(@PathVariable int id){
         File file = fileService.getFileById(id);
@@ -64,6 +86,12 @@ public class FileController {
         return file;
     }
 
+    /**
+     * 根据id更新文件
+     * @param id
+     * @param fileModel
+     * @return
+     */
     @PutMapping(value = "/{id}")
     public File updateFile(@PathVariable int id, @RequestBody FileModel fileModel){
         File file = fileService.getFileById(id);
@@ -74,6 +102,11 @@ public class FileController {
         return file;
     }
 
+    /**
+     * 根据id删除文件
+     * @param id
+     * @return
+     */
     @DeleteMapping(value = "/{id}")
     public File deleteFile(@PathVariable int id) {
         File file = fileService.getFileById(id);
