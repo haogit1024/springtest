@@ -24,3 +24,19 @@ function test2() {
     var token = localStorage.getItem("token");
     alert(token)
 }
+
+function testAjax() {
+    $.ajax({
+        url : "../../files",
+        type:"GET",
+        beforeSend: function (xhr) {
+            var token = window.localStorage.getItem("token");
+            // alert("token = " + token)
+            xhr.setRequestHeader("Authorization", token);
+        }
+    }).done(function (res) {
+        console.log("success: " + JSON.stringify(res))
+    }).fail(function (res) {
+        console.log("fail: " + JSON.stringify(res))
+    });
+}

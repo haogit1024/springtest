@@ -32,6 +32,7 @@ public class LoginInterceptors implements HandlerInterceptor {
         String authorization = httpServletRequest.getHeader("Authorization");
         if (null == authorization || "".equals(authorization)) {
             //UNAUTHORIZED
+            log.info("Authorization为空");
             responseError(httpServletResponse, mapper, 401, "UNAUTHORIZED");
             return false;
         }
