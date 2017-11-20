@@ -1,8 +1,11 @@
 function testFun() {
     var data = {account : 'admin', password :'admin'};
+    var loginObject = data;
+    localStorage.setItem("loginObject", loginObject);
     login(data);
 }
 
+//输入ccount, password
 function login(data) {
     var _ajax = $.ajax({
         url:'../../login',
@@ -14,17 +17,23 @@ function login(data) {
     }).done(function (res) {
         // alert(_ajax.status);
         var token = res.token;
+        var timestamp = new Date().getTime();
         localStorage.setItem("token", token);
+        localStorage.setItem("tokenValidTime", timestamp + 3600000)
     }).fail(function (res) {
         console.log('fail = ' + JSON.stringify(res))
     })
 }
 
 function test2() {
-    var token = localStorage.getItem("token");
-    alert(token)
-}
+    var tokenValidTime = localStorage.getItem("tokenValidTime");
 
+    var now = new Date().getTime();
+    if (now > tokenValidTime) {
+        var loginObject = localStorage.getItem("loginObject");
+        login(loginObject)
+    }
+}
 function testAjax() {
     $.ajax({
         url : "../../files",
