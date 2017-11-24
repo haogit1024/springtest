@@ -11,11 +11,14 @@ import com.czh.util.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -117,5 +120,27 @@ public class FileController {
         return file;
     }
 
-    
+    /**
+     * 下载文件
+     */
+    @GetMapping(value = "download1/{id}")
+    public void download(@PathVariable int id, HttpServletResponse response) throws IOException {
+//        File file = fileService.getFileById(id);
+//        if (null == file) throw new NotFoundException(id);
+        String dept = "";
+        String fileName = "";
+        response.setContentType("application/octet-stream;charset=UTF-8");
+//        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(dept + fileName +".xls", "UTF-8"));
+        response.setHeader("content-disposition", "attachment;filename=test.PNG");
+        OutputStream os = response.getOutputStream();
+        java.io.File file = new java.io.File("C:\\Users\\czh\\Desktop\\collector_interface.png");
+        FileInputStream fis = new FileInputStream(file);
+        byte[] buffer = new byte[64];
+        int len;
+        while ((len = fis.read(buffer)) != -1) {
+            os.write(buffer);
+        }
+        fis.close();
+        os.close();
+    }
 }
