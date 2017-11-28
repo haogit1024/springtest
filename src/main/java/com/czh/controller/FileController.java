@@ -10,6 +10,7 @@ import com.czh.service.FileService;
 import com.czh.util.FileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -142,5 +143,17 @@ public class FileController {
         }
         fis.close();
         os.close();
+    }
+
+    @GetMapping(value = "download2/{id}")
+    public ResponseEntity download1(@PathVariable int id) throws IOException {
+        java.io.File file = new java.io.File("C:\\Users\\czh\\Desktop\\sms.sql");
+        InputStream in = new FileInputStream(file);
+        byte[] bytes = new byte[in.available()];
+        in.read(bytes);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-disposition", "attachment;filename=sms.sql");
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        return responseEntity;
     }
 }
