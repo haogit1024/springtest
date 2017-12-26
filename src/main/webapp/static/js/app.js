@@ -40,7 +40,7 @@ testBtn.onclick = function () {
     });
     instance.get('/files?uid=1').then(function (response) {
         var data = response.data;
-        // fileListVM.items = data;
+        fileListVM.items = data;
         console.log(data);
     }).catch(function (error) {
         console.log(error);
