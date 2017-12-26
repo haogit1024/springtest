@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class LoginInterceptors implements HandlerInterceptor {
+public class LoginInterceptors extends HandlerInterceptorAdapter {
     private static final Logger log = Logger.getLogger(LoginInterceptors.class);
 
     @Override
@@ -75,7 +76,13 @@ public class LoginInterceptors implements HandlerInterceptor {
         String uid = payload.getAud();
         log.info("uid = " + uid);
         httpServletRequest.setAttribute("uid", uid);
-        return true;
+//        return true;
+        httpServletResponse.addHeader("Access-Control-Allow-Origin","*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods","*");
+        httpServletResponse.addHeader("Access-Control-Max-Age","100");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials","false");
+        return super.preHandle(httpServletRequest, httpServletResponse, o);
     }
 
     private void responseError(HttpServletResponse response, ObjectMapper mapper,int status, String errorMsg) throws IOException {

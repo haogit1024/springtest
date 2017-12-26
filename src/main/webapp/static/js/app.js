@@ -2,7 +2,7 @@ var account = 'admin';
 var psssword = 'admin';
 
 //登录获取token
-axios.post('/login',{
+axios.post('http://localhost:8080/login',{
     account:account,
     password:psssword
 }).then(function(response){
@@ -36,11 +36,11 @@ testBtn.onclick = function () {
     var instance = axios.create({
         baseURL:'http://localhost:8080/',
         timeout:5000,
-        headers:{'Authorization':token}
+        headers:{'Authorization':token,'Access-Control-Allow-Methods':'POST'}
     });
-    instance.get('/files').then(function (response) {
+    instance.get('/files?uid=1').then(function (response) {
         var data = response.data;
-        fileListVM.items = data;
+        // fileListVM.items = data;
         console.log(data);
     }).catch(function (error) {
         console.log(error);

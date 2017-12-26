@@ -19,6 +19,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 //        registry.freeMarker().cache(false);
 //    }
 
+
+    /**
+     * 添加拦截器
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
@@ -46,4 +50,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
 
+    /**
+     * 支持跨域访问
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
 }
