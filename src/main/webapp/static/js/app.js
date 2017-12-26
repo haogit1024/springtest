@@ -15,6 +15,20 @@ axios.post('/login',{
     console.log(error);
 });
 
+var fileListVM = new Vue({
+    el: '#fileList',
+    data: {
+        items:[
+            {
+                type:'code',
+                filename:'test',
+                size:'100',
+                time:'1213151'
+            }
+        ]
+    }
+});
+
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
     var token = localStorage.getItem('token');
@@ -26,15 +40,9 @@ testBtn.onclick = function () {
     });
     instance.get('/files').then(function (response) {
         var data = response.data;
+        fileListVM.items = data;
         console.log(data);
     }).catch(function (error) {
         console.log(error);
     })
 };
-
-var fileListVM = new Vue({
-    el: '#',
-    data: {
-        items:[]
-    }
-})
