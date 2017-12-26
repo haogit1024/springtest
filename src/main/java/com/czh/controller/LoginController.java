@@ -31,7 +31,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Token login(@RequestBody LoginModel user) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
         User realUser = userService.getUser(user.getAccount());
         if (realUser == null) {

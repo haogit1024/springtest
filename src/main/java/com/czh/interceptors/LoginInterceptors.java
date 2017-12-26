@@ -26,7 +26,7 @@ public class LoginInterceptors implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
 
-//        log.info("interceptors is run");
+        log.info("interceptors is run");
         Encrypt encrypt = new Encrypt();
         ObjectMapper mapper = new ObjectMapper();
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -72,7 +72,9 @@ public class LoginInterceptors implements HandlerInterceptor {
             return false;
         }
         //验证通过,将payload的aud(uid)保存在request中
-        httpServletRequest.setAttribute("uid", payload.getAud());
+        String uid = payload.getAud();
+        log.info("uid = " + uid);
+        httpServletRequest.setAttribute("uid", uid);
         return true;
     }
 
