@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
+@CrossOrigin
 public class LoginInterceptors implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(LoginInterceptors.class);
 

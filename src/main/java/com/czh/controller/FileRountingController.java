@@ -35,9 +35,11 @@ public class FileRountingController {
     private FileService fileService;
 
     @RequestMapping(value = "/fileList", method = RequestMethod.GET)
-    public String fileListFtl(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
-
-        return "";
+    public ModelAndView fileListFtl(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
+        List<com.czh.entity.File> list = fileService.getFileByParsonId(1,0);
+        ModelAndView model = new ModelAndView();
+        model.addObject(list);
+        return model;
     }
 
     //根据uid获取文件

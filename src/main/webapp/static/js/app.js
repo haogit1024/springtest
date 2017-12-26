@@ -36,9 +36,9 @@ testBtn.onclick = function () {
     var instance = axios.create({
         baseURL:'http://localhost:8080/',
         timeout:5000,
-        headers:{'Authorization':token,'Access-Control-Allow-Methods':'POST'}
+        headers:{'Authorization':token}
     });
-    instance.get('/files?uid=1').then(function (response) {
+    instance.get('/files').then(function (response) {
         var data = response.data;
         fileListVM.items = data;
         console.log(data);
