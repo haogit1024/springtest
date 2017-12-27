@@ -42,33 +42,31 @@ var ulVM = new Vue({
     data: {
         items: [
             {
+                id: 1,
                 type:'code',
                 filename:'test',
                 size:'100',
                 time:'1213151'
             },
             {
+                id: 2,
                 type:'folder',
                 filename:'test',
                 size:'100',
                 time:'1213151'
             },
             {
+                id: 3,
                 type:'code',
                 filename:'test',
                 size:'100',
                 time:'1213151'
             }
         ]
-    }
-})
-
-var test2VM = new Vue({
-    el: '#test2',
-    data: {
-        classObject: {
-            active: true,
-            'text-danger': false
+    },
+    methods: {
+        fileClick: function(id, type, event) {
+            if (event) event.preventDefault();
         }
     }
 })

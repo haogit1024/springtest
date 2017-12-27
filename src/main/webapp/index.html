@@ -13,9 +13,11 @@
     <script src="https://cdn.bootcss.com/axios/0.16.0/axios.min.js"></script>
 
     <style>
+        /* 去除下划线 */
         a:hover {
             text-decoration: none;
         }
+        a:focus{text-decoration: none}
     </style>
 </head>
 
@@ -43,7 +45,7 @@
                             <i class="fa " v-bind:class="'fa-' + item.type"></i>
                         </td>
                         <td>
-                            <a href="javascript:void(0)">{{item.filename}}</a>
+                            <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.type, $event)">{{item.filename}}</a>
                         </td>
                         <td>{{item.size}}</td>
                         <td>{{item.time}}</td>
