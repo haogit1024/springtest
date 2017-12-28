@@ -8,7 +8,6 @@ import com.czh.jwt.Payload;
 import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-@CrossOrigin
 public class LoginInterceptors implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(LoginInterceptors.class);
 
@@ -32,6 +30,12 @@ public class LoginInterceptors implements HandlerInterceptor {
         Encrypt encrypt = new Encrypt();
         ObjectMapper mapper = new ObjectMapper();
         String authorization = httpServletRequest.getHeader("Authorization");
+        String method = httpServletRequest.getMethod();
+        log.info("method = " + method);
+        //支持跨域, 浏览器自动在跨域的 GET 请求发送之前发送一个 OPTIONS 请求，以判断服务端是否允许这一域访问。可查看 axios 的 CORS 相关文档
+        if (method.equals("OPTIONS")) {
+            return true;
+        }
         if (null == authorization || "".equals(authorization)) {
             //UNAUTHORIZED
             log.info("Authorization为空");

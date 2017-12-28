@@ -1,52 +1,36 @@
-function testFun() {
-    var data = {account : 'admin', password :'admin'};
-    var loginObject = data;
-    localStorage.setItem("loginObject", loginObject);
-    login(data);
+//初始化函数
+function init() {
+    console.log('init begin');
+    initList();
 }
 
-//输入ccount, password
-function login(data) {
-    var _ajax = $.ajax({
-        url:'../../login',
-        type:'post',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        processData: false,  // 不处理数据
-        contentType: 'application/json'   // 不设置内容类型
-    }).done(function (res) {
-        // alert(_ajax.status);
-        var token = res.token;
-        var timestamp = new Date().getTime();
-        localStorage.setItem("token", token);
-        localStorage.setItem("tokenValidTime", timestamp + 3600000)
-    }).fail(function (res) {
-        console.log('fail = ' + JSON.stringify(res))
+//初始化列表函数
+function initList(instance) {
+    console.log('init list begin');
+    var token = localStorage.getItem('token');
+    //初始化一个axios
+    var instance = axios.create({
+        baseURL:'http://localhost:8080/',
+        timeout:5000,
+        headers:{'Content-Type':'application/x-www-form-urlencoded','Authorization':token}
+    });
+    instance.get('/files').then(function (response) {
+        var data = response.data;
+        // fileListVM.items = data;
+        console.log(data);
+        listVM.data = data;
+    }).catch(function (error) {
+        console.log(error);
     })
 }
 
-function test2() {
-    var tokenValidTime = localStorage.getItem("tokenValidTime");
+function getAxiosInstance() {
+    // 3_0_bond.tpl.php  3_0_footer.tpl.php  3_0_home.tpl.php	3_0_profile.tpl.php
+}
 
-    var now = new Date().getTime();
-    if (now > tokenValidTime) {
-        var loginObject = localStorage.getItem("loginObject");
-        login(loginObject)
+var listVM = new Vue({
+    el: '#filelist',
+    data: {
+        items: []
     }
-}
-
-function testAjax() {
-    $.ajax({
-        url : "../../files",
-        type:"GET",
-        beforeSend: function (xhr) {
-            var token = window.localStorage.getItem("token");
-            // alert("token = " + token)
-            xhr.setRequestHeader("Authorization", token);
-        }
-    }).done(function (res) {
-        console.log("success: " + JSON.stringify(res))
-    }).fail(function (res) {
-        console.log("fail: " + JSON.stringify(res))
-    });
-}
+})
