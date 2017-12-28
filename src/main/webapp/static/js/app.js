@@ -10,7 +10,8 @@ axios.post('http://localhost:8080/login',{
     console.log("token = " + token);
     var timestamp = new Date().getTime();
     localStorage.setItem("token", token);
-    localStorage.setItem("tokenValidTime", timestamp + 3600000)
+    localStorage.setItem("tokenValidTime", timestamp + 3600000);
+    init();
 }).catch(function(error){
     console.log(error);
 });
@@ -40,7 +41,12 @@ testBtn.onclick = function () {
     // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 };
 
-
+var listVM = new Vue({
+    el: '#filelist',
+    data: {
+        items: []
+    }
+})
 
 function testAjax() {
     alert('ajax');

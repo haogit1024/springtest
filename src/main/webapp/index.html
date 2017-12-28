@@ -42,7 +42,7 @@
                 <tbody class="">
                     <tr v-for="item in items">
                         <td class="text-right">
-                            <i class="fa " v-bind:class="'fa-' + item.type"></i>
+                            <i class="fa " v-bind:class="'fa-file-' + item.type + '-o'"></i>
                         </td>
                         <td>
                             <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.type, $event)">{{item.filename}}</a>
