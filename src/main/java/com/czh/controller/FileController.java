@@ -43,6 +43,7 @@ public class FileController {
         if (null == parsonId) {
             parsonId = 0;
         }
+        log.info("parsonId = " + parsonId);
         return fileService.getFileByParsonId(uid, parsonId);
     }
 

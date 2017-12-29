@@ -22,8 +22,8 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        List<File> files = fileDao.getFileByUid(1);
-        files.forEach(System.out::println);
+        List<File> files = fileDao.getFileByParsonId(1, 2);
+        System.out.println(files.size());
     }
 
 }

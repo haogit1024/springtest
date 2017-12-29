@@ -13,7 +13,7 @@ axios.post('http://localhost:8080/login',{
     localStorage.setItem("tokenValidTime", timestamp + 3600000);
     init();
 }).catch(function(error){
-    console.log(error);
+    console.error('登录出错');
 });
 
 
@@ -41,26 +41,34 @@ testBtn.onclick = function () {
     // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 };
 
+var folderData;
+
 var listVM = new Vue({
     el: '#filelist',
     data: {
         items: []
+    },
+    methods: {
+        fileClick: function(id, parsonId, type, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            var axiosInstance = getAxiosInstance();
+            if (type === 'folder') {
+                //文件夹
+                axiosInstance.get('/files?parsonId=' + id).then(function(response) {
+                    var data = response.data;
+                    console.log('folder data = ');
+                    console.log(data);
+                    listVM.items = data;
+                }).catch(function(error) {
+                    console.error('parsonId获取文件列表出错');
+                });
+            } else {
+                //文件
+                console.log('点击了文件')
+                downloadFile(id);
+            }
+        }
     }
 })
-
-function testAjax() {
-    alert('ajax');
-    $.ajax({
-        url : "http://localhost:8080/files",
-        type:"GET",
-        beforeSend: function (xhr) {
-            var token = window.localStorage.getItem("token");
-            // alert("token = " + token)
-            xhr.setRequestHeader("Authorization", token);
-        }
-    }).done(function (res) {
-        console.log("success: " + JSON.stringify(res))
-    }).fail(function (res) {
-        console.log("fail: " + JSON.stringify(res))
-    });
-}

@@ -45,7 +45,7 @@
                             <i class="fa " v-bind:class="'fa-file-' + item.type + '-o'"></i>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.type, $event)">{{item.filename}}</a>
+                            <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.parsonId,item.type, $event)">{{item.filename}}</a>
                         </td>
                         <td>{{item.size}}</td>
                         <td>{{item.time}}</td>

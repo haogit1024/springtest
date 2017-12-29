@@ -31,3 +31,7 @@ function getAxiosInstance() {
     });
     return instance;
 }
+
+function downloadFile(id) {
+    
+}
