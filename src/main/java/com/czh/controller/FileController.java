@@ -122,6 +122,27 @@ public class FileController {
         return file;
     }
 
+    @GetMapping(value = "download/{id}")
+    public ResponseEntity download(@PathVariable int id, @RequestAttribute("uid") int uid,HttpSession session){
+        File file = fileService.getFileById(id);
+        if (null == file) throw new NotFoundException(id);
+        String filename = file.getFilename();
+        String filepath = fileUtil.getFilePath(uid, filename, session);
+        try {
+            FileInputStream fis = new FileInputStream(filepath);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-disposition", "attachment;filename=" + filename);
+            byte[] bytes = new byte[fis.available()];
+            ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+            return responseEntity;
+        }  catch (IOException e) {
+            e.printStackTrace();
+            //todo throw custom exception
+        }
+        return null;
+
+    }
+
     /**
      * 下载文件
      */

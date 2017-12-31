@@ -25,21 +25,41 @@ testBtn.onclick = function () {
     var instance = axios.create({
         baseURL:'http://localhost:8080/',
         timeout:5000,
-        headers:{'Content-Type':'application/x-www-form-urlencoded','Authorization':token}
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded',
+            'Authorization':token,
+            'Content-Type': 'multipart/form-data'
+        }
     });
-    instance.get('/files').then(function (response) {
-        var data = response.data;
-        // fileListVM.items = data;
-        console.log(data);
-    }).catch(function (error) {
-        console.log(error);
-    })
-    // testAjax();
+    // instance.get('/files').then(function (response) {
+    //     var data = response.data;
+    //     // fileListVM.items = data;
+    //     console.log(data);
+    // }).catch(function (error) {
+    //     console.log(error);
+    // })
 
-    // axios.defaults.baseURL = 'https://api.example.com';
-    // axios.defaults.headers.common['Authorization'] = token;
-    // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 };
+
+function foo(event) {
+    var formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    var token = localStorage.getItem('token');
+    var instance = axios.create({
+        baseURL:'http://localhost:8080/',
+        timeout:5000,
+        headers:{
+            'Content-Type': 'multipart/form-data',
+            'Authorization':token
+        }
+    });
+    instance.post('files').then(function(response) {
+        console.log(response);
+    }).catch(function(error) {
+        console.error('files post error');
+        console.error(error);
+    });
+}
 
 var folderData;
 

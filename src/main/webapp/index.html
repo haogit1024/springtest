@@ -28,10 +28,13 @@
 <body>
     <div>
         <button id="testBtn">测试按钮</button>
-
     </div>
 
-    <div class="panel panel-primary">
+    <div>
+        <input type="file" id="file" onchange="foo(event)">
+    </div>
+
+    <div class="panel panel-default">
         <div class="panel-heading">文件列表</div>
         <div class="panel-body" id="filelist">
             <table class="table">

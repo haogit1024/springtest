@@ -139,4 +139,11 @@ public class FileUtil {
         }
         return null;
     }
+
+    public String getFilePath(int uid, String filename, HttpSession session) {
+        //服务器真实路径
+        String realPath = session.getServletContext().getRealPath("/");
+        String filePath = realPath + "files/" + uid + "/" + filename;
+        return filePath;
+    }
 }
