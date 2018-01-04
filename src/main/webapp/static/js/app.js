@@ -11,6 +11,7 @@ axios.post('http://localhost:8080/login',{
     var timestamp = new Date().getTime();
     localStorage.setItem("token", token);
     localStorage.setItem("tokenValidTime", timestamp + 3600000);
+    sessionStorage.setItem("parentId", 0);
     init();
 }).catch(function(error){
     console.error('登录出错');
@@ -81,6 +82,7 @@ var listVM = new Vue({
                     console.log('folder data = ');
                     console.log(data);
                     listVM.items = data;
+                    sessionStorage.setItem("parentId", id);
                 }).catch(function(error) {
                     console.error('parsonId获取文件列表出错');
                 });
@@ -91,4 +93,25 @@ var listVM = new Vue({
             }
         }
     }
-})
+});
+
+var uploadBtn = document.getElementById("upload");
+var uploadFileInput = document.getElementById("uploadFile");
+uploadBtn.onclick = function () {
+    uploadFileInput.click();
+};
+
+uploadFileInput.onchange = function (e) {
+    var file = uploadFileInput.files[0];
+    var formData = new FormData();
+    formData.append("file", file);
+    var token = localStorage.getItem('token');
+    var config = {
+        headers:{'Content-Type':'multipart/form-data','Authorization':token}
+    };
+    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
+        alert(JSON.stringify(value.data))
+    }).catch(function (reason) {
+
+    })
+};

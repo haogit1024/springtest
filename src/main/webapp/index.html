@@ -10,8 +10,8 @@
     <!-- <script type="text/javascript" src="./static/js/jquery.js"></script> -->
     <!-- <script type="text/javascript" src="./static/js/bootstrap.min.js"></script> -->
     <script type="text/javascript" src="./static/js/vue.js"></script>
-    <script src="https://cdn.bootcss.com/axios/0.16.0/axios.min.js"></script>
-
+    <!--<script src="https://cdn.bootcss.com/axios/0.16.0/axios.min.js"></script>-->
+    <script type="text/javascript" src="./static/js/axios.js"></script>
     <style>
         /* 去除下划线 */
 
@@ -28,10 +28,8 @@
 <body>
     <div>
         <button id="testBtn">测试按钮</button>
-    </div>
-
-    <div>
-        <input type="file" id="file" onchange="foo(event)">
+        <button id="upload">上传文件</button>
+        <input type="file" id="uploadFile" style="display: none;"/>
     </div>
 
     <div class="panel panel-default">
