@@ -124,6 +124,7 @@ public class FileController {
 
     @GetMapping(value = "download/{id}")
     public ResponseEntity download(@PathVariable int id, @RequestAttribute("uid") int uid,HttpSession session){
+        log.info("下载文件");
         File file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
         String filename = file.getFilename();

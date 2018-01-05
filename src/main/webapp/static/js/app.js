@@ -1,5 +1,6 @@
 var account = 'admin';
 var psssword = 'admin';
+var domain = "http://localhost:8080/";
 
 //登录获取token
 axios.post('http://localhost:8080/login',{
@@ -89,7 +90,11 @@ var listVM = new Vue({
             } else {
                 //文件
                 console.log('点击了文件')
-                downloadFile(id);
+                // console.log(event.currentTarget.getAttribute('href'));
+                var aElement = event.currentTarget;
+                aElement.setAttribute('href', domain + "download/" + id);
+                // aElement.onclick();
+                // aElement.setAttribute('href', 'javascript:void(0)');
             }
         }
     }
