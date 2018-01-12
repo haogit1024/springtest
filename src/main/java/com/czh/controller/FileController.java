@@ -130,6 +130,7 @@ public class FileController {
         String filename = file.getFilename();
         String filepath = fileUtil.getFilePath(uid, filename, session);
         try {
+            log.info("filepath = " + filepath);
             FileInputStream fis = new FileInputStream(filepath);
             HttpHeaders headers = new HttpHeaders();
             headers.add("content-disposition", "attachment;filename=" + filename);
@@ -141,7 +142,6 @@ public class FileController {
             //todo throw custom exception
         }
         return null;
-
     }
 
     /**
@@ -157,7 +157,7 @@ public class FileController {
 //        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(dept + fileName +".xls", "UTF-8"));
         response.setHeader("content-disposition", "attachment;filename=test.PNG");
         OutputStream os = response.getOutputStream();
-        java.io.File file = new java.io.File("C:\\Users\\czh\\Desktop\\collector_interface.png");
+        java.io.File file = new java.io.File("\\home\\czh\\gitclone\\springtest\\target\\springtest\\files\\1\\czh.sql");
         FileInputStream fis = new FileInputStream(file);
         byte[] buffer = new byte[64];
         int len;
@@ -170,7 +170,8 @@ public class FileController {
 
     @GetMapping(value = "download2/{id}")
     public ResponseEntity download1(@PathVariable int id) throws IOException {
-        java.io.File file = new java.io.File("C:\\Users\\czh\\Desktop\\sms.sql");
+        log.info("id = " + id);
+        java.io.File file = new java.io.File("\\home\\czh\\gitclone\\springtest\\target\\springtest\\files\\1\\czh.sql");
         InputStream in = new FileInputStream(file);
         byte[] bytes = new byte[in.available()];
         in.read(bytes);
