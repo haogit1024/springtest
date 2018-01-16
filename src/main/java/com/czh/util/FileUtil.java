@@ -110,6 +110,7 @@ public class FileUtil {
         //将相关信息保存在fileData中返回
         com.czh.entity.File fileData = new com.czh.entity.File();
         fileData.setFilename(fileName);
+        fileData.setRealname(newFileName.toString());
         fileData.setSize(size);
         fileData.setMd5(md5);
         fileData.setType(getFileType(ext));

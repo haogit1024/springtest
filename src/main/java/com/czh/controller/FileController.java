@@ -127,7 +127,7 @@ public class FileController {
         log.info("下载文件");
         File file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
-        String filename = file.getFilename();
+        String filename = file.getRealname();
         String filepath = fileUtil.getFilePath(uid, filename, session);
         try {
             log.info("filepath = " + filepath);

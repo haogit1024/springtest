@@ -8,6 +8,7 @@ public class File {
     @NotEmpty
     private int uid;
     private String filename;
+    private String realname;
     private String url;
     private String md5;
     private int status;
@@ -39,6 +40,14 @@ public class File {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getUrl() {
@@ -111,6 +120,7 @@ public class File {
                 "id=" + id +
                 ", uid=" + uid +
                 ", filename='" + filename + '\'' +
+                ", realname='" + realname + '\'' +
                 ", url='" + url + '\'' +
                 ", md5='" + md5 + '\'' +
                 ", status=" + status +

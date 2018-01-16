@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 测试链接
-Source Server Version : 50719
-Source Host           : 119.23.153.64:3307
+Source Server         : 本地
+Source Server Version : 50553
+Source Host           : localhost:3306
 Source Database       : czh
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-17 16:50:33
+Date: 2018-01-16 22:57:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,6 +39,7 @@ CREATE TABLE `tb_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL,
   `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `realname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `md5` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
@@ -48,17 +49,18 @@ CREATE TABLE `tb_file` (
   `parsonId` int(11) DEFAULT NULL,
   `time` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tb_file
 -- ----------------------------
-INSERT INTO `tb_file` VALUES ('4', '1', 'pom.xml', 'http://localhost:8080/springtest/file/czh/1506514021158.xml', null, '1', 'code', null, '/', '0', '100');
-INSERT INTO `tb_file` VALUES ('5', '1', '新建文件夹', null, null, '1', 'folder', null, '/', '0', '0');
-INSERT INTO `tb_file` VALUES ('6', '1', 'github记账项目借口文档.xlsx', 'http://localhost:8080/springtest/file/czh/1507899759627.xlsx', null, '1', 'excel', null, '/', '0', '0');
-INSERT INTO `tb_file` VALUES ('7', '1', '2017-11-03 21-33-20 的屏幕截图.png', 'localhost:8080/springtest/files/556c0b37b838411c9de6ee6a9f7484e9.png', 'cdaa0efeb41750478492efe6b89b3628', '1', 'image', '478167', '/', '0', '0');
-INSERT INTO `tb_file` VALUES ('8', '1', 'daotestupdate', 'localhost:8080/springtest/files/1/fabf647c15fe4c83b4cb85da78bbfd27.png', 'cdaa0efeb41750478492efe6b89b3628', '1', 'image', '478167', '/', '0', '0');
-INSERT INTO `tb_file` VALUES ('9', '1', '公交离线码支付平台接口方案_整体方案和小程序端.docx', 'localhost:8080/springtest/files/1/8876f3bfb8ee430fb679184d2a9050cd.docx', 'fc8d5a6d6cfac23ae4f0d3e1719cd692', '1', 'word', '720662', '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('4', '1', 'pom.xml', null, 'http://localhost:8080/springtest/file/czh/1506514021158.xml', null, '1', 'code', null, '/', '0', '100');
+INSERT INTO `tb_file` VALUES ('5', '1', '新建文件夹', null, null, null, '1', 'folder', null, '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('6', '1', 'github记账项目借口文档.xlsx', null, 'http://localhost:8080/springtest/file/czh/1507899759627.xlsx', null, '1', 'excel', null, '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('7', '1', '2017-11-03 21-33-20 的屏幕截图.png', null, 'localhost:8080/springtest/files/556c0b37b838411c9de6ee6a9f7484e9.png', 'cdaa0efeb41750478492efe6b89b3628', '1', 'image', '478167', '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('8', '1', 'daotestupdate', null, 'localhost:8080/springtest/files/1/fabf647c15fe4c83b4cb85da78bbfd27.png', 'cdaa0efeb41750478492efe6b89b3628', '1', 'image', '478167', '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('9', '1', '公交离线码支付平台接口方案_整体方案和小程序端.docx', null, 'localhost:8080/springtest/files/1/8876f3bfb8ee430fb679184d2a9050cd.docx', 'fc8d5a6d6cfac23ae4f0d3e1719cd692', '1', 'word', '720662', '/', '0', '0');
+INSERT INTO `tb_file` VALUES ('10', '1', 'todo.md', null, 'localhost:8080/springtest/files/1/08805f40eb5f4d8da2d444055e0652a3.md', 'b45ddf8c95ab1502ec5f587d0bbca71a', '1', '', '308', '/', '0', '0');
 
 -- ----------------------------
 -- Table structure for tb_record
