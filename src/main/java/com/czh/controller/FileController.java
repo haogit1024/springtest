@@ -151,6 +151,7 @@ public class FileController {
     public void download(@PathVariable int id, HttpServletResponse response) throws IOException {
 //        File file = fileService.getFileById(id);
 //        if (null == file) throw new NotFoundException(id);
+        log.info("hello");
         String dept = "";
         String fileName = "";
         response.setContentType("application/octet-stream;charset=UTF-8");

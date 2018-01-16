@@ -1,5 +1,6 @@
 package com.czh;
 
+import com.czh.interceptors.DownloadInterceptors;
 import com.czh.interceptors.LoginInterceptors;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
@@ -25,8 +26,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //添加登录拦截
         registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
-                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**").excludePathPatterns("/static/**");
+                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**")
+                .excludePathPatterns("/static/**").excludePathPatterns("/files/download/**");
+        //添加文件下载拦截
+        registry.addInterceptor(new DownloadInterceptors()).addPathPatterns("/files/download/**");
     }
 
     /**

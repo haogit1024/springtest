@@ -9,40 +9,26 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class LoginInterceptors implements HandlerInterceptor {
-    private static final Logger log = Logger.getLogger(LoginInterceptors.class);
+public class DownloadInterceptors implements HandlerInterceptor {
+    private final Logger log = Logger.getLogger(DownloadInterceptors.class);
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
-
-        log.info("login interceptors is run");
+        log.info("download interceptors run");
         Encrypt encrypt = new Encrypt();
         ObjectMapper mapper = new ObjectMapper();
-        String authorization = httpServletRequest.getHeader("Authorization");
-        String method = httpServletRequest.getMethod();
-        log.info("method = " + method);
-        //支持跨域, 浏览器自动在跨域的 GET 请求发送之前发送一个 OPTIONS 请求，以判断服务端是否允许这一域访问。可查看 axios 的 CORS 相关文档
-        if (method.equals("OPTIONS")) {
-            return true;
-        }
-        if (null == authorization || "".equals(authorization)) {
-            //UNAUTHORIZED
-            log.info("Authorization为空");
+        String token = httpServletRequest.getParameter("token");
+        if ("".equals(token) || null == token) {
+            log.info("token");
             responseError(httpServletResponse, mapper, 401, "UNAUTHORIZED");
             return false;
         }
-        log.info("authorization = " + authorization);
-//        String token = authorization.split(" ");
-        String token = authorization;
 //        log.info("token = " + token);
         String[] tokenData = token.split("\\.");
         String base64Header = tokenData[0];
@@ -73,22 +59,13 @@ public class LoginInterceptors implements HandlerInterceptor {
             log.info("sign = " + sign);
             //返回错误
             responseError(httpServletResponse, mapper, 406, "SIGN_FAIL");
-            return false;
+            return true;
         }
         //验证通过,将payload的aud(uid)保存在request中
         String uid = payload.getAud();
         log.info("uid = " + uid);
         httpServletRequest.setAttribute("uid", uid);
         return true;
-    }
-
-    private void responseError(HttpServletResponse response, ObjectMapper mapper,int status, String errorMsg) throws IOException {
-        response.setContentType("application/json; charset=utf-8");
-        response.setStatus(406);
-        PrintWriter out = response.getWriter();
-        String jsonResults = mapper.writeValueAsString(new Error(status, errorMsg));
-        out.write(jsonResults);
-        out.close();
     }
 
     @Override
@@ -101,4 +78,12 @@ public class LoginInterceptors implements HandlerInterceptor {
 
     }
 
+    private void responseError(HttpServletResponse response, ObjectMapper mapper,int status, String errorMsg) throws IOException {
+        response.setContentType("application/json; charset=utf-8");
+        response.setStatus(406);
+        PrintWriter out = response.getWriter();
+        String jsonResults = mapper.writeValueAsString(new Error(status, errorMsg));
+        out.write(jsonResults);
+        out.close();
+    }
 }

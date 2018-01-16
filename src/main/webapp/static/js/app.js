@@ -90,28 +90,33 @@ var listVM = new Vue({
             } else {
                 //文件
                 console.log('点击了文件')
+                var token = localStorage.getItem("token");
+                var filePath = domain + "files/download/" + id + "?token=" + token;
+                console.log("filePath = " + filePath);
+                window.onload = filePath;
+                //通过a标签下载文件
                 // console.log(event.currentTarget.getAttribute('href'));
                 // var aElement = event.currentTarget;
                 // aElement.setAttribute('href', domain + "download/" + id);
                 // aElement.onclick();
                 // aElement.setAttribute('href', 'javascript:void(0)');
-                var filePath = domain + "files/download/" + id;
-                axiosInstance.get(filePath).then(function(response){
-                    console.log("下载文件请求成功")
-                    const content = response;
-                    const blob = new Blob([content]);
-                    const fileName = '测试表格123.md';
-                    const elink = document.createElement('a')
-                    elink.download = fileName
-                    elink.style.display = 'none'
-                    elink.href = URL.createObjectURL(blob)
-                    document.body.appendChild(elink)
-                    elink.click()
-                    URL.revokeObjectURL(elink.href) // 释放URL 对象
-                    document.body.removeChild(elink)
-                }).catch(function(error){
-                    console.debug("下载文件出错");
-                })
+                // var filePath = domain + "files/download/" + id;
+                // axiosInstance.get(filePath).then(function(response){
+                //     console.log("下载文件请求成功")
+                //     const content = response;
+                //     const blob = new Blob([content]);
+                //     const fileName = '测试表格123.md';
+                //     const elink = document.createElement('a')
+                //     elink.download = fileName
+                //     elink.style.display = 'none'
+                //     elink.href = URL.createObjectURL(blob)
+                //     document.body.appendChild(elink)
+                //     elink.click()
+                //     URL.revokeObjectURL(elink.href) // 释放URL 对象
+                //     document.body.removeChild(elink)
+                // }).catch(function(error){
+                //     console.debug("下载文件出错");
+                // })
             }
         }
     }
