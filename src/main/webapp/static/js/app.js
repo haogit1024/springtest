@@ -16,31 +16,15 @@ axios.post('http://localhost:8080/login',{
     init();
 }).catch(function(error){
     console.error('登录出错');
+    console.debug(error)
 });
 
 
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-    var token = localStorage.getItem('token');
-    console.log("token = " + token);
-    var instance = axios.create({
-        baseURL:'http://localhost:8080/',
-        timeout:5000,
-        headers:{
-            'Content-Type':'application/x-www-form-urlencoded',
-            'Authorization':token,
-            'Content-Type': 'multipart/form-data'
-        }
-    });
-    // instance.get('/files').then(function (response) {
-    //     var data = response.data;
-    //     // fileListVM.items = data;
-    //     console.log(data);
-    // }).catch(function (error) {
-    //     console.log(error);
-    // })
-
+    var parentsId = localStorage.getItem("parentsId");
+    console.log("");
 };
 
 function foo(event) {
@@ -89,11 +73,7 @@ var listVM = new Vue({
                 });
             } else {
                 //文件
-                console.log('点击了文件')
-                var token = localStorage.getItem("token");
-                var filePath = domain + "files/download/" + id + "?token=" + token;
-                console.log("filePath = " + filePath);
-                window.onload = filePath;
+                downloadFile(id);
                 //通过a标签下载文件
                 // console.log(event.currentTarget.getAttribute('href'));
                 // var aElement = event.currentTarget;
@@ -122,6 +102,7 @@ var listVM = new Vue({
     }
 });
 
+//上传文件模块
 var uploadBtn = document.getElementById("upload");
 var uploadFileInput = document.getElementById("uploadFile");
 uploadBtn.onclick = function () {

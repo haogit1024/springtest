@@ -127,14 +127,16 @@ public class FileController {
         log.info("下载文件");
         File file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
-        String filename = file.getRealname();
-        String filepath = fileUtil.getFilePath(uid, filename, session);
+        String filename = file.getFilename();
+        String realname = file.getRealname();
+        String filepath = fileUtil.getFilePath(uid, realname, session);
         try {
             log.info("filepath = " + filepath);
             FileInputStream fis = new FileInputStream(filepath);
             HttpHeaders headers = new HttpHeaders();
             headers.add("content-disposition", "attachment;filename=" + filename);
             byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
             ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(bytes, headers, HttpStatus.OK);
             return responseEntity;
         }  catch (IOException e) {

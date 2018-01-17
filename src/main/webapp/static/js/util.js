@@ -33,5 +33,11 @@ function getAxiosInstance() {
 }
 
 function downloadFile(id) {
-    
+    // console.log('点击了文件')
+    var token = localStorage.getItem("token");
+    var filePath = domain + "files/download/" + id + "?token=" + token;
+    var elemIF = document.createElement("iframe");
+    elemIF.src = filePath;
+    elemIF.style.display = "none";
+    document.body.appendChild(elemIF);
 }

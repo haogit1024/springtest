@@ -1,6 +1,7 @@
 package com.czh.util;
 
 import com.czh.App;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Component
 public class FileUtil {
     private int BUFFER_SIZE = 1024 * 100;
+    private final Logger log = Logger.getLogger(FileUtil.class);
     //TODO 这里不全文件格式判断
     public String getFileType(String ext) {
         if (ext.equals(".text")) {
@@ -72,6 +74,7 @@ public class FileUtil {
     public com.czh.entity.File save(MultipartFile file, HttpSession session, int uid) throws IOException {
         //获取文件的名字,大小
         String fileName = file.getOriginalFilename();
+        log.info("保存文件:文件名=" + fileName);
         long size = file.getSize();
         //服务器真实路径
         String realPath = session.getServletContext().getRealPath("/");
