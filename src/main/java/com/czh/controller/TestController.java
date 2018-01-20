@@ -4,11 +4,13 @@ import com.czh.dao.UserDao;
 import com.czh.entity.FileRouting;
 import com.czh.entity.User;
 import com.czh.service.FileService;
+import com.czh.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -21,28 +23,19 @@ import java.util.List;
 /**
  * Created by czh on 17-6-4.
  */
-@Controller
+@RestController
+@RequestMapping(value = "/test")
 public class TestController {
 
     @Autowired
-    private FileService fileService;
+    private UserService userService;
 
-    @RequestMapping(value = "/ftl", method = RequestMethod.GET)
-    public String test1(Model model) {
-        List<String> strings = new ArrayList<>();
-        strings.add("hello");
-        strings.add("world");
-        strings.add("freemarker");
-//        strings.add("中文");
-        model.addAttribute("strings", strings);
-        return "test";
-    }
-
-    @RequestMapping(value = "testDb")
-    public ModelAndView testDataBase(){
-        ModelAndView model = new ModelAndView();
-//        List<FileRouting> fileList = fileService.getFileByUid("test");
-//        model.addObject("files", fileList);
-        return model;
+    private final Logger log = Logger.getLogger(TestController.class);
+    @PostMapping(value = "/files")
+    public User test(@RequestPart("file") MultipartFile file, @RequestPart(value = "parentId", required = false) String parentId) {
+        User user = userService.getUser("admin");
+        log.info("fileName = " + file.getOriginalFilename());
+        log.info("parentId = " + parentId);
+        return user;
     }
 }

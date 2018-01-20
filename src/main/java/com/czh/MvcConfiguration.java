@@ -29,7 +29,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         //添加登录拦截
         registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
                 .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**")
-                .excludePathPatterns("/static/**").excludePathPatterns("/files/download/**");
+                .excludePathPatterns("/static/**").excludePathPatterns("/files/download/**").excludePathPatterns("/test/**");
         //添加文件下载拦截
         registry.addInterceptor(new DownloadInterceptors()).addPathPatterns("/files/download/**");
     }
