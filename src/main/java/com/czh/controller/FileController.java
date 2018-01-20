@@ -1,7 +1,6 @@
 package com.czh.controller;
 
-import com.czh.dto.FileDTO;
-import com.czh.entity.Error;
+
 import com.czh.entity.File;
 import com.czh.exception.DatabaseException;
 import com.czh.exception.NotFoundException;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -60,25 +58,23 @@ public class FileController {
     @PostMapping(value = "")
     public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
                            @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
-        log.info("fileModel = " + fileModel);
-//        String parsonPath;
-//        Integer parsonId = fileModel.getParentId();
-//        if (null == parsonId) {
-//            parsonId = 0;
-//            parsonPath = "/";
-//        } else {
-//            File parsonFile = fileService.getFileById(parsonId);
-//            if (null == parsonFile) throw new NotFoundException(parsonId);
-//            parsonPath = parsonFile.getFilename();
-//        }
-//        File fileData = fileUtil.save(file, session, uid);
-//        fileData.setParsonId(parsonId);
-//        fileData.setParsonPath(parsonPath);
-//        fileData.setStatus(1);
-//        int id = fileService.insertFile(fileData);
-//        fileData.setId(id);
-//        return fileData;
-        return new File();
+        String parsonPath;
+        Integer parsonId = fileModel.getParentId();
+        if (null == parsonId) {
+            parsonId = 0;
+            parsonPath = "/";
+        } else {
+            File parsonFile = fileService.getFileById(parsonId);
+            if (null == parsonFile) throw new NotFoundException(parsonId);
+            parsonPath = parsonFile.getFilename();
+        }
+        File fileData = fileUtil.save(file, session, uid);
+        fileData.setParsonId(parsonId);
+        fileData.setParsonPath(parsonPath);
+        fileData.setStatus(1);
+        int id = fileService.insertFile(fileData);
+        fileData.setId(id);
+        return fileData;
     }
 
     /**
@@ -148,41 +144,4 @@ public class FileController {
         return null;
     }
 
-    /**
-     * 下载文件
-     */
-    @GetMapping(value = "download1/{id}")
-    public void download(@PathVariable int id, HttpServletResponse response) throws IOException {
-//        File file = fileService.getFileById(id);
-//        if (null == file) throw new NotFoundException(id);
-        log.info("hello");
-        String dept = "";
-        String fileName = "";
-        response.setContentType("application/octet-stream;charset=UTF-8");
-//        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(dept + fileName +".xls", "UTF-8"));
-        response.setHeader("content-disposition", "attachment;filename=test.PNG");
-        OutputStream os = response.getOutputStream();
-        java.io.File file = new java.io.File("\\home\\czh\\gitclone\\springtest\\target\\springtest\\files\\1\\czh.sql");
-        FileInputStream fis = new FileInputStream(file);
-        byte[] buffer = new byte[64];
-        int len;
-        while ((len = fis.read(buffer)) != -1) {
-            os.write(buffer);
-        }
-        fis.close();
-        os.close();
-    }
-
-    @GetMapping(value = "download2/{id}")
-    public ResponseEntity download1(@PathVariable int id) throws IOException {
-        log.info("id = " + id);
-        java.io.File file = new java.io.File("\\home\\czh\\gitclone\\springtest\\target\\springtest\\files\\1\\czh.sql");
-        InputStream in = new FileInputStream(file);
-        byte[] bytes = new byte[in.available()];
-        in.read(bytes);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("content-disposition", "attachment;filename=sms.sql");
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
-        return responseEntity;
-    }
 }

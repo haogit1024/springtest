@@ -97,6 +97,13 @@ uploadFileInput.onchange = function (e) {
     var formData = new FormData();
     // formData.append("parsonId", parentId);
     formData.append("file", file);
+    formData.append('fileModel', new Blob([JSON.stringify({
+        "parentId": parentId,
+        "md5": "this is md5",
+        "name":"this is name"
+    })], {
+        type: "application/json"
+    }));
     var token = localStorage.getItem('token');
     var config = {
         headers:{'Content-Type':'multipart/form-data','Authorization':token}
