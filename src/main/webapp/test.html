@@ -3,12 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>测试</title>
+    <link href="./static/css/bootstrap.css" rel="stylesheet">
+    <link href="./static/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="./static/js/vue.js"></script>
+    <script type="text/javascript" src="./static/js/axios.js"></script>
 </head>
 <body>
-    <form action="http://localhost:8080/test/files" method="post" enctype="multipart/form-data">
-        <input type="file" name="file"><br>
-        <input type="text" name="parentId"><br>
-        <input type="submit">
-    </form>
+    <div id="d">
+        <p>this is p</p>
+    </div>
+    <div id="example">
+        <my-component></my-component>
+    </div>
+    <div id="example2">
+        <my-component></my-component>
+    </div>
+    <div id="example3">
+        <simple-counter></simple-counter>
+        <child my-message="hello"></child>
+    </div>
+    <script>
+        Vue.component('my-component', {
+            template: '<div>A custom component</div>'
+        });
+        new Vue({
+            el: "#example"
+        });
+        var char = {
+            template: '<div>A custom component2</div>'
+        };
+        new Vue({
+            el: "#example2",
+            components: {
+                'my-component':char
+            }
+        });
+        Vue.component('simple-counter', {
+            template: '<button v-on:click="counter += 1">{{ counter }}</button>',
+            data: function(){
+                return {
+                    counter: 0
+                }
+            }
+        });
+        Vue.component('child', {
+            props: ['myMessage'],
+            template: '<span>{{myMessage}}</span>'
+        });
+
+        new Vue({
+            el: '#example3'
+        });
+    </script>
 </body>
 </html>

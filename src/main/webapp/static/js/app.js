@@ -89,8 +89,6 @@ uploadBtn.onclick = function () {
 };
 
 uploadFileInput.onchange = function (e) {
-    var parentId = sessionStorage.getItem("parentId");
-    console.log("parentId = " + parentId);
     var file = uploadFileInput.files[0];
     var parentId = localStorage.getItem("parentId");
     console.log("upload parentId = " + parentId);
