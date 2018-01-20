@@ -28,4 +28,13 @@ public class FileModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "FileModel{" +
+                "parentId=" + parentId +
+                ", md5='" + md5 + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

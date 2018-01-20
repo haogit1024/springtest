@@ -23,8 +23,11 @@ axios.post('http://localhost:8080/login',{
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-    var parentsId = localStorage.getItem("parentsId");
-    console.log("");
+    var data = {
+        name: "this is name",
+        age: "this is age"
+    }
+    console.log(data);
 };
 
 function foo(event) {
@@ -110,9 +113,17 @@ uploadBtn.onclick = function () {
 };
 
 uploadFileInput.onchange = function (e) {
+    var parentId = sessionStorage.getItem("parentId");
+    console.log("parentId = " + parentId);
     var file = uploadFileInput.files[0];
     var formData = new FormData();
     formData.append("file", file);
+    var fileModel = {
+        parentId: parentId,
+        md5: "thisismd5",
+        name: "testfilename"
+    }
+    formData.append("fileModel", JSON.stringify(fileModel));
     var token = localStorage.getItem('token');
     var config = {
         headers:{'Content-Type':'multipart/form-data','Authorization':token}

@@ -58,25 +58,27 @@ public class FileController {
      * @throws IOException 可能发生的io异常 TODO 用try_catch处理
      */
     @PostMapping(value = "")
-    public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart(value = "FileModel", required = false) FileModel fileModel,
+    public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
                            @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
-        String parsonPath;
-        Integer parsonId = fileModel.getParentId();
-        if (null == parsonId) {
-            parsonId = 0;
-            parsonPath = "/";
-        } else {
-            File parsonFile = fileService.getFileById(parsonId);
-            if (null == parsonFile) throw new NotFoundException(parsonId);
-            parsonPath = parsonFile.getFilename();
-        }
-        File fileData = fileUtil.save(file, session, uid);
-        fileData.setParsonId(parsonId);
-        fileData.setParsonPath(parsonPath);
-        fileData.setStatus(1);
-        int id = fileService.insertFile(fileData);
-        fileData.setId(id);
-        return fileData;
+        log.info("fileModel = " + fileModel);
+//        String parsonPath;
+//        Integer parsonId = fileModel.getParentId();
+//        if (null == parsonId) {
+//            parsonId = 0;
+//            parsonPath = "/";
+//        } else {
+//            File parsonFile = fileService.getFileById(parsonId);
+//            if (null == parsonFile) throw new NotFoundException(parsonId);
+//            parsonPath = parsonFile.getFilename();
+//        }
+//        File fileData = fileUtil.save(file, session, uid);
+//        fileData.setParsonId(parsonId);
+//        fileData.setParsonPath(parsonPath);
+//        fileData.setStatus(1);
+//        int id = fileService.insertFile(fileData);
+//        fileData.setId(id);
+//        return fileData;
+        return new File();
     }
 
     /**
