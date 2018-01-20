@@ -51,17 +51,17 @@ public class FileController {
      * 新建文件
      * 保存用户上传的文件
      * @param file 文件
-     * @param parsonId 父id
-     * @param md5 md5码
+     * @param fileModel 文件前端模型
      * @param uid 用户id
      * @param session session,用于获取实际物理路径
-     * @return
-     * @throws IOException
+     * @return 导入文件详情
+     * @throws IOException 可能发生的io异常 TODO 用try_catch处理
      */
     @PostMapping(value = "")
-    public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart(value = "parsonId", required = false) Integer parsonId,
-                           @RequestPart(value = "md5", required = false) String md5, @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
+    public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart(value = "FileModel", required = false) FileModel fileModel,
+                           @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
         String parsonPath;
+        Integer parsonId = fileModel.getParentId();
         if (null == parsonId) {
             parsonId = 0;
             parsonPath = "/";
