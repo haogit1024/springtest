@@ -61,7 +61,7 @@ var listVM = new Vue({
         items: []
     },
     methods: {
-        fileClick: function(id, parsonId, type, event) {
+        fileClick: function(id, parsonId, type, filename, event) {
             if (event) {
                 event.preventDefault();
             }
@@ -75,7 +75,8 @@ var listVM = new Vue({
                     console.log('folder data = ');
                     console.log(data);
                     listVM.items = data;
-                    sessionStorage.setItem("parentId", id);
+                    currentList = data;
+                    updateNav(data, filename)
                 }).catch(function(error) {
                     console.error('parsonId获取文件列表出错');
                 });

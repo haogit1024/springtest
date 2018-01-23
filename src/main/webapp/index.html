@@ -32,6 +32,12 @@
         <input type="file" id="uploadFile" style="display: none;"/>
     </div>
 
+    <ol id="navBar" class="breadcrumb">
+        <li class="active">home</li>
+        <li><a href="javascript:void(0)">lib</a></li>
+        <li><a href="javascript:void(0)">data</a></li>
+    </ol>
+
     <div class="panel panel-default">
         <div class="panel-heading">文件列表</div>
         <div class="panel-body" id="filelist">
@@ -50,7 +56,7 @@
                             <i class="fa " v-bind:class="'fa-file-' + item.type + '-o'"></i>
                         </td>
                         <td>
-                            <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.parsonId,item.type, $event)">{{item.filename}}</a>
+                            <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.parsonId,item.type, item.filename, $event)">{{item.filename}}</a>
                         </td>
                         <td>{{item.size}}</td>
                         <td>{{item.time}}</td>

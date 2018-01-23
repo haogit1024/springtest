@@ -14,13 +14,7 @@ function initList(instance) {
         console.log(data);
         listVM.items = data;
         currentList = data;
-        navigation[navIndex] = 0;
-        var listObj = {
-            "fileName": "所有文件",
-            "value": data
-        };
-        navigationObj[0] = listObj;
-        navIndex++;
+        updateNav(data, "所有文件");
     }).catch(function (error) {
         console.log(error);
     })
@@ -46,4 +40,17 @@ function downloadFile(id) {
     elemIF.src = filePath;
     elemIF.style.display = "none";
     document.body.appendChild(elemIF);
+}
+
+function updateNav(data, fileName) {
+    var parentId = localStorage.getItem("parentId");
+    navigation[navIndex] = parentId;
+    var listObj = {
+        "fileName": fileName,
+        "value": data
+    };
+    navigationObj[navIndex] = listObj;
+    navIndex++;
+    // console.log("navigation = " + JSON.stringify(navigation));
+    // console.log("navigationObj = "+ JSON.stringify(navigationObj));
 }

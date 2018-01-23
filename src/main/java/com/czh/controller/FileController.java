@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -72,6 +74,7 @@ public class FileController {
         fileData.setParsonId(parsonId);
         fileData.setParsonPath(parsonPath);
         fileData.setStatus(1);
+        fileData.setTime(new Date().getTime());
         int id = fileService.insertFile(fileData);
         fileData.setId(id);
         return fileData;

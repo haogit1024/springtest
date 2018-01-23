@@ -22,6 +22,17 @@
         <simple-counter></simple-counter>
         <child my-message="hello"></child>
     </div>
+    <div id="example4">
+        <comp some-prop="1"></comp>
+    </div>
+    <div id="example5">
+        <comp-test test="this is test" class="text-primary"></comp-test>
+    </div>
+    <div id="example6">
+        <p>{{total}}</p>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
     <script>
         Vue.component('my-component', {
             template: '<div>A custom component</div>'
@@ -50,9 +61,50 @@
             props: ['myMessage'],
             template: '<span>{{myMessage}}</span>'
         });
-
         new Vue({
             el: '#example3'
+        });
+
+        Vue.component('comp', {
+            props:['someProp'],
+            template: '<span>{{someProp}}</span>'
+        });
+        new Vue({
+            el: "#example4"
+        });
+
+        Vue.component('comp-test', {
+            props:['test'],
+            template: '<span>{{test}}</span>'
+        });
+        new Vue({
+            el: '#example5'
+        });
+
+        Vue.component('button-counter', {
+            template:'<button v-on:click="incrementCounter">{{counter}}</button>',
+            data: function () {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                incrementCounter: function () {
+                    this.counter += 1;
+                    this.$emit('increment')
+                }
+            }
+        });
+        new Vue({
+            el: "#example6",
+            data: {
+                total: 0
+            },
+            methods: {
+                incrementTotal: function () {
+                    this.total +=1
+                }
+            }
         });
     </script>
 </body>
