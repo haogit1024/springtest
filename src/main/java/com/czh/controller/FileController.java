@@ -60,7 +60,7 @@ public class FileController {
                            @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
         String parsonPath;
         Integer parsonId = fileModel.getParentId();
-        if (null == parsonId) {
+        if (null == parsonId || parsonId == 0) {
             parsonId = 0;
             parsonPath = "/";
         } else {

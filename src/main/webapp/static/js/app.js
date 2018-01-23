@@ -1,6 +1,12 @@
 var account = 'admin';
 var psssword = 'admin';
 var domain = "http://localhost:8080/";
+//当前列表数据
+var currentList = new Array();
+//导航栏数据
+var navigation = new Array();
+//导航指针
+var navIndex = 0;
 
 //登录获取token
 axios.post('http://localhost:8080/login',{
@@ -23,7 +29,7 @@ axios.post('http://localhost:8080/login',{
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-
+    console.log(currentList);
 };
 
 function foo(event) {
@@ -107,7 +113,9 @@ uploadFileInput.onchange = function (e) {
         headers:{'Content-Type':'multipart/form-data','Authorization':token}
     };
     axios.post("http://localhost:8080/files", formData, config).then(function (value) {
-        alert(JSON.stringify(value.data))
+        // alert(JSON.stringify(value.data))
+        //刷新列表date数据
+        currentList.push(value.data);
     }).catch(function (reason) {
 
     })

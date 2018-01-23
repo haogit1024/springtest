@@ -1,4 +1,3 @@
-var fileData;
 //初始化函数
 function init() {
     console.log('init begin');
@@ -14,7 +13,10 @@ function initList(instance) {
         console.log('filelist = ');
         console.log(data);
         listVM.items = data;
-        fileData = data;
+        currentList = data;
+        var newLength = navigation.push({
+            "全部文件": data
+        });
     }).catch(function (error) {
         console.log(error);
     })
