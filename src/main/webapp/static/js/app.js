@@ -5,6 +5,7 @@ var domain = "http://localhost:8080/";
 var currentList = new Array();
 //导航栏数据
 var navigation = new Array();
+var navigationObj = new Array();
 //导航指针
 var navIndex = 0;
 

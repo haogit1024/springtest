@@ -14,9 +14,13 @@ function initList(instance) {
         console.log(data);
         listVM.items = data;
         currentList = data;
-        var newLength = navigation.push({
-            "全部文件": data
-        });
+        navigation[navIndex] = 0;
+        var listObj = {
+            "fileName": "所有文件",
+            "value": data
+        };
+        navigationObj[0] = listObj;
+        navIndex++;
     }).catch(function (error) {
         console.log(error);
     })
