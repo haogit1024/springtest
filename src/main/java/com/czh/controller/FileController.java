@@ -8,6 +8,7 @@ import com.czh.model.FileModel;
 import com.czh.service.FileService;
 import com.czh.util.FileUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class FileController {
      * @throws IOException 可能发生的io异常 TODO 用try_catch处理
      */
     @PostMapping(value = "")
-    public File insertFile(@RequestPart("file") MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
+    public File insertFile(@RequestPart(value = "file", required = false) MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
                            @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
         String parsonPath;
         Integer parsonId = fileModel.getParentId();
@@ -70,14 +71,28 @@ public class FileController {
             if (null == parsonFile) throw new NotFoundException(parsonId);
             parsonPath = parsonFile.getFilename();
         }
-        File fileData = fileUtil.save(file, session, uid);
-        fileData.setParsonId(parsonId);
-        fileData.setParsonPath(parsonPath);
-        fileData.setStatus(1);
-        fileData.setTime(new Date().getTime());
-        int id = fileService.insertFile(fileData);
-        fileData.setId(id);
-        return fileData;
+        if (null != file) {
+            File fileData = fileUtil.save(file, session, uid);
+            fileData.setParsonId(parsonId);
+            fileData.setParsonPath(parsonPath);
+            fileData.setStatus(1);
+            fileData.setTime(new Date().getTime());
+            int id = fileService.insertFile(fileData);
+            fileData.setId(id);
+            return fileData;
+        } else {
+            File fileEntity = new File();
+            fileEntity.setTime(new Date().getTime());
+            fileEntity.setType("folder");
+            fileEntity.setFilename(fileModel.getName());
+            fileEntity.setStatus(1);
+            fileEntity.setParsonId(parsonId);
+            fileEntity.setUid(uid);
+            fileEntity.setParsonPath(parsonPath);
+            fileService.insertFile(fileEntity);
+            return fileEntity;
+        }
+
     }
 
     /**

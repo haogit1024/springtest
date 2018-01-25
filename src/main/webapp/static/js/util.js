@@ -14,7 +14,7 @@ function initList(instance) {
         console.log(data);
         listVM.items = data;
         currentList = data;
-        updateNav(data, "所有文件");
+        updateNav(data, "所有文件", 0);
     }).catch(function (error) {
         console.log(error);
     })
@@ -42,15 +42,31 @@ function downloadFile(id) {
     document.body.appendChild(elemIF);
 }
 
-function updateNav(data, fileName) {
+function updateList(id) {
+    localStorage.setItem("parentId", id);
+    var axiosInstance = getAxiosInstance();
+    axiosInstance.get('/files?parsonId=' + id).then(function(response) {
+        var data = response.data;
+        console.log('folder data = ');
+        console.log(data);
+        listVM.items = data;
+        currentList = data;
+    }).catch(function(error) {
+        console.error('parsonId获取文件列表出错');
+    });
+}
+
+function updateNav(data, fileName, id) {
     var parentId = localStorage.getItem("parentId");
     navigation[navIndex] = parentId;
     var listObj = {
         "fileName": fileName,
+        "id": id,
         "value": data
     };
-    navigationObj[navIndex] = listObj;
+    navigationObj.push(listObj);
     navIndex++;
+    navVm.items = navigationObj;
     // console.log("navigation = " + JSON.stringify(navigation));
     // console.log("navigationObj = "+ JSON.stringify(navigationObj));
 }

@@ -33,9 +33,7 @@
     </div>
 
     <ol id="navBar" class="breadcrumb">
-        <li class="active">home</li>
-        <li><a href="javascript:void(0)">lib</a></li>
-        <li><a href="javascript:void(0)">data</a></li>
+        <li v-for="item in items"><a href="javascript:void(0)" v-on:click="navClick(item.fileName)">{{item.fileName}}</a></li>
     </ol>
 
     <div class="panel panel-default">

@@ -30,7 +30,29 @@ axios.post('http://localhost:8080/login',{
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-    console.log(currentList);
+    var formData = new FormData();
+    // formData.append("parsonId", parentId);
+    // formData.append("file", file);
+    var parentId = localStorage.getItem("parentId");
+    formData.append('fileModel', new Blob([JSON.stringify({
+        "parentId": parentId,
+        "md5": "this is md5",
+        "name":"新建文件夹"
+    })], {
+        type: "application/json"
+    }));
+    var token = localStorage.getItem('token');
+    var config = {
+        headers:{'Content-Type':'multipart/form-data','Authorization':token}
+    };
+    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
+        // alert(JSON.stringify(value.data))
+        //刷新列表date数据
+        console.log("新建文件夹");
+        currentList.push(value.data);
+    }).catch(function (reason) {
+
+    })
 };
 
 function foo(event) {
@@ -65,21 +87,11 @@ var listVM = new Vue({
             if (event) {
                 event.preventDefault();
             }
-            var axiosInstance = getAxiosInstance();
             if (type === 'folder') {
                 //文件夹
                 console.log("点击了文件夹");
-                localStorage.setItem("parentId", id);
-                axiosInstance.get('/files?parsonId=' + id).then(function(response) {
-                    var data = response.data;
-                    console.log('folder data = ');
-                    console.log(data);
-                    listVM.items = data;
-                    currentList = data;
-                    updateNav(data, filename)
-                }).catch(function(error) {
-                    console.error('parsonId获取文件列表出错');
-                });
+                updateList(id);
+                updateNav(data, filename, id)
             } else {
                 //文件
                 console.log("点击了文件");
@@ -119,6 +131,28 @@ uploadFileInput.onchange = function (e) {
         //刷新列表date数据
         currentList.push(value.data);
     }).catch(function (reason) {
-
-    })
+        alert("上传文件出错");
+        console.error(reason.data);
+    });
 };
+
+var navVm = new Vue({
+    el: "#navBar",
+    data: {
+        items: []
+    },
+    methods: {
+        navClick: function (fileName) {
+            var length = navigationObj.length;
+            for (var i = length - 1; i >= 0; i--) {
+                var index = navigationObj[i];
+                if (index.fileName === fileName) {
+                    listVM.items = index.value;
+                    currentList = index.value;
+                } else {
+                    navigationObj.pop();
+                }
+            }
+        }
+    }
+});
