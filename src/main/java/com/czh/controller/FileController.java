@@ -1,14 +1,13 @@
 package com.czh.controller;
 
 
-import com.czh.entity.File;
+import com.czh.entity.FileEntity;
 import com.czh.exception.DatabaseException;
 import com.czh.exception.NotFoundException;
 import com.czh.model.FileModel;
 import com.czh.service.FileService;
 import com.czh.util.FileUtil;
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,10 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +37,7 @@ public class FileController {
      * @return
      */
     @GetMapping(value = "")
-    public List<File> getFileList(@RequestParam(name = "parsonId", required = false) Integer parsonId, @RequestAttribute("uid") int uid){
+    public List<FileEntity> getFileList(@RequestParam(name = "parsonId", required = false) Integer parsonId, @RequestAttribute("uid") int uid){
         if (null == parsonId) {
             parsonId = 0;
         }
@@ -59,20 +56,20 @@ public class FileController {
      * @throws IOException 可能发生的io异常 TODO 用try_catch处理
      */
     @PostMapping(value = "")
-    public File insertFile(@RequestPart(value = "file", required = false) MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
-                           @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
+    public FileEntity insertFile(@RequestPart(value = "file", required = false) MultipartFile file, @RequestPart("fileModel") FileModel fileModel,
+                                 @RequestAttribute("uid") int uid, HttpSession session) throws IOException {
         String parsonPath;
         Integer parsonId = fileModel.getParentId();
         if (null == parsonId || parsonId == 0) {
             parsonId = 0;
             parsonPath = "/";
         } else {
-            File parsonFile = fileService.getFileById(parsonId);
+            FileEntity parsonFile = fileService.getFileById(parsonId);
             if (null == parsonFile) throw new NotFoundException(parsonId);
             parsonPath = parsonFile.getFilename();
         }
         if (null != file) {
-            File fileData = fileUtil.save(file, session, uid);
+            FileEntity fileData = fileUtil.save(file, session, uid);
             fileData.setParsonId(parsonId);
             fileData.setParsonPath(parsonPath);
             fileData.setStatus(1);
@@ -81,7 +78,7 @@ public class FileController {
             fileData.setId(id);
             return fileData;
         } else {
-            File fileEntity = new File();
+            FileEntity fileEntity = new FileEntity();
             fileEntity.setTime(new Date().getTime());
             fileEntity.setType("folder");
             fileEntity.setFilename(fileModel.getName());
@@ -101,8 +98,8 @@ public class FileController {
      * @return
      */
     @GetMapping(value = "/{id}")
-    public File getFile(@PathVariable int id){
-        File file = fileService.getFileById(id);
+    public FileEntity getFile(@PathVariable int id){
+        FileEntity file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
         return file;
     }
@@ -114,8 +111,8 @@ public class FileController {
      * @return
      */
     @PutMapping(value = "/{id}")
-    public File updateFile(@PathVariable int id, @RequestBody FileModel fileModel){
-        File file = fileService.getFileById(id);
+    public FileEntity updateFile(@PathVariable int id, @RequestBody FileModel fileModel){
+        FileEntity file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
         file.setFilename(fileModel.getName());
         boolean flag = fileService.updateFile(file);
@@ -129,8 +126,8 @@ public class FileController {
      * @return
      */
     @DeleteMapping(value = "/{id}")
-    public File deleteFile(@PathVariable int id) {
-        File file = fileService.getFileById(id);
+    public FileEntity deleteFile(@PathVariable int id) {
+        FileEntity file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
         file.setStatus(2);
         boolean flag = fileService.updateFile(file);
@@ -141,7 +138,7 @@ public class FileController {
     @GetMapping(value = "download/{id}")
     public ResponseEntity download(@PathVariable int id, @RequestAttribute("uid") int uid,HttpSession session){
         log.info("下载文件");
-        File file = fileService.getFileById(id);
+        FileEntity file = fileService.getFileById(id);
         if (null == file) throw new NotFoundException(id);
         String filename = file.getFilename();
         String realname = file.getRealname();

@@ -2,11 +2,15 @@ package com.czh.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.io.Serializable;
 
-public class File {
-    private int id;
+
+public class FileEntity implements Serializable {
+
+
+    private Integer id;
     @NotEmpty
-    private int uid;
+    private Integer uid;
     private String filename;
     private String realname;
     private String url;
@@ -18,19 +22,19 @@ public class File {
     private int parsonId;
     private long time;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 

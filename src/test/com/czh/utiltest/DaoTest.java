@@ -1,8 +1,7 @@
 package com.czh.utiltest;
 
 import com.czh.dao.FileDao;
-import com.czh.entity.File;
-import com.czh.entity.FileRouting;
+import com.czh.entity.FileEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        List<File> files = fileDao.getFileByParsonId(1, 2);
+        List<FileEntity> files = fileDao.getFileByParsonId(1, 2);
         System.out.println(files.size());
     }
 

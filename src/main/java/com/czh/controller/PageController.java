@@ -1,6 +1,6 @@
 package com.czh.controller;
 
-import com.czh.entity.File;
+import com.czh.entity.FileEntity;
 import com.czh.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,14 +19,14 @@ public class PageController {
 
     @RequestMapping(value = "/files/{uid}", method = RequestMethod.GET)
     public String files(Model model, @PathVariable int uid){
-        List<File> files = fileService.getFileByParsonId(uid, 0);
+        List<FileEntity> files = fileService.getFileByParsonId(uid, 0);
         model.addAttribute("files", files);
         return "filemain";
     }
 
     @RequestMapping(value = "files/list/{parsonId}")
     public String getFileList(Model model, @PathVariable int parsonId, @RequestAttribute int uid) {
-        List<File> files = fileService.getFileByParsonId(uid, parsonId);
+        List<FileEntity> files = fileService.getFileByParsonId(uid, parsonId);
         model.addAttribute("files", files);
         return "filelist";
     }

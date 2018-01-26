@@ -1,6 +1,7 @@
 package com.czh.util;
 
 import com.czh.App;
+import com.czh.entity.FileEntity;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,7 +72,7 @@ public class FileUtil {
         return null;
     }
 
-    public com.czh.entity.File save(MultipartFile file, HttpSession session, int uid) throws IOException {
+    public FileEntity save(MultipartFile file, HttpSession session, int uid) throws IOException {
         //获取文件的名字,大小
         String fileName = file.getOriginalFilename();
         log.info("保存文件:文件名=" + fileName);
@@ -111,7 +112,7 @@ public class FileUtil {
         //生产可访问url  域名 + 项目名 + 相对地址 + uid + 保存的文件名
         String url = App.DOMAIN + "/" + App.PROJECT_NAME + "/" + relativePath + "/" + uid + "/" + newFileName.toString();
         //将相关信息保存在fileData中返回
-        com.czh.entity.File fileData = new com.czh.entity.File();
+        FileEntity fileData = new FileEntity();
         fileData.setFilename(fileName);
         fileData.setRealname(newFileName.toString());
         fileData.setSize(size);

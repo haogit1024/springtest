@@ -1,5 +1,6 @@
 package com.czh.controller;
 
+import com.czh.entity.FileEntity;
 import com.czh.entity.FileRouting;
 import com.czh.response.StatusCode;
 import com.czh.service.FileService;
@@ -12,9 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -36,7 +34,7 @@ public class FileRountingController {
 
     @RequestMapping(value = "/fileList", method = RequestMethod.GET)
     public ModelAndView fileListFtl(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
-        List<com.czh.entity.File> list = fileService.getFileByParsonId(1,0);
+        List<FileEntity> list = fileService.getFileByParsonId(1,0);
         ModelAndView model = new ModelAndView();
         model.addObject(list);
         return model;
