@@ -16,12 +16,12 @@ public class FileService {
         return fileDao.getFileById(id);
     }
 
-    public List<File> getFileByUid(int uid) {
-        return fileDao.getFileByUid(uid);
+    public List<File> listFileByUid(int uid) {
+        return fileDao.listFileByUid(uid);
     }
 
-    public List<File> getFileByParsonId(int uid, int parsonId) {
-        return this.fileDao.getFileByParsonId(uid,parsonId);
+    public List<File> listFileByParsonId(int uid, int parsonId) {
+        return this.fileDao.listFileByParsonId(uid,parsonId);
     }
 
     public int insertFile(File file) {

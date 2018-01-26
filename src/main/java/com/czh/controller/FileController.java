@@ -45,7 +45,7 @@ public class FileController {
             parsonId = 0;
         }
         log.info("parsonId = " + parsonId);
-        return fileService.getFileByParsonId(uid, parsonId);
+        return fileService.listFileByParsonId(uid, parsonId);
     }
 
     /**

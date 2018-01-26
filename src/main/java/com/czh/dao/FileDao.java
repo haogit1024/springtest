@@ -20,18 +20,18 @@ public class FileDao {
         return this.session.selectOne("getFileById", id);
     }
 
-    public List<File> getFileByUid(int uid) {
+    public List<File> listFileByUid(int uid) {
         return this.session.selectList("getFileByUid", uid);
     }
 
-    public List<File> getFileByParsonId(int uid, int parsonId) {
+    public List<File> listFileByParsonId(int uid, int parsonId) {
         Map<String, Integer> map = new HashMap<>();
         map.put("uid", uid);
         map.put("parsonId", parsonId);
         return this.session.selectList("getFileByParsonId", map);
     }
 
-    public List<File> getFileByParsonPath(String uid, String parsonPath) {
+    public List<File> listFileByParsonPath(String uid, String parsonPath) {
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid);
         map.put("parsonPath", parsonPath);
