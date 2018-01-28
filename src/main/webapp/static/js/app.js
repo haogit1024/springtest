@@ -30,52 +30,29 @@ axios.post('http://localhost:8080/login',{
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-    var formData = new FormData();
-    // formData.append("parsonId", parentId);
-    // formData.append("file", file);
-    var parentId = localStorage.getItem("parentId");
-    formData.append('fileModel', new Blob([JSON.stringify({
-        "parentId": parentId,
-        "md5": "this is md5",
-        "name":"新建文件夹"
-    })], {
-        type: "application/json"
-    }));
-    var token = localStorage.getItem('token');
-    var config = {
-        headers:{'Content-Type':'multipart/form-data','Authorization':token}
-    };
-    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
-        // alert(JSON.stringify(value.data))
-        //刷新列表date数据
-        console.log("新建文件夹");
-        currentList.push(value.data);
-    }).catch(function (reason) {
 
-    })
 };
 
-function foo(event) {
-    var formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    var token = localStorage.getItem('token');
-    var instance = axios.create({
-        baseURL:'http://localhost:8080/',
-        timeout:5000,
-        headers:{
-            'Content-Type': 'multipart/form-data',
-            'Authorization':token
-        }
-    });
-    instance.post('files').then(function(response) {
-        console.log(response);
-    }).catch(function(error) {
-        console.error('files post error');
-        console.error(error);
-    });
-}
+// function foo(event) {
+//     var formData = new FormData();
+//     formData.append('file', event.target.files[0]);
+//     var token = localStorage.getItem('token');
+//     var instance = axios.create({
+//         baseURL:'http://localhost:8080/',
+//         timeout:5000,
+//         headers:{
+//             'Content-Type': 'multipart/form-data',
+//             'Authorization':token
+//         }
+//     });
+//     instance.post('files').then(function(response) {
+//         console.log(response);
+//     }).catch(function(error) {
+//         console.error('files post error');
+//         console.error(error);
+//     });
+// }
 
-var folderData;
 
 var listVM = new Vue({
     el: '#filelist',
@@ -134,6 +111,12 @@ uploadFileInput.onchange = function (e) {
         alert("上传文件出错");
         console.error(reason.data);
     });
+};
+
+//新建文件夹
+var newFolderBtn = document.getElementById("newFolder");
+newFolderBtn.onclick = function () {
+    createFolder('');
 };
 
 var navVm = new Vue({

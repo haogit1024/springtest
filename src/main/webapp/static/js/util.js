@@ -42,6 +42,33 @@ function downloadFile(id) {
     document.body.appendChild(elemIF);
 }
 
+function createFolder(name) {
+    var formData = new FormData();
+    if (name === '' || name === null) {
+        name = "新建文件夹"
+    }
+    var parentId = localStorage.getItem("parentId");
+    formData.append('fileModel', new Blob([JSON.stringify({
+        "parentId": parentId,
+        "md5": "this is md5",
+        "name": name
+    })], {
+        type: "application/json"
+    }));
+    var token = localStorage.getItem('token');
+    var config = {
+        headers:{'Content-Type':'multipart/form-data','Authorization':token}
+    };
+    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
+        // alert(JSON.stringify(value.data))
+        //刷新列表date数据
+        console.log("新建文件夹");
+        currentList.push(value.data);
+    }).catch(function (reason) {
+
+    })
+}
+
 function updateList(id) {
     localStorage.setItem("parentId", id);
     var axiosInstance = getAxiosInstance();
@@ -52,7 +79,7 @@ function updateList(id) {
         listVM.items = data;
         currentList = data;
     }).catch(function(error) {
-        console.error('parsonId获取文件列表出错');
+        console.error('parsonId获取文件列表出错: ' + error.data);
     });
 }
 

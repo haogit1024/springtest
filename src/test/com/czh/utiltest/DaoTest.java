@@ -21,7 +21,7 @@ public class DaoTest {
 
     @Test
     public void testDao(){
-        List<FileEntity> files = fileDao.getFileByParsonId(1, 2);
+        List<FileEntity> files = fileDao.listFileByParsonId(1, 2);
         System.out.println(files.size());
     }
 

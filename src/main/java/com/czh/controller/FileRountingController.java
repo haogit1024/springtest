@@ -34,7 +34,7 @@ public class FileRountingController {
 
     @RequestMapping(value = "/fileList", method = RequestMethod.GET)
     public ModelAndView fileListFtl(@RequestParam String uid, @RequestParam String parsonPath,HttpSession session){
-        List<FileEntity> list = fileService.getFileByParsonId(1,0);
+        List<FileEntity> list = fileService.listFileByParsonId(1,0);
         ModelAndView model = new ModelAndView();
         model.addObject(list);
         return model;

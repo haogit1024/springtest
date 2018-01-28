@@ -19,14 +19,14 @@ public class PageController {
 
     @RequestMapping(value = "/files/{uid}", method = RequestMethod.GET)
     public String files(Model model, @PathVariable int uid){
-        List<FileEntity> files = fileService.getFileByParsonId(uid, 0);
+        List<FileEntity> files = fileService.listFileByParsonId(uid, 0);
         model.addAttribute("files", files);
         return "filemain";
     }
 
     @RequestMapping(value = "files/list/{parsonId}")
     public String getFileList(Model model, @PathVariable int parsonId, @RequestAttribute int uid) {
-        List<FileEntity> files = fileService.getFileByParsonId(uid, parsonId);
+        List<FileEntity> files = fileService.listFileByParsonId(uid, parsonId);
         model.addAttribute("files", files);
         return "filelist";
     }
