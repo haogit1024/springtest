@@ -67,8 +67,8 @@ var listVM = new Vue({
             if (type === 'folder') {
                 //文件夹
                 console.log("点击了文件夹");
-                updateList(id);
-                updateNav(data, filename, id)
+                updateList(id, filename);
+                // updateNav(data, filename, id)
             } else {
                 //文件
                 console.log("点击了文件");
@@ -78,9 +78,17 @@ var listVM = new Vue({
     }
 });
 
-//上传文件模块
-var uploadBtn = document.getElementById("upload");
+//html对象
+var newFolderBtn = document.getElementById("newFolder");
 var uploadFileInput = document.getElementById("uploadFile");
+var uploadBtn = document.getElementById("upload");
+var folderNameTr = document.getElementById("folderNameTr");
+var folderNameInput = document.getElementById("folderNameInput");
+var confirmFolderBtn = document.getElementById("confirmFolderBtn");
+var closeFolderBtn = document.getElementById("closeFolderBtn");
+
+
+//上传文件模块
 uploadBtn.onclick = function () {
     uploadFileInput.click();
 };
@@ -106,7 +114,8 @@ uploadFileInput.onchange = function (e) {
     axios.post("http://localhost:8080/files", formData, config).then(function (value) {
         // alert(JSON.stringify(value.data))
         //刷新列表date数据
-        currentList.push(value.data);
+        // currentList.push(value.data);
+        currentList.unshift(value.data);
     }).catch(function (reason) {
         alert("上传文件出错");
         console.error(reason.data);
@@ -114,9 +123,18 @@ uploadFileInput.onchange = function (e) {
 };
 
 //新建文件夹
-var newFolderBtn = document.getElementById("newFolder");
 newFolderBtn.onclick = function () {
-    createFolder('');
+    folderNameTr.removeAttribute("style");
+};
+
+confirmFolderBtn.onclick = function () {
+    let inputVal = folderNameInput.value;
+    createFolder(inputVal);
+    folderNameTr.style.display = "none";
+};
+
+closeFolderBtn.onclick = function () {
+    folderNameTr.style.display = "none";
 };
 
 var navVm = new Vue({
@@ -125,16 +143,23 @@ var navVm = new Vue({
         items: []
     },
     methods: {
-        navClick: function (fileName) {
+        navClick: function (fileName, id) {
             var length = navigationObj.length;
+            let parentId = localStorage.getItem("parentId");
             for (var i = length - 1; i >= 0; i--) {
                 var index = navigationObj[i];
-                if (index.fileName === fileName) {
-                    listVM.items = index.value;
-                    currentList = index.value;
+                if (parentId != id) {
+                    if (index.fileName === fileName) {
+                        listVM.items = index.value;
+                        currentList = index.value;
+                    } else {
+                        navigationObj.pop();
+                    }
                 } else {
-                    navigationObj.pop();
+                    alert("aaa");
+                    break;
                 }
+
             }
         }
     }

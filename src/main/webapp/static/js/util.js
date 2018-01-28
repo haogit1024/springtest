@@ -12,6 +12,7 @@ function initList(instance) {
         var data = response.data;
         console.log('filelist = ');
         console.log(data);
+        data.reverse();
         listVM.items = data;
         currentList = data;
         updateNav(data, "所有文件", 0);
@@ -63,21 +64,24 @@ function createFolder(name) {
         // alert(JSON.stringify(value.data))
         //刷新列表date数据
         console.log("新建文件夹");
-        currentList.push(value.data);
+        // currentList.push(value.data);
+        currentList.unshift(value.data);
     }).catch(function (reason) {
 
     })
 }
 
-function updateList(id) {
+function updateList(id, filename) {
     localStorage.setItem("parentId", id);
     var axiosInstance = getAxiosInstance();
     axiosInstance.get('/files?parsonId=' + id).then(function(response) {
         var data = response.data;
         console.log('folder data = ');
         console.log(data);
+        data.reverse();
         listVM.items = data;
         currentList = data;
+        updateNav(data, filename, id)
     }).catch(function(error) {
         console.error('parsonId获取文件列表出错: ' + error.data);
     });

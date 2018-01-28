@@ -34,7 +34,7 @@
     </div>
 
     <ol id="navBar" class="breadcrumb">
-        <li v-for="item in items"><a href="javascript:void(0)" v-on:click="navClick(item.fileName)">{{item.fileName}}</a></li>
+        <li v-for="item in items"><a href="javascript:void(0)" v-on:click="navClick(item.fileName, item.id)">{{item.fileName}}</a></li>
     </ol>
 
     <div class="panel panel-default">
@@ -50,6 +50,16 @@
                     </tr>
                 </thead>
                 <tbody class="">
+                    <tr id="folderNameTr" style="display: none;">
+                        <td></td>
+                        <td>
+                            <input id="folderNameInput">
+                            <button class="btn btn-default" id="confirmFolderBtn"><i class="fa fa-check"></i></button>
+                            <button class="btn btn-default" id="closeFolderBtn"><i class="fa fa-close"></i></button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr v-for="item in items">
                         <td class="text-right">
                             <i class="fa " v-bind:class="'fa-file-' + item.type + '-o'"></i>
