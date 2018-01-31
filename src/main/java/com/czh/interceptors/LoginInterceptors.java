@@ -33,6 +33,7 @@ public class LoginInterceptors implements HandlerInterceptor {
         log.info("content type = " + httpServletRequest.getHeader("Content-Type"));
         //支持跨域, 浏览器自动在跨域的 GET 请求发送之前发送一个 OPTIONS 请求，以判断服务端是否允许这一域访问。可查看 axios 的 CORS 相关文档
         if (method.equals("OPTIONS")) {
+            log.info("OPTIONS request Allowed to pass");
             return true;
         }
         if (null == authorization || "".equals(authorization)) {

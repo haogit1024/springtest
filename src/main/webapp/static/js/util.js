@@ -26,7 +26,16 @@ function getAxiosInstance() {
     var token = localStorage.getItem('token');
     //初始化一个axios
     var instance = axios.create({
-        baseURL:'http://localhost:8080/',
+        baseURL:domain,
+        timeout:5000,
+        headers:{'Content-Type':'application/x-www-form-urlencoded','Authorization':token}
+    });
+    return instance;
+}
+
+function getSimpleAxiosInstance(token) {
+    var instance = axios.create({
+        baseURL:domain,
         timeout:5000,
         headers:{'Content-Type':'application/x-www-form-urlencoded','Authorization':token}
     });
@@ -60,7 +69,7 @@ function createFolder(name) {
     var config = {
         headers:{'Content-Type':'multipart/form-data','Authorization':token}
     };
-    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
+    axios.post(domain + "files", formData, config).then(function (value) {
         // alert(JSON.stringify(value.data))
         //刷新列表date数据
         console.log("新建文件夹");
@@ -69,6 +78,17 @@ function createFolder(name) {
     }).catch(function (reason) {
 
     })
+}
+
+function deleteFile(id) {
+    simpleAxios.delete(domain + "files/" + id).then(function (value) {
+        console.log("成功删除文件");
+        // console.log(value.data);
+        currentList.remove(value.data);
+    }).catch(function (error) {
+        console.error("删除文件出错");
+        console.error(error);
+    });
 }
 
 function updateList(id, filename) {

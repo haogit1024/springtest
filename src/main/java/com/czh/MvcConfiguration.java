@@ -56,10 +56,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
 
     /**
-     * 支持跨域访问
+     * 支持跨域访问和跨域配置
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedMethods("OPTIONS", "GET", "POST","PUT", "DELETE");
     }
 }

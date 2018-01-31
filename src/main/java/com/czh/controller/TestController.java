@@ -38,4 +38,10 @@ public class TestController {
         log.info("parentId = " + parentId);
         return user;
     }
+
+    @DeleteMapping(value = "/delete")
+    public User testDelete(){
+        User user = userService.getUser("admin");
+        return user;
+    }
 }

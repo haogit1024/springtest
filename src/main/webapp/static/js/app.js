@@ -1,6 +1,21 @@
 var account = 'admin';
 var psssword = 'admin';
 var domain = "http://localhost:8080/";
+//定义一个数组的删除方法
+Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].id == val.id) return i;
+    }
+    return -1;
+};
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    console.log("index = " + index);
+
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
 //当前列表数据
 var currentList = new Array();
 //导航栏数据
@@ -8,6 +23,8 @@ var navigation = new Array();
 var navigationObj = new Array();
 //导航指针
 var navIndex = 0;
+//简单的axios实例
+var simpleAxios;
 
 //登录获取token
 axios.post('http://localhost:8080/login',{
@@ -20,6 +37,7 @@ axios.post('http://localhost:8080/login',{
     localStorage.setItem("token", token);
     localStorage.setItem("tokenValidTime", timestamp + 3600000);
     localStorage.setItem("parentId", 0);
+    simpleAxios = getSimpleAxiosInstance(token);
     init();
 }).catch(function(error){
     console.error('登录出错');
@@ -30,30 +48,22 @@ axios.post('http://localhost:8080/login',{
 
 var testBtn = document.getElementById("testBtn");
 testBtn.onclick = function () {
-
+    axios({
+        method: 'delete',
+        url: domain + "test/delete",
+        data: {
+            "id":"a"
+        }
+    })
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(response) {
+            console.error(response);
+        });
 };
 
-// function foo(event) {
-//     var formData = new FormData();
-//     formData.append('file', event.target.files[0]);
-//     var token = localStorage.getItem('token');
-//     var instance = axios.create({
-//         baseURL:'http://localhost:8080/',
-//         timeout:5000,
-//         headers:{
-//             'Content-Type': 'multipart/form-data',
-//             'Authorization':token
-//         }
-//     });
-//     instance.post('files').then(function(response) {
-//         console.log(response);
-//     }).catch(function(error) {
-//         console.error('files post error');
-//         console.error(error);
-//     });
-// }
-
-
+///////////VM区/////////////
 var listVM = new Vue({
     el: '#filelist',
     data: {
@@ -68,15 +78,45 @@ var listVM = new Vue({
                 //文件夹
                 console.log("点击了文件夹");
                 updateList(id, filename);
-                // updateNav(data, filename, id)
             } else {
                 //文件
                 console.log("点击了文件");
                 downloadFile(id);
             }
+        },
+        fileDelete: function (id) {
+            deleteFile(id);
         }
     }
 });
+
+var navVm = new Vue({
+    el: "#navBar",
+    data: {
+        items: []
+    },
+    methods: {
+        navClick: function (fileName, id) {
+            var length = navigationObj.length;
+            let parentId = localStorage.getItem("parentId");
+            for (var i = length - 1; i >= 0; i--) {
+                var index = navigationObj[i];
+                if (parentId != id) {
+                    if (index.fileName === fileName) {
+                        listVM.items = index.value;
+                        currentList = index.value;
+                    } else {
+                        navigationObj.pop();
+                    }
+                } else {
+                    break;
+                }
+
+            }
+        }
+    }
+});
+////////////////////////
 
 //html对象
 var newFolderBtn = document.getElementById("newFolder");
@@ -111,8 +151,7 @@ uploadFileInput.onchange = function (e) {
     var config = {
         headers:{'Content-Type':'multipart/form-data','Authorization':token}
     };
-    axios.post("http://localhost:8080/files", formData, config).then(function (value) {
-        // alert(JSON.stringify(value.data))
+    axios.post(domain + "files", formData, config).then(function (value) {
         //刷新列表date数据
         // currentList.push(value.data);
         currentList.unshift(value.data);
@@ -136,31 +175,3 @@ confirmFolderBtn.onclick = function () {
 closeFolderBtn.onclick = function () {
     folderNameTr.style.display = "none";
 };
-
-var navVm = new Vue({
-    el: "#navBar",
-    data: {
-        items: []
-    },
-    methods: {
-        navClick: function (fileName, id) {
-            var length = navigationObj.length;
-            let parentId = localStorage.getItem("parentId");
-            for (var i = length - 1; i >= 0; i--) {
-                var index = navigationObj[i];
-                if (parentId != id) {
-                    if (index.fileName === fileName) {
-                        listVM.items = index.value;
-                        currentList = index.value;
-                    } else {
-                        navigationObj.pop();
-                    }
-                } else {
-                    alert("aaa");
-                    break;
-                }
-
-            }
-        }
-    }
-});

@@ -44,9 +44,10 @@
                 <thead class="navbar-default">
                     <tr>
                         <td style="width: 2%"></td>
-                        <td style="width: 58%">文件名</td>
-                        <td style="width: 16%">大小</td>
-                        <td style="width: 23%">修改时间</td>
+                        <td style="width: 55%">文件名</td>
+                        <td style="width: 5%;">操作</td>
+                        <td style="width: 15%">大小</td>
+                        <td style="width: 22%">修改时间</td>
                     </tr>
                 </thead>
                 <tbody class="">
@@ -66,6 +67,14 @@
                         </td>
                         <td>
                             <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.parsonId,item.type, item.filename, $event)">{{item.filename}}</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-download" v-on:click="fileClick(item.id, item.parsonId,item.type, item.filename, $event)"></i>
+                            </a>
+                            <a href="javascript:void(0)">
+                                <i class="fa fa-close" v-on:click="fileDelete(item.id)"></i>
+                            </a>
                         </td>
                         <td>{{item.size}}</td>
                         <td>{{item.time}}</td>
