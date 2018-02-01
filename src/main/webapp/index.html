@@ -63,21 +63,21 @@
                     </tr>
                     <tr v-for="item in items">
                         <td class="text-right">
-                            <i class="fa " v-bind:class="'fa-file-' + item.type + '-o'"></i>
+                            <i class="fa" v-bind:class="computedClassByType(item.type)"></i>
                         </td>
                         <td>
                             <a href="javascript:void(0)" v-on:click="fileClick(item.id, item.parsonId,item.type, item.filename, $event)">{{item.filename}}</a>
                         </td>
                         <td>
                             <a href="javascript:void(0)">
-                                <i class="fa fa-download" v-on:click="fileClick(item.id, item.parsonId,item.type, item.filename, $event)"></i>
+                                <i class="fa fa-download" v-on:click="downloadFile(item.id)"></i>
                             </a>
                             <a href="javascript:void(0)">
                                 <i class="fa fa-close" v-on:click="fileDelete(item.id)"></i>
                             </a>
                         </td>
-                        <td>{{item.size}}</td>
-                        <td>{{item.time}}</td>
+                        <td>{{computedSize(item.size)}}</td>
+                        <td>{{computedTime(item.time)}}</td>
                     </tr>
                 </tbody>
             </table>

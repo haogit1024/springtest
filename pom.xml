@@ -108,7 +108,7 @@
 
     </dependencies>
     <build>
-        <finalName>springtest</finalName>
+        <finalName>api</finalName>
 
         <!-- Package as an executable jar -->
         <plugins>

@@ -39,8 +39,8 @@ public class TestController {
         return user;
     }
 
-    @DeleteMapping(value = "/delete")
-    public User testDelete(){
+    @PostMapping(value = "/batch")
+    public User testBatchFile() {
         User user = userService.getUser("admin");
         return user;
     }

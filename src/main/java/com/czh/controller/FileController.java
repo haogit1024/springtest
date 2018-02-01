@@ -150,6 +150,7 @@ public class FileController {
             headers.add("content-disposition", "attachment;filename=" + filename);
             byte[] bytes = new byte[fis.available()];
             fis.read(bytes);
+            fis.close();
             ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(bytes, headers, HttpStatus.OK);
             return responseEntity;
         }  catch (IOException e) {

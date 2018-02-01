@@ -11,7 +11,6 @@ Array.prototype.indexOf = function(val) {
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
     console.log("index = " + index);
-
     if (index > -1) {
         this.splice(index, 1);
     }
@@ -86,6 +85,38 @@ var listVM = new Vue({
         },
         fileDelete: function (id) {
             deleteFile(id);
+        },
+        downloadFile: function (id) {
+            console.log("下载文件");
+            downloadFile(id);
+        },
+        computedSize: function (byte) {
+            if (byte != 0) {
+                let sizeUnit = ['B', 'KB', 'MB', 'GB'];
+                for (let i = 0; i < sizeUnit.length; i++) {
+                    if (byte >= 1024) {
+                        byte = byte / 1024;
+                    } else {
+                        return byte.toFixed(2) + sizeUnit[i];
+                    }
+                }
+                return byte.toFixed(2) + sizeUnit[sizeUnit.length - 1];
+            }
+            return '-';
+            // return byte;
+        },
+        computedTime: function (timestamp) {
+            if (timestamp != 0) {
+                return getTimeByTimestamp(timestamp);
+            }
+            return '-';
+        },
+        computedClassByType: function (type) {
+            if (type != 'folder') {
+                return 'fa-file-' + type + '-o';
+            } else {
+                return 'fa-' + type + '-o';
+            }
         }
     }
 });
