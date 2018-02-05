@@ -20,7 +20,7 @@ import java.util.UUID;
 public class FileUtil {
     private int BUFFER_SIZE = 1024 * 100;
     private final Logger log = Logger.getLogger(FileUtil.class);
-    //TODO 这里不全文件格式判断
+
     public String getFileType(String ext) {
         if (ext.equals(".text")) {
             return "text";
@@ -44,7 +44,7 @@ public class FileUtil {
             return "powerpoint";
         }
 //        return ext.substring(1,ext.length());
-        return "";
+        return "file";
     }
 
     /**

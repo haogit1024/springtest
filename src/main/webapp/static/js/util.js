@@ -126,9 +126,24 @@ function getTimeByTimestamp(timestamp) {
     var date = new Date(timestamp);
     Y = date.getFullYear() + '-';
     M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    D = date.getDate() + ' ';
+    D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
     h = date.getHours() + ':';
     m = date.getMinutes() + ':';
     s = date.getSeconds();
     return Y+M+D+h+m+s;
+}
+
+function getFileSize(byte) {
+    if (byte != 0) {
+        let sizeUnit = ['B', 'KB', 'MB', 'GB'];
+        for (let i = 0; i < sizeUnit.length; i++) {
+            if (byte >= 1024) {
+                byte = byte / 1024;
+            } else {
+                return byte.toFixed(2) + sizeUnit[i];
+            }
+        }
+        return byte.toFixed(2) + sizeUnit[sizeUnit.length - 1];
+    }
+    return '-';
 }
