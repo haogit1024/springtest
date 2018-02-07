@@ -1,7 +1,7 @@
 package com.czh.service;
 
 import com.czh.dao.UserDao;
-import com.czh.entity.User;
+import com.czh.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +13,15 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User getUser(String account){
+    public UserEntity getUser(String account){
         return userDao.getUser(account);
     }
 
-    public int insertUser(User user) {
+    public int insertUser(UserEntity user) {
         return userDao.insertUser(user);
     }
 
-    public boolean updateUser(User user) {
+    public boolean updateUser(UserEntity user) {
         return userDao.updateUser(user);
     }
 }

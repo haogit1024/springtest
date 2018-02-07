@@ -1,23 +1,11 @@
 package com.czh.controller;
 
-import com.czh.dao.UserDao;
-import com.czh.entity.FileRouting;
-import com.czh.entity.User;
-import com.czh.service.FileService;
+import com.czh.entity.UserEntity;
 import com.czh.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -32,16 +20,16 @@ public class TestController {
 
     private final Logger log = Logger.getLogger(TestController.class);
     @PostMapping(value = "/files")
-    public User test(@RequestPart("file") MultipartFile file, @RequestPart(value = "parentId", required = false) String parentId) {
-        User user = userService.getUser("admin");
+    public UserEntity test(@RequestPart("file") MultipartFile file, @RequestPart(value = "parentId", required = false) String parentId) {
+        UserEntity user = userService.getUser("admin");
         log.info("fileName = " + file.getOriginalFilename());
         log.info("parentId = " + parentId);
         return user;
     }
 
     @PostMapping(value = "/batch")
-    public User testBatchFile() {
-        User user = userService.getUser("admin");
+    public UserEntity testBatchFile() {
+        UserEntity user = userService.getUser("admin");
         return user;
     }
 }

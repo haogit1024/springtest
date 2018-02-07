@@ -1,24 +1,14 @@
 package com.czh.controller;
 
-import com.czh.dao.UserDao;
-import com.czh.entity.User;
-import com.czh.model.LoginModel;
-import com.czh.response.StatusCode;
+import com.czh.entity.UserEntity;
 import com.czh.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.UUID;
 
 /**
  * Created by czh on 17-6-9.
@@ -67,13 +57,13 @@ public class UserController {
             model.addObject("statusCode","");
             return model;
         }
-        User user = userService.getUser(account);
+        UserEntity user = userService.getUser(account);
         if (user != null) {
             model.addObject("status",1);
             model.addObject("statusCode", "该用户名已存在");
             return model;
         }
-        User newUser = new User();
+        UserEntity newUser = new UserEntity();
         newUser.setAccount(account);
         newUser.setPassword(password);
         int id = userService.insertUser(newUser);

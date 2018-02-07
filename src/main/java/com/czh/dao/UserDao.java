@@ -1,20 +1,8 @@
 package com.czh.dao;
 
-import com.czh.entity.User;
+import com.czh.entity.UserEntity;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by czh on 17-6-9.
@@ -28,11 +16,11 @@ public class UserDao {
         this.sqlSession = sqlSession;
     }
 
-    public User getUser(String account) {
+    public UserEntity getUser(String account) {
         return this.sqlSession.selectOne("getUser", account);
     }
 
-    public int insertUser(User user) {
+    public int insertUser(UserEntity user) {
 
         int i = this.sqlSession.insert("addUser", user);
         if (i > 0) {
@@ -41,7 +29,7 @@ public class UserDao {
         return -1;
     }
 
-    public boolean updateUser(User user){
+    public boolean updateUser(UserEntity user){
         int i = this.sqlSession.update("updateUser", user);
         System.out.println("i = " + i);
         if (i > 0) {

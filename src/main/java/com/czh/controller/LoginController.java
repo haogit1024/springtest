@@ -1,9 +1,8 @@
 package com.czh.controller;
 
 import com.czh.App;
-import com.czh.entity.Error;
 import com.czh.entity.Token;
-import com.czh.entity.User;
+import com.czh.entity.UserEntity;
 import com.czh.exception.LoginException;
 import com.czh.jwt.Header;
 import com.czh.jwt.Payload;
@@ -13,17 +12,14 @@ import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.Properties;
 
 @RestController
 public class LoginController {
@@ -33,7 +29,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Token login(@RequestBody LoginModel user) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
-        User realUser = userService.getUser(user.getAccount());
+        UserEntity realUser = userService.getUser(user.getAccount());
         if (realUser == null) {
             System.out.println("用户不存在");
             throw new LoginException("用户不存在");
