@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <link href="./static/css/bootstrap.css" rel="stylesheet">
+    <link href="./static/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="./static/js/jquery.js"></script>
+    <script type="text/javascript" src="./static/js/jquery.binarytransport.js"></script>
+</head>
+
+<body>
+    <h1>测试下载文件</h1>
+    <a id="testa">测试</a>
+    <script>
+        var url = 'http://localhost:8080/excel/order';
+        var headers = {
+            Authorization: 'eyJ0eXAiOiJIUzI1NiIsImFsZyI6IkpXVCJ9.eyJpc3MiOiJjaGVuemgiLCJzdWIiOiJhZG1pbiIsImF1ZCI6IjIiLCJleHAiOjE1MzI4NTA3MjUyNjYsImlhdCI6MTUzMjg0MzUyNTI2Nn0=.C4C8C95CAA6A92A0A9C21FB8AE61E76EBC944EC02BB6ACE70DFA3902620BC155'
+        };
+        var anchor = $('#testa');
+        var fileName = "test.xls";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'binary',
+            headers: headers,
+            processData: false,
+            success: function (blob) {
+                var windowUrl = window.URL || window.webkitURL;
+                var url = windowUrl.createObjectURL(blob);
+                anchor.prop('href', url);
+                anchor.prop('download', fileName);
+                anchor.get(0).click();
+                windowUrl.revokeObjectURL(url);
+            }
+        });
+    </script>
+</body>
+
+</html>

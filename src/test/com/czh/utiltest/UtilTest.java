@@ -1,6 +1,11 @@
 package com.czh.utiltest;
 
+import com.czh.database.DataSourceKey;
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
@@ -82,5 +87,26 @@ public class UtilTest {
 //        String type = fileNameMap.getContentTypeFor(name);//name:"aa.txt"
 
         System.out.println(type);
+    }
+
+    @Test
+    public void testImage() {
+        File imageFile = new File("C:\\Users\\czh\\Desktop\\1.jpg");
+        ITesseract instance = new Tesseract();  // JNA Interface Mapping
+        // ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+        // File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+        // instance.setDatapath(tessDataFolder.getPath());
+
+        try {
+            String result = instance.doOCR(imageFile);
+            System.out.println(result);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testEnum() {
+        String name = DataSourceKey.master.name();
     }
 }

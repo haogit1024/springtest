@@ -1,5 +1,6 @@
 package com.czh.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,13 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class TestAspect {
+
+    @Pointcut("execution(* com.czh.dao.CzhTestDao.listCzhTest())")
+    public void czhTestPointcut() {}
+
+    public void testBefore(JoinPoint joinPoint) {
+
+    }
 
 //    @Pointcut("execution(* com.czh.dao.UserDao.getUser(..))")
 //    public void dao(){}

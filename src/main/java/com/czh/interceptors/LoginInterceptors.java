@@ -1,11 +1,13 @@
 package com.czh.interceptors;
 
 import com.czh.App;
+import com.czh.dao.CzhTestDao;
 import com.czh.entity.Error;
 import com.czh.jwt.Payload;
 import com.czh.util.Encrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +21,8 @@ import java.util.Date;
 
 public class LoginInterceptors implements HandlerInterceptor {
     private static final Logger log = Logger.getLogger(LoginInterceptors.class);
+    @Autowired
+    CzhTestDao czhTestDao;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {

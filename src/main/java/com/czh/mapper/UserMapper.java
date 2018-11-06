@@ -1,11 +1,14 @@
+/*
 package com.czh.mapper;
 
 import com.czh.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
 
+*/
 /**
  * Created by czh on 17-6-9.
- */
+ *//*
+
 @Mapper
 public interface UserMapper {
     @Select("select * from tb_user where account = #{account}")
@@ -18,3 +21,4 @@ public interface UserMapper {
     @Update("update tb_user set account = #{account}, password = #{password}, email = #{email}, phone = #{phone}, gender = #{gender}, nickname = #{nickname}, realname = #{realname}, status = #{status} where id = #{id}")
     int updateUser();
 }
+*/

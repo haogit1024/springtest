@@ -1,8 +1,11 @@
 package com.czh;
 
 import com.czh.interceptors.DownloadInterceptors;
+import com.czh.interceptors.HttpInterceptors;
 import com.czh.interceptors.LoginInterceptors;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -20,6 +23,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 //        registry.freeMarker().cache(false);
 //    }
 
+    // 注册一个拦截器
+    /*@Bean
+    public HandlerInterceptor httpInterceptor() {
+        return new HttpInterceptors();
+    }*/
 
     /**
      * 添加拦截器
@@ -27,11 +35,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //添加登录拦截
-        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
-                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**")
-                .excludePathPatterns("/static/**").excludePathPatterns("/files/download/**").excludePathPatterns("/test/**");
+//        registry.addInterceptor(new LoginInterceptors()).addPathPatterns("/**").excludePathPatterns("/login")
+//                .excludePathPatterns("/error").excludePathPatterns("/error/**").excludePathPatterns("/page/**")
+//                .excludePathPatterns("/static/**").excludePathPatterns("/files/download/**").excludePathPatterns("/test/**");
         //添加文件下载拦截
-        registry.addInterceptor(new DownloadInterceptors()).addPathPatterns("/files/download/**");
+//        registry.addInterceptor(new DownloadInterceptors()).addPathPatterns("/files/download/**");
+        // http拦截器拦截
+//        registry.addInterceptor(httpInterceptor()).addPathPatterns("/**");
     }
 
     /**
