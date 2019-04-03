@@ -2,11 +2,13 @@ package com.czh.controller;
 
 import com.czh.dao.CzhTestDao;
 import com.czh.database.DynamicDataSourceContextHolder;
+import com.czh.dto.FileDTO;
 import com.czh.entity.CzhTest;
 import com.czh.entity.UserEntity;
 import com.czh.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,11 +24,13 @@ public class TestController {
     CzhTestDao czhTestDao;
 
     @RequestMapping("/test")
-    public List<CzhTest> test() {
+    public Object test(@RequestBody @Validated FileDTO fileDTO) {
 //        DynamicDataSourceContextHolder.setDataSources("dev");
-        List<CzhTest> list = czhTestDao.listCzhTest();
+        /*List<CzhTest> list = czhTestDao.listCzhTest();
         list.forEach(System.out::println);
-        return list;
+        return list;*/
+
+        return fileDTO;
     }
 
 }
