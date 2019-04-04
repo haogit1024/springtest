@@ -1,12 +1,9 @@
 package com.czh.dto;
 
 
-import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class FileDTO {
-    @NotNull
     private int id;
     @NotBlank(message = "name不能为空")
     private String name;
