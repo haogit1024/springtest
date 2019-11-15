@@ -1,10 +1,7 @@
 #!/usr/bin/env groovy
 pipeline{
     agent any
-    // 可以设置环境变量
-    environment {
 
-    }
     //默认命令运行的pwd 为项目workspace
     stages {
         stage('Build') {
