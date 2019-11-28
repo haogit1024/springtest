@@ -8,6 +8,7 @@ def testFunction(String message) {
         println(i)
         println(message)
     }
+    throw new RuntimeException("time out")
 }
 
 pipeline{
