@@ -8,7 +8,7 @@ def testFunction(String message) {
         println(i)
         println(message)
     }
-    throw new RuntimeException("time out")
+    throw new RuntimeException("服务器没有响应")
 }
 
 pipeline{
