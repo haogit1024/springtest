@@ -1,7 +1,13 @@
 #!/usr/bin/env groovy
 
+int timeOut = 60 * 1000
+
 def testFunction(String message) {
-    println(message)
+    for (int i = 1; i < 5; i++) {
+        Thread.sleep(5000)
+        println(i)
+        println(message)
+    }
 }
 
 pipeline{
