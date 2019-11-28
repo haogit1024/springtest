@@ -1,4 +1,9 @@
 #!/usr/bin/env groovy
+
+def testFunction(String message) {
+    println(message)
+}
+
 pipeline{
     agent any
 
@@ -20,6 +25,7 @@ pipeline{
         stage('Deploy') {
             steps{
                 echo 'This is a deploy step'
+                testFunction("fuck you jenkinsfile")
 //                sshPublisher(publishers: [sshPublisherDesc(configName: '136', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'D:\\file', remoteDirectorySDF: false, removePrefix: '/target', sourceFiles: '/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
